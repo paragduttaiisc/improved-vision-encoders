@@ -32,13 +32,15 @@ test_transform = transforms.Compose([
 ])
 
 
-def get_dataloaders(data_dir: str, batch_size: int):
+def get_dataloaders(
+        data_dir: str, batch_size: int, n_workers: int = 4
+) -> tuple[DataLoader, DataLoader, DataLoader]:
     trainset = ImageFolder(data_dir, transform=train_transform)
     valset = ImageFolder(data_dir, transform=train_transform)
     testset = ImageFolder(data_dir, transform=test_transform)
 
-    if os.path.exists("data/imagenet/splits.pt"):
-        splits = torch.load("data/imagenet/splits.pt")
+    if os.path.exists(f"{data_dir}/splits.pt"):
+        splits = torch.load(f"{data_dir}/splits.pt")
         train_set = Subset(trainset, splits["train"])
         val_set = Subset(valset, splits["val"])
         test_set = Subset(testset, splits["test"])
@@ -72,16 +74,16 @@ def get_dataloaders(data_dir: str, batch_size: int):
             "train": train_indices,
             "val": val_indices,
             "test": test_indices,
-        }, "data/imagenet/splits.pt")
+        }, f"{data_dir}/splits.pt")
 
     train_loader = DataLoader(
-        train_set, batch_size=batch_size, shuffle=True, num_workers=8,
+        train_set, batch_size=batch_size, shuffle=True, num_workers=n_workers,
         pin_memory=True, persistent_workers=True)
     val_loader = DataLoader(
-        val_set, batch_size=batch_size, shuffle=True, num_workers=8,
+        val_set, batch_size=batch_size, shuffle=True, num_workers=n_workers,
         pin_memory=True, persistent_workers=True)
     test_loader = DataLoader(
-        test_set, batch_size=batch_size, shuffle=False, num_workers=8,
+        test_set, batch_size=batch_size, shuffle=False, num_workers=n_workers,
         pin_memory=True, persistent_workers=True)
 
     return train_loader, val_loader, test_loader

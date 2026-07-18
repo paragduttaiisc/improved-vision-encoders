@@ -224,6 +224,7 @@ data/
 logs/
 wandb/
 outputs/
+models/
 temp/
 temp*
 CLAUDE.md
