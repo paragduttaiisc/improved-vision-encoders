@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Custom
+.vscode/
+.idea/
+data/
+logs/
+wandb/
+outputs/
+temp/
+temp*
+CLAUDE.md
+AGENT.md
