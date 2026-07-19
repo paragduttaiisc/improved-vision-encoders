@@ -23,7 +23,7 @@ def main(args: argparse.Namespace) -> None:
         init_kwargs={
             "wandb": {
                 "entity": "statsml-csa-iisc",
-                "name": "ViT-MAE",
+                "name": args.run_name,
             }
         },
     )
@@ -35,6 +35,7 @@ def main(args: argparse.Namespace) -> None:
 
     encoder = Encoder(args)
     decoder = Decoder(args)
+    linear_probe = torch.nn.Linear(args.n_embed, args.n_classes)
     encoder.compile()
     decoder.compile()
     
@@ -53,6 +54,9 @@ def main(args: argparse.Namespace) -> None:
         {"params": decay, "weight_decay": args.weight_decay},
         {"params": no_decay, "weight_decay": 0.0},
     ], lr=args.lr, betas=(0.9, 0.95), fused=torch.cuda.is_available())
+    probe_optimizer = optim.AdamW(
+        linear_probe.parameters(), lr=args.probe_lr,
+        betas=(0.9, 0.95), weight_decay=0.0)
 
     total_steps = args.num_epochs * len(train_loader) // torch.cuda.device_count()
 
@@ -70,13 +74,16 @@ def main(args: argparse.Namespace) -> None:
     accelerator.print(f"Encoder params: {hrs(encoder_params)}")
     accelerator.print(f"Decoder params: {hrs(decoder_params)}")
 
-    encoder, decoder, optimizer, train_loader, val_loader = accelerator.prepare(
-        encoder, decoder, optimizer, train_loader, val_loader)
+    encoder, decoder, linear_probe, optimizer, probe_optimizer, train_loader,\
+        val_loader = accelerator.prepare(
+            encoder, decoder, linear_probe, optimizer,
+            probe_optimizer, train_loader, val_loader)
 
     for epoch in range(1, args.num_epochs + 1):
         encoder.train()
         decoder.train()
-        for batch_idx, (imgs, _) in enumerate(train_loader):
+        linear_probe.train()
+        for batch_idx, (imgs, labels) in enumerate(train_loader):
             patches = patchify(imgs, args.patch_size)
             
             B, N, _ = patches.shape
@@ -100,6 +107,20 @@ def main(args: argparse.Namespace) -> None:
             optimizer.step()
             scheduler.step()
 
+            encoder.eval()
+            with torch.no_grad():
+                latents = encoder(patches)
+                features = latents.mean(dim=1).detach()
+            encoder.train()
+            logits = linear_probe(features)
+            probe_loss = F.cross_entropy(logits, labels)
+            probe_optimizer.zero_grad()
+            accelerator.backward(probe_loss)
+            probe_optimizer.step()
+            preds = logits.argmax(dim=-1)
+            preds, labels = accelerator.gather_for_metrics((preds, labels))
+            acc = (preds == labels).sum().item() / len(labels)
+
             global_step = epoch * len(train_loader) + batch_idx
             accelerator.log({
                 "train/loss": loss.item(),
@@ -111,6 +132,8 @@ def main(args: argparse.Namespace) -> None:
                     f"Epoch [{epoch}/{args.num_epochs}]"
                     f" Batch [{batch_idx + 1}/{len(train_loader)}]"
                     f" Loss: {loss.item():.4f}"
+                    f" Probe Loss: {probe_loss.item():.4f}"
+                    f" Probe Acc: {acc:.4f}"
                 )
             
         accelerator.wait_for_everyone()
@@ -121,9 +144,11 @@ def main(args: argparse.Namespace) -> None:
         
         encoder.eval()
         decoder.eval()
+        linear_probe.eval()
         total_loss, total_mse, total_mae, total_psnr = 0.0, 0.0, 0.0, 0.0
+        total_correct_1, total_correct_5, total_correct_10 = 0, 0, 0
         with torch.no_grad():
-            for batch_idx, (imgs, _) in enumerate(val_loader):
+            for batch_idx, (imgs, labels) in enumerate(val_loader):
                 patches = patchify(imgs, args.patch_size)
                 
                 B, N, _ = patches.shape
@@ -140,6 +165,8 @@ def main(args: argparse.Namespace) -> None:
                     reconstructed, args.patch_size, args.image_size, args.in_channels))
                 targets = denormalize(unpatchify(
                     patches, args.patch_size, args.image_size, args.in_channels))
+                mask = torch.ones(B, N, device=accelerator.device)
+                mask.scatter_(1, ids_keep, 0.)
                 if batch_idx == 0 and accelerator.is_main_process:
                     masked_patches = patches * (1 - mask.unsqueeze(-1))
                     masked_inputs = denormalize(unpatchify(
@@ -147,12 +174,21 @@ def main(args: argparse.Namespace) -> None:
                         args.image_size, args.in_channels))
                     fig = visualize(targets, masked_inputs, preds)
                     accelerator.log({"visualization": fig}, step=global_step)
-                mask = torch.ones(B, N, device=accelerator.device)
-                mask.scatter_(1, ids_keep, 0.)
                 loss = (loss * mask).sum() / mask.sum()
                 mse = F.mse_loss(preds, targets)
                 mae = F.l1_loss(preds, targets)
                 psnr = -10 * torch.log10(mse)
+
+                latents = encoder(patches)
+                logits = linear_probe(latents.mean(dim=1).detach())
+                logits, labels = accelerator.gather_for_metrics((logits, labels))
+                total_correct_1 +=\
+                    (logits.argmax(dim=-1) == labels).sum().item()
+                labels = labels.unsqueeze(-1)
+                total_correct_5 +=\
+                    (logits.topk(5, dim=-1).indices == labels).sum().item()
+                total_correct_10 +=\
+                    (logits.topk(10, dim=-1).indices == labels).sum().item()
 
                 total_loss += loss.item()
                 total_mse += mse.item()
@@ -162,12 +198,18 @@ def main(args: argparse.Namespace) -> None:
         val_mse = total_mse / len(val_loader)
         val_mae = total_mae / len(val_loader)
         val_psnr = total_psnr / len(val_loader)
+        correct_1 = total_correct_1 / len(val_loader.dataset)
+        correct_5 = total_correct_5 / len(val_loader.dataset)
+        correct_10 = total_correct_10 / len(val_loader.dataset)
         accelerator.log({
             "val/loss": val_loss,
             "val/mse": val_mse,
             "val/rmse": math.sqrt(val_mse),
             "val/mae": val_mae,
             "val/psnr": val_psnr,
+            "val/acc@1": correct_1,
+            "val/acc@5": correct_5,
+            "val/acc@10": correct_10
         }, step=global_step)
         
         accelerator.print(
@@ -176,7 +218,11 @@ def main(args: argparse.Namespace) -> None:
             f" Average Val MSE: {val_mse:.4f}"
             f" Average Val RMSE: {math.sqrt(val_mse):.4f}"
             f" Average Val MAE: {val_mae:.4f}"
-            f" Average Val PSNR: {val_psnr:.4f} dB")
+            f" Average Val PSNR: {val_psnr:.4f} dB"
+            f" Average Val Acc@1: {correct_1:.4f}"
+            f" Average Val Acc@5: {correct_5:.4f}"
+            f" Average Val Acc@10: {correct_10:.4f}"
+        )
     accelerator.end_training()
 
 
@@ -200,9 +246,11 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', type=int, default=1024)
     parser.add_argument('--lr', type=float, default=2e-4)
     parser.add_argument('--weight_decay', type=float, default=1e-4)
+    parser.add_argument('--probe_lr', type=float, default=5e-3)
     parser.add_argument('--log_interval', type=int, default=10)
     parser.add_argument('--save_interval', type=int, default=10)
     parser.add_argument('--save_dir', type=str, default='models')
     parser.add_argument('--output_dir', type=str, default='outputs')
+    parser.add_argument('--run_name', type=str, default='ViT-MAE')
     args = parser.parse_args()
     main(args)
