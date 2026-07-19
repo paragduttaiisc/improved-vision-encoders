@@ -22,7 +22,7 @@ The encoder produces high-quality patch-level features that are evaluated via a 
 - [x] **Multi-GPU training** — Accelerate-based DDP across 8× NVIDIA A100-SXM4-40GB
 - [x] **Validation & logging** — reconstruction metrics (MSE, RMSE, MAE, PSNR) + probe accuracy (Acc@1/5/10)
 - [x] **WandB experiment tracking** — loss curves, learning rate schedules, visualization of masked/reconstructed images
-- [x] **Linear probe inference** — standalone script for probing frozen pre-trained encoders
+- [x] **Linear probe inference** — standalone script that reports Acc@1/5/10 on the held-out test set (no training loop)
 - [x] **Checkpointing** — periodic state saving and restoration via `accelerator.save_state()`
 
 ---
@@ -125,8 +125,8 @@ python main.py --batch_size 64 --num_epochs 2 --log_interval 1
 ### Linear Probe Inference
 
 ```bash
-# Train a linear classifier on frozen pre-trained features
-python infer.py --lr 1e-2 --num_epochs 100
+# Report Acc@1/5/10 on the held-out test set (no training)
+python infer.py --batch_size 2048
 ```
 
 ---
@@ -190,7 +190,7 @@ for each batch:
 - [x] **Multi-GPU training** — Accelerate-based DDP across 8× NVIDIA A100-SXM4-40GB
 - [x] **Validation & logging** — reconstruction metrics (MSE, RMSE, MAE, PSNR) + probe accuracy (Acc@1/5/10)
 - [x] **WandB experiment tracking** — loss curves, LR schedules, visualization of masked/reconstructed images
-- [x] **Linear probe inference** — standalone script for probing frozen pre-trained encoders
+- [x] **Linear probe inference** — standalone script that reports Acc@1/5/10 on the held-out test set (no training loop)
 - [x] **Checkpointing** — periodic state saving and restoration via `accelerator.save_state()`
 
 ### Phase 1: JEPA Objective
@@ -255,7 +255,7 @@ Replace pixel-wise MSE reconstruction with a joint predictive objective:
 | [model.py](model.py) | Model definitions: `MultiHeadAttention`, `FeedForward`, `Block`, `ViTBaseModel`, `Encoder`, `Decoder` |
 | [dataloader.py](dataloader.py) | ImageFolder dataloader with stratified train/val/test splits |
 | [utils.py](utils.py) | Helpers: `patchify`, `unpatchify`, `denormalize`, `visualize`, `set_seed` |
-| [infer.py](infer.py) | Linear probe inference: freeze encoder, train classifier |
+| [infer.py](infer.py) | Linear probe inference: freeze encoder, report Acc@1/5/10 on test set |
 
 ---
 

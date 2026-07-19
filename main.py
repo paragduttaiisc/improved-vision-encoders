@@ -36,6 +36,8 @@ def main(args: argparse.Namespace) -> None:
     encoder = Encoder(args)
     decoder = Decoder(args)
     linear_probe = torch.nn.Linear(args.n_embed, args.n_classes)
+    torch.nn.init.trunc_normal_(linear_probe.weight, std=0.02)
+    torch.nn.init.zeros_(linear_probe.bias)
     encoder.compile()
     decoder.compile()
     
