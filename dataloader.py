@@ -7,41 +7,18 @@ from torchvision import transforms
 from torchvision.datasets import ImageFolder
 
 
-class MultiCropTransform:
-    def __init__(self):
-        self.global_transform = global_transform
-        self.local_transform = local_transform
-
-    def __call__(self, img):
-        global_views = [self.global_transform(img), self.global_transform(img)]
-        local_views = [self.local_transform(img) for _ in range(6)]
-        return global_views + local_views
-
-
-global_transform = transforms.Compose([
+train_transform = transforms.Compose([
     transforms.RandomResizedCrop(
-        224, scale=(0.3,1.0),
-        interpolation=transforms.InterpolationMode.BICUBIC),
+        224,
+        scale=(0.2, 1.0),
+        interpolation=transforms.InterpolationMode.BICUBIC,
+    ),
     transforms.RandomHorizontalFlip(),
-    transforms.ColorJitter(
-        brightness=0.4, contrast=0.4, saturation=0.2, hue=0.1),
-    transforms.RandomGrayscale(p=0.2),
-    transforms.GaussianBlur(9, sigma=(0.1, 2.0)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=(0.485,0.456,0.406), std=(0.229,0.224,0.225)),
-])
-
-local_transform = transforms.Compose([
-    transforms.RandomResizedCrop(
-        96, scale=(0.05,0.3),
-        interpolation=transforms.InterpolationMode.BICUBIC),
-    transforms.RandomHorizontalFlip(),
-    transforms.ColorJitter(
-        brightness=0.4, contrast=0.4, saturation=0.2, hue=0.1),
-    transforms.RandomGrayscale(p=0.2),
-    transforms.GaussianBlur(9, sigma=(0.1,2.0)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=(0.485,0.456,0.406), std=(0.229,0.224,0.225)),
+    transforms.Normalize(
+        mean=(0.485, 0.456, 0.406),
+        std=(0.229, 0.224, 0.225),
+    ),
 ])
 
 test_transform = transforms.Compose([
@@ -55,7 +32,7 @@ test_transform = transforms.Compose([
 def get_dataloaders(
         data_dir: str, batch_size: int, n_workers: int = 4
 ) -> tuple[DataLoader, DataLoader, DataLoader]:
-    trainset = ImageFolder(data_dir, transform=MultiCropTransform())
+    trainset = ImageFolder(data_dir, transform=train_transform)
     valset = ImageFolder(data_dir, transform=test_transform)
     testset = ImageFolder(data_dir, transform=test_transform)
 

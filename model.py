@@ -1,9 +1,8 @@
 import argparse
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange
+from typing import Optional
 
 
 class MultiHeadAttention(nn.Module):
@@ -66,28 +65,19 @@ class Block(nn.Module):
         return x
 
 
-class Model(nn.Module):
-    def __init__(self, args: argparse.Namespace) -> None:
+class ViTBaseModel(nn.Module):
+    def __init__(
+            self, n_embed: int, n_heads: int, n_layers: int, dropout: float
+    ) -> None:
         super().__init__()
-        assert args.n_embed % args.n_heads == 0
-        assert args.image_size % args.patch_size == 0
-        self.n_embed = args.n_embed
-        self.patch_size = args.patch_size
-        self.base_grid_size = args.image_size // args.patch_size
-        num_patches = self.base_grid_size ** 2
-
-        self.patch_emb = nn.Linear(
-            args.patch_size ** 2 * args.in_channels, args.n_embed)
-        self.pos_emb = nn.Parameter(
-            torch.zeros(1, num_patches, args.n_embed))
+        assert n_embed % n_heads == 0
+        
         self.layers = nn.ModuleList([
-            Block(args.n_embed, args.n_heads, args.dropout)
-            for _ in range(args.n_layers)])
-        self.norm_f = nn.RMSNorm(args.n_embed)
-
-        self.apply(self._init_weights)
-        nn.init.trunc_normal_(self.pos_emb, std=0.02)
-
+            Block(n_embed, n_heads, dropout)
+            for _ in range(n_layers)
+        ])
+        self.norm_f = nn.RMSNorm(n_embed)
+    
     def _init_weights(self, module) -> None:
         if isinstance(module, nn.Linear):
             nn.init.trunc_normal_(module.weight, std=0.02)
@@ -95,38 +85,73 @@ class Model(nn.Module):
                 nn.init.zeros_(module.bias)
         elif isinstance(module, nn.RMSNorm):
             nn.init.ones_(module.weight)
-
-    def interpolate_pos_emb(self, grid_h: int, grid_w: int) -> torch.Tensor:
-        if grid_h == self.base_grid_size and grid_w == self.base_grid_size:
-            return self.pos_emb
-        D = self.pos_emb.shape[-1]
-        pos = self.pos_emb.reshape(
-            1, self.base_grid_size, self.base_grid_size, D)
-        pos = pos.permute(0, 3, 1, 2)
-        pos = F.interpolate(
-            pos, size=(grid_h, grid_w), mode="bicubic", align_corners=False)
-        pos = pos.permute(0, 2, 3, 1)
-        pos = pos.reshape(1, grid_h * grid_w, D)
-        return pos
     
-    @staticmethod
-    def patchify(imgs: torch.Tensor, patch_size: int) -> torch.Tensor:
-        return rearrange(
-            imgs, "b c (gh ph) (gw pw) -> b (gh gw) (ph pw c)",
-            ph=patch_size, pw=patch_size)
-
-    def forward(self, imgs: torch.Tensor) -> torch.Tensor:
-        B, _, H, W = imgs.shape
-        assert H % self.patch_size == 0
-        assert W % self.patch_size == 0
-        grid_h = H // self.patch_size
-        grid_w = W // self.patch_size
-        patches = self.patchify(imgs, self.patch_size)
-        pos = self.interpolate_pos_emb(grid_h, grid_w).expand(B, -1, -1)
-        
-        x = self.patch_emb(patches)
-        x = x + pos
+    def forward_features(self, x: torch.Tensor) -> torch.Tensor:
         for layer in self.layers:
             x = layer(x)
-        x = self.norm_f(x)
-        return x
+        return self.norm_f(x)
+
+
+class Encoder(ViTBaseModel):
+    def __init__(self, args: argparse.Namespace) -> None:
+        super().__init__(
+            args.n_embed, args.n_heads, args.n_layers, args.dropout)
+        assert args.image_size % args.patch_size == 0
+        num_patches = (args.image_size // args.patch_size) ** 2
+        self.n_embed = args.n_embed
+        self.patch_emb = nn.Linear(
+            args.patch_size * args.patch_size * args.in_channels, args.n_embed)
+        self.pos_emb = nn.Parameter(torch.zeros(1, num_patches, args.n_embed))
+        
+        self.apply(self._init_weights)
+        nn.init.trunc_normal_(self.pos_emb, std=0.02)
+
+    def forward(
+            self,
+            patches: torch.Tensor,
+            ids_to_keep: Optional[torch.Tensor] = None
+    ) -> torch.Tensor:
+        B, _, D = patches.shape
+        pos = self.pos_emb.expand(B, -1, -1)
+        if ids_to_keep is not None:
+            patch_ids = ids_to_keep.unsqueeze(-1).expand(-1, -1, D)
+            patches = torch.gather(patches, dim=1, index=patch_ids)
+            pos_ids = ids_to_keep.unsqueeze(-1).expand(-1, -1, self.n_embed)
+            pos = torch.gather(pos, dim=1, index=pos_ids)
+        x = self.patch_emb(patches) + pos
+        return self.forward_features(x)
+
+
+class Decoder(ViTBaseModel):
+    def __init__(self, args: argparse.Namespace) -> None:
+        super().__init__(
+            args.decoder_n_embed, args.decoder_n_heads,
+            args.decoder_n_layers, args.dropout)
+        assert args.image_size % args.patch_size == 0
+        self.num_patches = (args.image_size // args.patch_size) ** 2
+        self.n_embed = args.decoder_n_embed
+        self.mask_token = nn.Parameter(torch.zeros(1, 1, args.decoder_n_embed))
+        self.decoder_embed = nn.Linear(args.n_embed, args.decoder_n_embed)
+        self.pos_emb = nn.Parameter(torch.zeros(
+            1, self.num_patches, args.decoder_n_embed))
+        self.pixel_head = nn.Linear(
+            args.decoder_n_embed, (args.patch_size ** 2) * args.in_channels)
+        self.apply(self._init_weights)
+        nn.init.trunc_normal_(self.mask_token, std=0.02)
+        nn.init.trunc_normal_(self.pos_emb, std=0.02)
+    
+    def forward(
+            self,
+            latents: torch.Tensor,
+            ids_to_restore: torch.Tensor
+    ) -> torch.Tensor:
+        x = self.decoder_embed(latents)
+        B, N, _ = x.shape
+        num_mask = self.num_patches - N
+        mask_tokens = self.mask_token.expand(B, num_mask, -1)
+        x = torch.cat([x, mask_tokens], dim=1)
+        idxs = ids_to_restore.unsqueeze(-1).expand(-1, -1, self.n_embed)
+        x = torch.gather(x, dim=1, index=idxs)
+        x = x + self.pos_emb
+        x = self.forward_features(x)
+        return self.pixel_head(x)
