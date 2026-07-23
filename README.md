@@ -11,19 +11,22 @@ Self-supervised vision encoder research — building larger, smarter masked auto
 
 ## Overview
 
-This project develops improved vision encoders through self-supervised learning. The core approach is a **Vision Transformer Masked Autoencoder (ViT-MAE)** that learns rich visual representations by reconstructing masked image patches — without any labels.
+This project develops improved vision encoders through self-supervised learning. The core approach is a **Joint Embedding Predictive Architecture (JEPA)** that learns rich visual representations by predicting latent features of masked regions from unmasked regions — without any labels.
 
 The encoder produces high-quality patch-level features that are evaluated via a linear probe (top-1 accuracy on ImageNet-1K) and through reconstruction quality metrics (PSNR, MSE, MAE). The goal is to push representation quality beyond current baselines through architectural innovations.
 
 ### What's Working
 
-- [x] **MAE training pipeline** — 75% random patch masking, encoder/decoder with cross-attention style reconstruction
-- [x] **Integrated linear probe** — probe trained concurrently with MAE for real-time representation quality tracking
+- [x] **JEPA training pipeline** — 75% random patch masking, encoder/predictor with prediction loss + variance loss + sliced Wasserstein loss
+- [x] **Integrated linear probe** — probe trained concurrently with JEPA for real-time representation quality tracking
 - [x] **Multi-GPU training** — Accelerate-based DDP across 8× NVIDIA A100-SXM4-40GB
 - [x] **Validation & logging** — reconstruction metrics (MSE, RMSE, MAE, PSNR) + probe accuracy (Acc@1/5/10)
 - [x] **WandB experiment tracking** — loss curves, learning rate schedules, visualization of masked/reconstructed images
 - [x] **Linear probe inference** — standalone script that reports Acc@1/5/10 on the held-out test set (no training loop)
 - [x] **Checkpointing** — periodic state saving and restoration via `accelerator.save_state()`
+- [x] **Configurable sequence mixing** — switch between Multi-Head Attention (FlashAttention) and FourierMixer (FFT-based) via `--token_mixer`
+- [x] **Configurable FFN activations** — GELU, SwiGLU, or SqReLU via `--activation`
+- [x] **Mixture of Experts (MoE)** — optional MoE in channel mixer with top-k routing and load-balancing aux loss
 
 ---
 
@@ -32,10 +35,10 @@ The encoder produces high-quality patch-level features that are evaluated via a 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Input: 224×224×3 Image                       │
-└────────────────────────────┬────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────┘
                            │
               ┌────────────▼────────────┐
-              │   Patch Embedding       │  16×16 → 512-d
+              │   Patch Embedding       │  16×16 → n_embed-d
               │   (196 patches)         │
               └────────────┬────────────┘
                            │
@@ -45,27 +48,32 @@ The encoder produces high-quality patch-level features that are evaluated via a 
                            │
          ┌─────────────────▼─────────────────┐
          │         ENCODER                   │
-         │   12 layers × ViT Block           │
-         │   512-d embed, 8 heads            │
-         │   RMSNorm + GELU MLP (4×)         │
+         │   N layers × Configurable Block   │
+         │   n_embed-d embed, n_heads        │
+         │   RMSNorm + Configurable FFN      │
+         │   (GELU / SwiGLU / SqReLU)        │
+         │   Token mixer: MHA or Fourier     │
          └─────────────────┬─────────────────┘
                            │
-                  [B, 49, 512]  ← latent features
+                  [B, 49, n_embed]  ← latent features
                            │
          ┌─────────────────▼─────────────────┐
-         │         DECODER                   │
-         │   6 layers × ViT Block            │
-         │   256-d embed, 4 heads            │
+         │         PREDICTOR                 │
+         │   N layers × Configurable Block   │
+         │   decoder_n_embed-d embed         │
          │   + mask tokens for 147 missing   │
          └─────────────────┬─────────────────┘
                            │
               ┌────────────▼────────────┐
-              │  Reconstructed Patches  │  [B, 196, 768]
-              │  (pixel-level output)   │
+              │  Predicted Latents  │  [B, 196, decoder_n_embed]
+              │  (patch-level output) │
               └────────────┬────────────┘
                            │
               ┌────────────▼────────────┐
-              │  MSE Loss (masked)      │
+              │  Prediction Loss (MSE)  │
+              │  + Variance Loss        │
+              │  + Sliced Wasserstein   │
+              │  + MoE Aux Loss         │
               │  + Linear Probe (1000)  │
               └─────────────────────────┘
 ```
@@ -74,12 +82,12 @@ The encoder produces high-quality patch-level features that are evaluated via a 
 
 | Component | Dimensions | Layers | Heads |
 |-----------|-----------|--------|-------|
-| Encoder | 512-d embed | 12 | 8 |
-| Decoder | 256-d embed | 6 | 4 |
-| Patch embedding | 16×16×3 → 512 | — | — |
-| Linear probe | 512 → 1000 | — | — |
+| Encoder | 768-d embed (default) | 12 (default) | 12 (default) |
+| Predictor | 256-d embed (default) | 6 (default) | 4 (default) |
+| Patch embedding | 16×16×3 → n_embed | — | — |
+| Linear probe | n_embed → 1000 | — | — |
 
-**Total parameters**: ~41.4 MB (encoder: 36.5 MB, decoder: 4.9 MB)
+**Total parameters**: ~150 MB (encoder: ~140 MB, predictor: ~10 MB) — varies with configuration
 
 ---
 
@@ -109,17 +117,19 @@ The dataloader auto-generates stratified splits (500k train / 10k val / ~30k tes
 
 ```bash
 # Default training (ImageNet, 500 epochs, 8 GPUs)
-python main.py --run-name ViT-MAE-Baseline
+python pretrain.py --run-name JEPA-Baseline
 
 # Custom configuration
-python main.py \
+python pretrain.py \
     --n_layers 24 --n_embed 768 --n_heads 12 \
     --batch_size 512 --num_epochs 100 \
     --lr 1e-4 --weight_decay 0.05 \
-    --run-name ViT-L-MAE
+    --token_mixer Fourier --activation SwiGLU \
+    --n_experts 8 --n_active_experts 2 \
+    --run-name JEPA-Large
 
 # Quick test run
-python main.py --batch_size 64 --num_epochs 2 --log_interval 1
+python pretrain.py --batch_size 64 --num_epochs 2 --log_interval 1
 ```
 
 ### Linear Probe Inference
@@ -135,9 +145,13 @@ python infer.py --batch_size 2048
 
 The training loop runs two objectives simultaneously:
 
-1. **MAE Reconstruction** — Random 75% of patches are masked. The encoder processes only the visible patches. The decoder reconstructs all patches (visible + masked) via mask tokens. Loss is MSE computed only on masked patches.
+1. **JEPA Prediction** — Random 75% of patches are masked. The encoder processes only the visible patches to produce latent features. The predictor reconstructs all patches (visible + masked) via mask tokens. Loss is a combination of:
+   - **Prediction loss**: MSE between predicted and actual patch latents (masked patches only)
+   - **Variance loss**: Encourages latent std to match a target (prevents collapse)
+   - **Sliced Wasserstein loss**: Aligns latent distribution to Gaussian (prevents collapse)
+   - **MoE aux loss**: Load-balancing regularization for mixture of experts
 
-2. **Linear Probe** — Encoder features (mean-pooled across patches) are fed to a linear classifier trained with cross-entropy on image labels. This runs concurrently with MAE training, providing real-time representation quality signals.
+2. **Linear Probe** — Encoder features (mean-pooled across patches) are fed to a linear classifier trained with cross-entropy on image labels. This runs concurrently with JEPA training, providing real-time representation quality signals.
 
 ```
 for each batch:
@@ -145,10 +159,12 @@ for each batch:
     patches = patchify(images)
     ids_keep = random_mask(patches, ratio=0.25)
     latents = encoder(patches, ids_keep)
-    reconstructed = decoder(latents, ids_restore)
+    predicted = predictor(latents, ids_restore)
 
-    # MAE loss (masked patches only)
-    loss_mae = mse(reconstructed, patches) [masked only]
+    # JEPA loss (masked patches only)
+    loss_pred = mse(predicted, patches) [masked only]
+    loss_var = variance_loss(latents)
+    loss_sw = sliced_wasserstein_loss(latents)
 
     # Linear probe (concurrent)
     features = latents.mean(dim=1)
@@ -156,14 +172,14 @@ for each batch:
     loss_probe = cross_entropy(logits, labels)
 
     # Backward pass
-    backward(loss_mae)
-    backward(loss_probe)
+    backward(loss_pred + loss_var + loss_sw + loss_probe)
 ```
 
 ### Scheduler
 
-- **Warmup**: Linear warmup for 3 epochs (learning rate 1e-3 → 2e-4)
-- **Annealing**: Cosine annealing from 2e-4 down to 2e-5 over remaining epochs
+- **Warmup**: Linear warmup for 10 epochs (learning rate 1e-3 → 2e-4)
+- **Annealing**: Cosine annealing from 2e-4 down to 1e-4 over epochs 10–480
+- **Constant**: Learning rate held at 1e-4 for epochs 480–500
 - **Gradient clipping**: L2 norm ≤ 1.0 on encoder + decoder parameters
 
 ---
@@ -185,22 +201,26 @@ for each batch:
 
 ### Completed
 
-- [x] **MAE training pipeline** — 75% random patch masking, encoder/decoder with pixel-wise MSE reconstruction
-- [x] **Integrated linear probe** — probe trained concurrently with MAE for real-time representation quality tracking
+- [x] **JEPA training pipeline** — 75% random patch masking, encoder/predictor with prediction loss + variance loss + sliced Wasserstein loss
+- [x] **Integrated linear probe** — probe trained concurrently with JEPA for real-time representation quality tracking
 - [x] **Multi-GPU training** — Accelerate-based DDP across 8× NVIDIA A100-SXM4-40GB
 - [x] **Validation & logging** — reconstruction metrics (MSE, RMSE, MAE, PSNR) + probe accuracy (Acc@1/5/10)
 - [x] **WandB experiment tracking** — loss curves, LR schedules, visualization of masked/reconstructed images
 - [x] **Linear probe inference** — standalone script that reports Acc@1/5/10 on the held-out test set (no training loop)
 - [x] **Checkpointing** — periodic state saving and restoration via `accelerator.save_state()`
+- [x] **Configurable sequence mixing** — Multi-Head Attention (FlashAttention) or FourierMixer (FFT-based)
+- [x] **Configurable FFN activations** — GELU, SwiGLU, or SqReLU
+- [x] **Mixture of Experts (MoE)** — optional MoE in channel mixer with top-k routing and load-balancing aux loss
 
 ### Phase 1: JEPA Objective
 
-Replace pixel-wise MSE reconstruction with a joint predictive objective:
+**Completed** — Replaced pixel-wise MSE reconstruction with a joint predictive objective:
 
-- [ ] Predict latent representations of masked regions from unmasked regions
-- [ ] Implement SIGReg (Sign-regularized) or similar contrastive regularization
+- [x] Predict latent representations of masked regions from unmasked regions
+- [x] Variance loss to prevent representation collapse
+- [x] Sliced Wasserstein loss for Gaussian alignment
+- [x] Replaced decoder with predictor network
 - [ ] Add teacher-student architecture for predictive coding
-- [ ] Replace decoder with predictor network
 - [ ] Add contrastive loss (InfoNCE) between predicted and target latents
 
 **Key papers:**
@@ -211,12 +231,17 @@ Replace pixel-wise MSE reconstruction with a joint predictive objective:
 
 ### Phase 2: Architectural Extensions
 
-- [ ] Mixture of Experts (MoE) in attention and FFN layers
-- [ ] Fourier Neural Operator attention mechanisms
+**Completed:**
+- [x] Mixture of Experts (MoE) in FFN layers with top-k routing
+- [x] FourierMixer (FFT-based sequence mixing) as alternative to MHA
+- [x] Configurable FFN activations (GELU, SwiGLU, SqReLU)
+
+**Remaining:**
+- [ ] Mixture of Experts in attention layers
 - [ ] Sparse / local attention (sliding window, cross-window communication)
 - [ ] Multi-scale / hierarchical encoder
 - [ ] Cross-attention between patch groups
-- [ ] Alternative FFN designs (gMLP, SwiGLU, gated MLP)
+- [ ] Alternative FFN designs (gMLP, gated MLP)
 
 **Key papers:**
 - [MoE](https://arxiv.org/abs/2101.03961) — "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity" (Fedus et al., 2022)
@@ -251,8 +276,9 @@ Replace pixel-wise MSE reconstruction with a joint predictive objective:
 
 | File | Purpose |
 |------|---------|
-| [main.py](main.py) | Training loop: MAE forward/backward, probe training, validation, logging |
-| [model.py](model.py) | Model definitions: `MultiHeadAttention`, `FeedForward`, `Block`, `ViTBaseModel`, `Encoder`, `Decoder` |
+| [pretrain.py](pretrain.py) | Training loop: JEPA forward/backward, probe training, validation, logging |
+| [model.py](model.py) | Model definitions: `MultiHeadAttention`, `FourierMixer`, `FeedForward` (GELU/SwiGLU/SqReLU), `MoE`, `Block`, `BaseModel`, `Encoder`, `Decoder` |
+| [losses.py](losses.py) | Regularization losses: `variance_loss_fn`, `sliced_wasserstein_loss_fn` |
 | [dataloader.py](dataloader.py) | ImageFolder dataloader with stratified train/val/test splits |
 | [utils.py](utils.py) | Helpers: `patchify`, `unpatchify`, `denormalize`, `visualize`, `set_seed` |
 | [infer.py](infer.py) | Linear probe inference: freeze encoder, report Acc@1/5/10 on test set |
