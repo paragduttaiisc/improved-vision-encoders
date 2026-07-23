@@ -1,8 +1,9 @@
 import math
 import argparse
 import torch, torch.nn.functional as F, torch.optim as optim
-from torch.optim.lr_scheduler import LinearLR, CosineAnnealingLR, SequentialLR
 from accelerate import Accelerator
+from torch.optim.lr_scheduler import\
+    LinearLR, CosineAnnealingLR, ConstantLR, SequentialLR
 
 from model import Encoder, Decoder
 from utils import set_seed, human_readable_numbers as hrn,\
@@ -62,16 +63,20 @@ def main(args: argparse.Namespace) -> None:
         probe.parameters(), lr=args.probe_lr,
         betas=(0.9, 0.95), weight_decay=0.0)
 
-    total_steps = args.num_epochs * len(train_loader) // torch.cuda.device_count()
+    steps_per_epoch = len(train_loader) // accelerator.num_processes
+    warmup_steps = args.warmup_epochs * steps_per_epoch
+    cosine_steps = (args.last_decay_epoch - args.warmup_epochs) * steps_per_epoch
+    constant_steps = (args.num_epochs - args.last_decay_epoch) * steps_per_epoch
 
-    warmup_steps = len(train_loader) // torch.cuda.device_count() * 3
-    cosine_steps = total_steps - warmup_steps
     warmup = LinearLR(
         optimizer, start_factor=1e-3, end_factor=1.0, total_iters=warmup_steps)
     cosine = CosineAnnealingLR(
-        optimizer, T_max=cosine_steps, eta_min=args.lr / 10)
+        optimizer, T_max=cosine_steps, eta_min=args.lr / 20)
+    constant = ConstantLR(
+        optimizer, factor=1.0, total_iters=constant_steps)
     scheduler = SequentialLR(
-        optimizer, schedulers=[warmup, cosine], milestones=[warmup_steps])
+        optimizer, schedulers=[warmup, cosine, constant],
+        milestones=[warmup_steps, warmup_steps + cosine_steps])
 
     get_param_count = lambda model: sum(p.numel() for p in model.parameters())
     accelerator.print(f"Train loader: {hrn(len(train_loader.dataset))} samples") # type: ignore
@@ -98,8 +103,8 @@ def main(args: argparse.Namespace) -> None:
             ids_keep = ids_shuffle[:, :N // 4]
             ids_restore = ids_shuffle.argsort(dim=1)
             
-            latents = encoder(patches, ids_keep)
-            reconstructed = decoder(latents, ids_restore)
+            latents, router_loss = encoder(patches, ids_keep)
+            reconstructed, _ = decoder(latents, ids_restore)
             
             pred_loss = F.mse_loss(
                 reconstructed, patches, reduction='none').mean(-1)
@@ -113,6 +118,8 @@ def main(args: argparse.Namespace) -> None:
                 + args.var_weight * var_loss\
                 + args.sw_weight * sw_loss
             )
+            if router_loss is not None:
+                loss += args.router_weight * router_loss
 
             optimizer.zero_grad()
             accelerator.backward(loss)
@@ -123,7 +130,7 @@ def main(args: argparse.Namespace) -> None:
 
             encoder.eval()
             with torch.no_grad():
-                latents = encoder(patches)
+                latents, _ = encoder(patches)
                 features = latents.mean(dim=1).detach()
             encoder.train()
             logits = probe(features)
@@ -145,6 +152,7 @@ def main(args: argparse.Namespace) -> None:
                 "train/sw_loss": sw_loss.item(),
                 "train/probe_loss": probe_loss.item(),
                 "train/probe_acc": acc,
+                "train/router_loss": router_loss.item() if router_loss is not None else 0.0
             }, step=global_step)
             if batch_idx % args.log_interval == 0:
                 accelerator.print(
@@ -157,13 +165,12 @@ def main(args: argparse.Namespace) -> None:
                     f" SW Loss: {sw_loss.item():.4f}"
                     f" Probe Loss: {probe_loss.item():.4f}"
                     f" Probe Acc: {acc:.4f}"
+                    f" Router Loss: {router_loss.item() if router_loss is not None else 0.0:.4f}"
                 )
             
         accelerator.wait_for_everyone()
         if accelerator.is_main_process and epoch % args.save_interval == 0:
-            accelerator.save_state(
-                f"{args.save_dir}/checkpoint"
-            )
+            accelerator.save_state(f"{args.save_dir}/checkpoint")
         
         encoder.eval()
         decoder.eval()
@@ -181,8 +188,8 @@ def main(args: argparse.Namespace) -> None:
                 ids_keep = ids_shuffle[:, :N // 4]
                 ids_restore = ids_shuffle.argsort(dim=1)
                 
-                latents = encoder(patches, ids_keep)
-                reconstructed = decoder(latents, ids_restore)
+                latents, _ = encoder(patches, ids_keep)
+                reconstructed, _ = decoder(latents, ids_restore)
                 
                 pred_loss = F.mse_loss(
                     reconstructed, patches, reduction='none').mean(-1)
@@ -207,11 +214,12 @@ def main(args: argparse.Namespace) -> None:
                     + args.var_weight * var_loss\
                     + args.sw_weight * sw_loss
                 )
+                # Router loss not included in validation loss
                 mse = F.mse_loss(preds, targets)
                 mae = F.l1_loss(preds, targets)
                 psnr = -10 * torch.log10(mse)
 
-                latents = encoder(patches)
+                latents, _ = encoder(patches)
                 logits = probe(latents.mean(dim=1).detach())
                 logits, labels = accelerator.gather_for_metrics((logits, labels))
                 total_correct_1 +=\
@@ -240,7 +248,6 @@ def main(args: argparse.Namespace) -> None:
         correct_5 = total_correct_5 / len(val_loader.dataset)
         correct_10 = total_correct_10 / len(val_loader.dataset)
         accelerator.log({
-            "val/epoch": epoch,
             "val/pred_loss": val_pred_loss,
             "val/var_loss": val_var_loss,
             "val/sw_loss": val_sw_loss,
@@ -278,23 +285,30 @@ if __name__ == "__main__":
     parser.add_argument('--image_size', type=int, default=224)
     parser.add_argument('--patch_size', type=int, default=16)
     parser.add_argument('--in_channels', type=int, default=3)
-    parser.add_argument('--n_embed', type=int, default=512)
-    parser.add_argument('--n_heads', type=int, default=8)
+    parser.add_argument('--n_embed', type=int, default=768)
+    parser.add_argument('--n_heads', type=int, default=12)
+    parser.add_argument('--n_experts', type=int, default=8)
+    parser.add_argument('--n_active_experts', type=int, default=2)
     parser.add_argument('--n_layers', type=int, default=12)
+    parser.add_argument('--token_mixer', type=str, default='MHA')
+    parser.add_argument('--activation', type=str, default='SwiGLU')
     parser.add_argument('--decoder_n_embed', type=int, default=256)
     parser.add_argument('--decoder_n_heads', type=int, default=4)
     parser.add_argument('--decoder_n_layers', type=int, default=6)
-    parser.add_argument('--dropout', type=float, default=0.1)
+    parser.add_argument('--dropout', type=float, default=0.05)
     parser.add_argument('--n_classes', type=int, default=1000)
     parser.add_argument('--n_workers', type=int, default=8)
-    parser.add_argument('--num_epochs', type=int, default=300)
-    parser.add_argument('--batch_size', type=int, default=1024)
-    parser.add_argument('--lr', type=float, default=1e-3)
+    parser.add_argument('--num_epochs', type=int, default=500)
+    parser.add_argument('--warmup_epochs', type=int, default=10)
+    parser.add_argument('--last_decay_epoch', type=int, default=480)
+    parser.add_argument('--batch_size', type=int, default=512)
+    parser.add_argument('--lr', type=float, default=2e-4)
     parser.add_argument('--weight_decay', type=float, default=0.05)
     parser.add_argument('--probe_lr', type=float, default=6e-3)
     parser.add_argument('--pred_weight', type=float, default=1.0)
     parser.add_argument('--var_weight', type=float, default=25.0)
     parser.add_argument('--sw_weight', type=float, default=1.0)
+    parser.add_argument('--router_weight', type=float, default=0.01)
     parser.add_argument('--log_interval', type=int, default=10)
     parser.add_argument('--save_interval', type=int, default=10)
     parser.add_argument('--save_dir', type=str, default='models')
