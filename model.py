@@ -5,36 +5,15 @@ import torch.nn.functional as F
 from typing import Optional
 
 
-class MultiHeadAttention(nn.Module):
-    def __init__(self, num_heads: int, n_embed: int, dropout: float) -> None:
+class FourierMixer(nn.Module):
+    def __init__(self, n_embed: int, dropout: float) -> None:
         super().__init__()
-        self.num_heads = num_heads
-        self.head_size = n_embed // num_heads
-
-        self.attn_mat = nn.Linear(n_embed, 3 * n_embed, bias=False)
         self.proj = nn.Linear(n_embed, n_embed)
         self.dropout = nn.Dropout(dropout)
 
-        self.flash = hasattr(F, 'scaled_dot_product_attention')
-    
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        B, T, C = x.shape
-        q, k, v = self.attn_mat(x).chunk(3, dim=-1)  # Each: B, T, n_embed
-        q = q.view(B, T, self.num_heads, self.head_size).transpose(1, 2)
-        k = k.view(B, T, self.num_heads, self.head_size).transpose(1, 2)
-        v = v.view(B, T, self.num_heads, self.head_size).transpose(1, 2)
-
-        if self.flash: # Flash attention using PyTorch 2.0's built-in function
-            out = F.scaled_dot_product_attention(
-                q, k, v, attn_mask=None, is_causal=False,
-                dropout_p=self.dropout.p if self.training else 0.0)
-        else: # Fallback to manual SDPA implementation
-            att = q @ k.transpose(-2, -1) * (self.head_size ** -0.5)
-            att = F.softmax(att, dim=-1)
-            att = self.dropout(att)
-            out = att @ v
-        out = out.transpose(1, 2).contiguous().view(B, T, C)
-        return self.dropout(self.proj(out))  # B, T, n_embed
+        x = torch.fft.fft(x, dim=1).real
+        return self.dropout(self.proj(x))
 
 
 class FeedForward(nn.Module):
@@ -52,30 +31,24 @@ class FeedForward(nn.Module):
 
 
 class Block(nn.Module):
-    def __init__(self, n_embed: int, num_heads: int, dropout: float) -> None:
+    def __init__(self, n_embed: int, dropout: float) -> None:
         super().__init__()
-        self.sa_heads = MultiHeadAttention(num_heads, n_embed, dropout)
-        self.ffwd = FeedForward(n_embed, dropout)
+        self.token_mixer = FourierMixer(n_embed, dropout)
+        self.channel_mixer = FeedForward(n_embed, dropout)
         self.norm1 = nn.RMSNorm(n_embed)
         self.norm2 = nn.RMSNorm(n_embed)
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = x + self.sa_heads(self.norm1(x))
-        x = x + self.ffwd(self.norm2(x))
+        x = x + self.token_mixer(self.norm1(x))
+        x = x + self.channel_mixer(self.norm2(x))
         return x
 
 
-class ViTBaseModel(nn.Module):
-    def __init__(
-            self, n_embed: int, n_heads: int, n_layers: int, dropout: float
-    ) -> None:
+class BaseModel(nn.Module):
+    def __init__(self, n_embed: int, n_layers: int, dropout: float) -> None:
         super().__init__()
-        assert n_embed % n_heads == 0
-        
         self.layers = nn.ModuleList([
-            Block(n_embed, n_heads, dropout)
-            for _ in range(n_layers)
-        ])
+            Block(n_embed, dropout) for _ in range(n_layers)])
         self.norm_f = nn.RMSNorm(n_embed)
     
     def _init_weights(self, module) -> None:
@@ -92,16 +65,15 @@ class ViTBaseModel(nn.Module):
         return self.norm_f(x)
 
 
-class Encoder(ViTBaseModel):
+class Encoder(BaseModel):
     def __init__(self, args: argparse.Namespace) -> None:
-        super().__init__(
-            args.n_embed, args.n_heads, args.n_layers, args.dropout)
+        super().__init__(args.n_embed, args.n_layers, args.dropout)
         assert args.image_size % args.patch_size == 0
         num_patches = (args.image_size // args.patch_size) ** 2
         self.n_embed = args.n_embed
         self.patch_emb = nn.Linear(
             args.patch_size * args.patch_size * args.in_channels, args.n_embed)
-        self.pos_emb = nn.Parameter(torch.zeros(1, num_patches, args.n_embed))
+        self.pos_emb = nn.Parameter(torch.empty(1, num_patches, args.n_embed))
         
         self.apply(self._init_weights)
         nn.init.trunc_normal_(self.pos_emb, std=0.02)
@@ -122,17 +94,16 @@ class Encoder(ViTBaseModel):
         return self.forward_features(x)
 
 
-class Decoder(ViTBaseModel):
+class Decoder(BaseModel):
     def __init__(self, args: argparse.Namespace) -> None:
         super().__init__(
-            args.decoder_n_embed, args.decoder_n_heads,
-            args.decoder_n_layers, args.dropout)
+            args.decoder_n_embed, args.decoder_n_layers, args.dropout)
         assert args.image_size % args.patch_size == 0
         self.num_patches = (args.image_size // args.patch_size) ** 2
         self.n_embed = args.decoder_n_embed
-        self.mask_token = nn.Parameter(torch.zeros(1, 1, args.decoder_n_embed))
+        self.mask_token = nn.Parameter(torch.empty(1, 1, args.decoder_n_embed))
         self.decoder_embed = nn.Linear(args.n_embed, args.decoder_n_embed)
-        self.pos_emb = nn.Parameter(torch.zeros(
+        self.pos_emb = nn.Parameter(torch.empty(
             1, self.num_patches, args.decoder_n_embed))
         self.pixel_head = nn.Linear(
             args.decoder_n_embed, (args.patch_size ** 2) * args.in_channels)

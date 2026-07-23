@@ -15,9 +15,9 @@ def set_seed(seed: int):
 
 def human_readable_numbers(size: int) -> str:
     for unit in ['', 'K', 'M', 'G', 'T']:
-        if size < 1024:
-            return f"{size:.2f} {unit}"
-        size /= 1024 # type: ignore
+        if size < 1000:
+            return f"{size:.2f}{unit}"
+        size /= 1000 # type: ignore
     return f"{size:.2f}{unit}"
 
 
