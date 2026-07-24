@@ -2,6 +2,7 @@ import math
 import argparse
 import torch, torch.nn.functional as F, torch.optim as optim
 from accelerate import Accelerator
+from accelerate.utils import DistributedDataParallelKwargs
 from torch.optim.lr_scheduler import\
     LinearLR, CosineAnnealingLR, ConstantLR, SequentialLR
 
@@ -15,7 +16,12 @@ from losses import variance_loss_fn, sliced_wasserstein_loss_fn
 def main(args: argparse.Namespace) -> None:
     set_seed(args.seed)
     torch.set_float32_matmul_precision('medium')
+
+    ddp_kwargs = DistributedDataParallelKwargs(
+        find_unused_parameters=True
+    )
     accelerator = Accelerator(
+        kwargs_handlers=[ddp_kwargs],
         mixed_precision="bf16",
         log_with="wandb" if args.run_name else None
     )
@@ -142,6 +148,23 @@ def main(args: argparse.Namespace) -> None:
             preds, labels = accelerator.gather_for_metrics((preds, labels))
             acc = (preds == labels).sum().item() / len(labels)
 
+            model = accelerator.unwrap_model(encoder)
+            if model.layers[0].channel_mixer.last_load is not None:
+                avg_load = torch.stack([
+                    l.channel_mixer.last_load.float()
+                    for l in model.layers]).mean(0)
+                avg_tokens = torch.stack([
+                    l.channel_mixer.last_num_tokens.float()
+                    for l in model.layers]).mean(0)
+                avg_importance = torch.stack([
+                    l.channel_mixer.last_importance.float()
+                    for l in model.layers]).mean(0)
+            load_logs = {}
+            for i in range(avg_load.numel()):
+                load_logs[f"expert_{i}_load"] = avg_load[i].item()
+                load_logs[f"expert_{i}_tokens"] = avg_tokens[i].item()
+                load_logs[f"expert_{i}_importance"] = avg_importance[i].item()
+
             global_step = (epoch - 1) * len(train_loader) + batch_idx
             accelerator.log({
                 "train/epoch": (epoch-1) + (batch_idx + 1) / len(train_loader),
@@ -152,7 +175,8 @@ def main(args: argparse.Namespace) -> None:
                 "train/sw_loss": sw_loss.item(),
                 "train/probe_loss": probe_loss.item(),
                 "train/probe_acc": acc,
-                "train/router_loss": router_loss.item() if router_loss is not None else 0.0
+                "train/router_loss": router_loss.item() if router_loss is not None else 0.0,
+                **load_logs
             }, step=global_step)
             if batch_idx % args.log_interval == 0:
                 accelerator.print(
