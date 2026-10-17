@@ -1,0 +1,54 @@
+LR-schedule verification (CPU, torch 2.14.0+cu130)
+robot: train_set=18420724  raw_per_rank_loader_len(batch=512)=35978  ceil(raw/8)=sbe=4498  (old floor gave 4497)
+imagenet: train_set=500000  raw_per_rank_loader_len=977  ceil(raw/8)=sbe=123  (old floor gave 122)
+
+----- STAGE-1 OLD (buggy) scheduler, around milestone2 -----
+milestone2=10980 (old floor sbe=122)
+  step   10978: LR=0.0000100000
+  step   10979: LR=0.0000100000
+  step   10980: LR=0.0002000000
+  step   10981: LR=0.0002000000
+  step   12200: LR=0.0002000000
+  >>> BUG: at milestone2 LR jumped 0.000010 -> 0.000200 (full base) and stayed there; old final LR=0.000200 (should have been 0.000010)
+
+===== STAGE-1 FIXED (100ep, warmup 10, decay to ep90, sbe=123, lr=2e-4) =====
+lr=0.0002  num_epochs=100  warmup_epochs=10  last_decay_epoch=90  steps_per_epoch(sbe)=123
+warmup_steps=1230  milestone2=11070  total_steps=12300  (hold = 1230 steps)
+   global_step                LR  note
+             0  0.0000002000  construction (first batch)
+          1229  0.0001998376  
+          1230  0.0002000000  warmup_end / milestone1
+         11069  0.0000100000  
+         11070  0.0000100000  milestone2 (enter hold)
+         11071  0.0000100000  milestone2+1
+         12299  0.0000100000  total-1 (last batch)
+         12300  0.0000100000  total (post-last-step)
+  CHECK monotonic_nonincreasing_after_warmup: True
+  CHECK no_upward_jump_at_milestone2: True
+  CHECK final_lr: 1e-05
+  CHECK final_eq_base_over_20: True
+  cross-check vs real LinearLR : max |mult diff| = 2.22e-15
+  cross-check vs real Cosine   : max |mult diff| = 1.24e-14
+  CONFIG STAGE-1 FIXED (100ep, warmup 10, decay to ep90, sbe=123, lr=2e-4): PASS
+
+===== STAGE-2 FIXED (9ep, warmup 1, decay to ep9, sbe=4498, lr=5e-5) =====
+lr=5e-05  num_epochs=9  warmup_epochs=1  last_decay_epoch=9  steps_per_epoch(sbe)=4498
+warmup_steps=4498  milestone2=40482  total_steps=40482  (hold = 0 steps)
+   global_step                LR  note
+             0  0.0000000500  construction (first batch)
+          4497  0.0000499889  
+          4498  0.0000500000  warmup_end / milestone1
+         40481  0.0000025000  total-1 (last batch)
+         40482  0.0000025000  total (post-last-step)
+  CHECK monotonic_nonincreasing_after_warmup: True
+  CHECK no_upward_jump_at_milestone2: True
+  CHECK final_lr: 2.5e-06
+  CHECK final_eq_base_over_20: True
+  cross-check vs real LinearLR : max |mult diff| = 1.64e-14
+  cross-check vs real Cosine   : max |mult diff| = 4.14e-14
+  CONFIG STAGE-2 FIXED (9ep, warmup 1, decay to ep9, sbe=4498, lr=5e-5): PASS
+
+===== SUMMARY =====
+STAGE-1: monotonic_after_warmup=True no_jump_at_milestone2=True final==lr/20=True (final=1e-05)  warmup~LinearLR=True cosine~Cosine=True  -> PASS
+STAGE-2: monotonic_after_warmup=True no_jump_at_milestone2=True final==lr/20=True (final=2.5e-06)  warmup~LinearLR=True cosine~Cosine=True  -> PASS
+OVERALL: PASS

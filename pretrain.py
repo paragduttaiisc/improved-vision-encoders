@@ -4,8 +4,7 @@ import argparse
 import torch, torch.nn.functional as F, torch.optim as optim
 from accelerate import Accelerator
 from accelerate.utils import DistributedDataParallelKwargs
-from torch.optim.lr_scheduler import\
-    LinearLR, CosineAnnealingLR, ConstantLR, SequentialLR
+from torch.optim.lr_scheduler import LambdaLR
 
 from model import Encoder, Decoder
 from utils import set_seed, human_readable_numbers as hrn,\
@@ -213,20 +212,36 @@ def main(args: argparse.Namespace) -> None:
         probe.parameters(), lr=args.probe_lr,
         betas=(0.9, 0.95), weight_decay=0.0)
 
-    steps_per_epoch = len(train_loader) // accelerator.num_processes
+    # steps_per_epoch: per-rank DDP step count. Use ceil (not floor) so the
+    # schedule milestones do not fire 1 step early. len(train_loader) is the
+    # raw per-rank dataloader length (before DDP wrapping).
+    steps_per_epoch = math.ceil(len(train_loader) / accelerator.num_processes)
     warmup_steps = args.warmup_epochs * steps_per_epoch
     cosine_steps = (args.last_decay_epoch - args.warmup_epochs) * steps_per_epoch
-    constant_steps = (args.num_epochs - args.last_decay_epoch) * steps_per_epoch
+    lr_floor = 1.0 / 20.0  # final LR multiplier = args.lr / 20
 
-    warmup = LinearLR(
-        optimizer, start_factor=1e-3, end_factor=1.0, total_iters=warmup_steps)
-    cosine = CosineAnnealingLR(
-        optimizer, T_max=cosine_steps, eta_min=args.lr / 20)
-    constant = ConstantLR(
-        optimizer, factor=1.0, total_iters=constant_steps)
-    scheduler = SequentialLR(
-        optimizer, schedulers=[warmup, cosine, constant],
-        milestones=[warmup_steps, warmup_steps + cosine_steps])
+    # Single LambdaLR for the whole budget. The old SequentialLR
+    # [LinearLR -> CosineAnnealingLR -> ConstantLR] had a bug: the ConstantLR
+    # "hold" phase reset LR to the full base value instead of holding at
+    # lr/20, because SequentialLR anchors each child scheduler to the
+    # original base_lrs (the initial lr), not to the cosine running value.
+    # A LambdaLR sidesteps this entirely by computing the multiplier from the
+    # global step, matching the warmup and cosine formulas exactly and
+    # holding at lr/20 for the remainder.
+    def _lr_lambda(n):
+        if n < warmup_steps:
+            # Linear warmup: 1e-3 -> 1.0 (matches LinearLR start_factor=1e-3)
+            return 1e-3 + (1.0 - 1e-3) * (n / warmup_steps if warmup_steps > 0 else 0.0)
+        elif n < warmup_steps + cosine_steps:
+            # Cosine decay: 1.0 -> 1/20 (matches CosineAnnealingLR eta_min=lr/20)
+            t = n - warmup_steps
+            return lr_floor + 0.5 * (1.0 - lr_floor) * \
+                   (1.0 + math.cos(math.pi * t / cosine_steps))
+        else:
+            # Hold at lr/20 (the fix: original ConstantLR reset to base_lr)
+            return lr_floor
+
+    scheduler = LambdaLR(optimizer, _lr_lambda)
 
     get_param_count = lambda model: sum(p.numel() for p in model.parameters())
     accelerator.print(f"Train loader: {hrn(len(train_loader.dataset))} samples") # type: ignore
@@ -239,6 +254,16 @@ def main(args: argparse.Namespace) -> None:
         _resume_from_checkpoint(
             args.resume, args, encoder, decoder, probe,
             optimizer, probe_optimizer)
+        # load_state_dict() inside _resume_from_checkpoint restores each
+        # param group's 'lr' from the checkpoint (the stage-1 base LR), which
+        # clobbers the fresh schedule. Re-sync the main optimizer LR to the
+        # fresh scheduler's value for the current step so batch 1 trains at
+        # the correct continued-run LR, not the stale checkpoint LR.
+        for pg, new_lr in zip(optimizer.param_groups, scheduler.get_lr()):
+            pg["lr"] = new_lr
+        accelerator.print(
+            f"[resume] main-optimizer LR re-synced to the fresh scheduler "
+            f"(step-0 value {optimizer.param_groups[0]['lr']:.6g})")
     encoder, decoder, probe, optimizer, probe_optimizer, train_loader,\
         val_loader = accelerator.prepare(
             encoder, decoder, probe, optimizer,
@@ -357,7 +382,9 @@ def main(args: argparse.Namespace) -> None:
             
         accelerator.wait_for_everyone()
         if accelerator.is_main_process and epoch % args.save_interval == 0:
-            accelerator.save_state(f"{args.save_dir}/checkpoint")
+            ckpt_path = f"{args.save_dir}/checkpoint_epoch_{epoch}"
+            accelerator.save_state(ckpt_path)
+            accelerator.print(f"[save] epoch {epoch} checkpoint -> {ckpt_path}")
 
         if args.max_steps:
             # Smoke-test mode: skip full validation after the train budget.
@@ -479,6 +506,15 @@ def main(args: argparse.Namespace) -> None:
             f" Average Val Acc@5: {correct_5:.4f}"
             f" Average Val Acc@10: {correct_10:.4f}"
         )
+    # Final checkpoint: persist the finished model after the last epoch's
+    # validation. With --save_interval 1, the per-epoch saves at each epoch
+    # START cover epochs 1..N-1; this final save covers the end of epoch N.
+    # Gated off in smoke-test (--max_steps) mode so a short run does not write
+    # a final checkpoint into the model save dir.
+    if accelerator.is_main_process and not args.max_steps:
+        final_path = f"{args.save_dir}/checkpoint_final"
+        accelerator.save_state(final_path)
+        accelerator.print(f"[save] final checkpoint -> {final_path}")
     accelerator.end_training()
 
 
