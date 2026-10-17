@@ -15,6 +15,127 @@ from dataloader import get_robot_dataloaders, get_imagenet_dataloaders,\
 from losses import variance_loss_fn, sliced_wasserstein_loss_fn
 
 
+def _raw_module(model):
+    """The underlying module of a torch.compiled model (no-op otherwise)."""
+    return getattr(model, "_orig_mod", model)
+
+
+def _interp_pos_emb(old, new_shape):
+    """Bilinearly resample a (1, P_old^2, D) positional-embedding tensor to
+    (1, P_new^2, D), where P_new^2 == new_shape[1] (new patch grid)."""
+    p_old = int(round(old.shape[1] ** 0.5))
+    p_new = int(round(new_shape[1] ** 0.5))
+    d = old.shape[2]
+    if p_old * p_old != old.shape[1] or p_new * p_new != new_shape[1]:
+        raise ValueError(f"pos_emb grid is not a perfect square: "
+                         f"{tuple(old.shape)}")
+    # (P_old^2, D) -> treat D as channels of a (p_old, p_old) grid.
+    grid = old[0].float().reshape(p_old, p_old, d).permute(2, 0, 1)
+    grid = torch.nn.functional.interpolate(
+        grid.unsqueeze(0), size=(p_new, p_new), mode="bilinear",
+        align_corners=False)
+    return grid[0].permute(1, 2, 0).reshape(1, p_new * p_new, d)
+
+
+def _load_state_dict(path):
+    """Load a model state dict from safetensors or a torch .bin file."""
+    if path.endswith(".safetensors"):
+        from safetensors.torch import load_file
+        return load_file(path, device="cpu")
+    return torch.load(path, map_location="cpu")
+
+
+def _load_into(path, raw, label, interpolate):
+    """Load the state dict at ``path`` into raw model ``raw`` (non-strict).
+
+    Shape-mismatched keys are dropped, unless it is the ``pos_emb`` tensor
+    and ``interpolate=True``: then it is bilinearly resampled to the
+    current patch grid (needed when resuming across image_size, e.g.
+    224 -> 256). All other parameters load verbatim. Returns True when
+    every key the model expects was loaded with a matching shape (i.e.
+    the module was not partially re-initialized).
+    """
+    sd = _load_state_dict(path)
+    cur = raw.state_dict()
+    for key in list(sd):
+        if key not in cur:
+            print(f"[resume] {label}: unexpected key {key} ignored")
+            del sd[key]
+        elif sd[key].shape != cur[key].shape:
+            if interpolate and key == "pos_emb":
+                old_shape = tuple(sd[key].shape)
+                sd[key] = _interp_pos_emb(sd[key], cur[key].shape)
+                print(f"[resume] {label}: interpolated pos_emb "
+                      f"{old_shape} -> {tuple(cur[key].shape)}")
+            else:
+                print(f"[resume] {label}: skipping {key} "
+                      f"(shape {tuple(sd[key].shape)} != "
+                      f"{tuple(cur[key].shape)})")
+                del sd[key]
+    res = raw.load_state_dict(sd, strict=False)
+    missing = [k for k in res.missing_keys if k != "pos_emb"]
+    print(f"[resume] {label}: loaded {len(sd)}/{len(cur)} tensors; "
+          f"still-missing={missing}")
+    return not missing
+
+
+def _resume_from_checkpoint(ckpt_dir, args, encoder, decoder, probe,
+                            optimizer, probe_optimizer):
+    """Continue training from an accelerate checkpoint directory.
+
+    accelerate's save_state() writes the prepared models split by
+    prepare-order index (model.safetensors = encoder, model_1 = decoder,
+    model_2 = probe) plus optimizer.bin / optimizer_1.bin. The LR
+    scheduler is intentionally NOT restored: a continued run gets a fresh
+    schedule for its own (shorter) epoch budget. This must be called
+    before accelerator.prepare() -- DDP wrapping preserves parameter
+    identity, so the loaded optimizer state stays valid after prepare().
+
+    Optimizer states are only loaded for modules whose parameters all
+    matched the checkpoint. This matters for the probe when n_classes
+    differs (ImageNet 1000 -> robot 8): the probe is re-initialized and
+    its stage-1 momentum buffers would have the wrong shape, so we leave
+    the probe optimizer fresh in that case.
+    """
+    enc_p = os.path.join(ckpt_dir, "model.safetensors")
+    dec_p = os.path.join(ckpt_dir, "model_1.safetensors")
+    prb_p = os.path.join(ckpt_dir, "model_2.safetensors")
+    if not os.path.isfile(enc_p):
+        enc_p, dec_p, prb_p = (
+            os.path.join(ckpt_dir, n)
+            for n in ("model.bin", "model_1.bin", "model_2.bin"))
+    print(f"[resume] continuing from {ckpt_dir} "
+          f"(image_size={args.image_size})")
+    enc_ok = _load_into(enc_p, _raw_module(encoder), "encoder", True)
+    dec_ok = _load_into(dec_p, _raw_module(decoder), "decoder", True)
+    prb_ok = _load_into(prb_p, probe, "probe", False)
+    if enc_ok and dec_ok:
+        opt_p = os.path.join(ckpt_dir, "optimizer.bin")
+        if os.path.isfile(opt_p):
+            optimizer.load_state_dict(torch.load(opt_p,
+                                                 map_location="cpu"))
+            print("[resume] loaded main optimizer state")
+        else:
+            print("[resume] WARNING: optimizer.bin not found; "
+                  "main optimizer starts fresh")
+    else:
+        print("[resume] WARNING: encoder/decoder did not fully load; "
+              "main optimizer starts fresh (no state loaded)")
+    if prb_ok:
+        popt_p = os.path.join(ckpt_dir, "optimizer_1.bin")
+        if os.path.isfile(popt_p):
+            probe_optimizer.load_state_dict(torch.load(popt_p,
+                                                       map_location="cpu"))
+            print("[resume] loaded probe optimizer state")
+        else:
+            print("[resume] WARNING: optimizer_1.bin not found; "
+                  "probe optimizer starts fresh")
+    else:
+        print("[resume] probe was re-initialized (n_classes differs); "
+              "probe optimizer left fresh")
+    print(f"[resume] checkpoint {ckpt_dir} loaded successfully")
+
+
 def main(args: argparse.Namespace) -> None:
     set_seed(args.seed)
     torch.set_float32_matmul_precision('medium')
@@ -114,6 +235,10 @@ def main(args: argparse.Namespace) -> None:
     accelerator.print(f"Decoder params: {hrn(get_param_count(decoder))}")
     accelerator.print(f"Probe params: {hrn(get_param_count(probe))}")
 
+    if args.resume:
+        _resume_from_checkpoint(
+            args.resume, args, encoder, decoder, probe,
+            optimizer, probe_optimizer)
     encoder, decoder, probe, optimizer, probe_optimizer, train_loader,\
         val_loader = accelerator.prepare(
             encoder, decoder, probe, optimizer,
@@ -396,5 +521,10 @@ if __name__ == "__main__":
     parser.add_argument('--save_dir', type=str, default='models')
     parser.add_argument('--output_dir', type=str, default='outputs')
     parser.add_argument('--run_name', type=str, default='')
+    parser.add_argument('--resume', type=str, default='',
+                        help='accelerate checkpoint dir to continue'
+                             ' training from (encoder/decoder/probe '
+                             '+ optimizers); the scheduler is rebuilt '
+                             'fresh for the new epoch budget')
     args = parser.parse_args()
     main(args)
