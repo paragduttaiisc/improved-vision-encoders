@@ -51,15 +51,28 @@ def unpatchify(
 
 def denormalize(
         imgs: torch.Tensor,
-        mean: torch.Tensor = torch.tensor([0.485,0.456,0.406]).view(1, 3, 1, 1),
-        std: torch.Tensor = torch.tensor([0.229,0.224,0.225]).view(1, 3, 1, 1)
+        mean: torch.Tensor | None = None,
+        std: torch.Tensor | None = None
 ) -> torch.Tensor:
+    """Inverse of normalization. Defaults to ImageNet mean/std when None.
+
+    mean/std may be a 3-vector (applied to all samples) or a per-sample
+    [B, 3] tensor (e.g. per-dataset stats looked up by dataset idx),
+    applied as [B, 3, 1, 1].
+    """
+    if mean is None:
+        mean = torch.tensor([0.485, 0.456, 0.406])
+    if std is None:
+        std = torch.tensor([0.229, 0.224, 0.225])
     if type(mean) is not torch.Tensor:
         mean = torch.tensor(mean, dtype=imgs.dtype, device=imgs.device)
         std = torch.tensor(std, dtype=imgs.dtype, device=imgs.device)
     if mean.ndim == 1:
-        mean = mean.view(-1, 3, 1, 1)
-        std = std.view(-1, 3, 1, 1)
+        mean = mean.view(1, 3, 1, 1)
+        std = std.view(1, 3, 1, 1)
+    else:
+        mean = mean.view(mean.size(0), 3, 1, 1)
+        std = std.view(std.size(0), 3, 1, 1)
     if mean.device != imgs.device:
         mean = mean.to(imgs.device)
         std = std.to(imgs.device)

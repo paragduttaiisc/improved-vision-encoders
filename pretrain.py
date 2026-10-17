@@ -1,4 +1,5 @@
 import math
+import os
 import argparse
 import torch, torch.nn.functional as F, torch.optim as optim
 from accelerate import Accelerator
@@ -9,13 +10,38 @@ from torch.optim.lr_scheduler import\
 from model import Encoder, Decoder
 from utils import set_seed, human_readable_numbers as hrn,\
     patchify, unpatchify, denormalize, visualize
-from dataloader import get_dataloaders
+from dataloader import get_robot_dataloaders, get_imagenet_dataloaders,\
+    load_norm_stats, normalize_batch
 from losses import variance_loss_fn, sliced_wasserstein_loss_fn
 
 
 def main(args: argparse.Namespace) -> None:
     set_seed(args.seed)
     torch.set_float32_matmul_precision('medium')
+
+    # Data: robot_jpg root (8 datasets, per-dataset normalization) or an
+    # ImageFolder root such as data/imagenet-540k-1k (legacy path).
+    if os.path.isdir(os.path.join(args.data_dir, "robot_jpg")):
+        train_loader, val_loader, dataset_names = get_robot_dataloaders(
+            args.data_dir, args.batch_size, args.n_workers)
+        is_robot = True
+        if args.n_classes != len(dataset_names):
+            print(f"[data] robot data: setting n_classes="
+                  f"{len(dataset_names)} (was {args.n_classes})")
+            args.n_classes = len(dataset_names)
+        stats = load_norm_stats(args.data_dir)
+        norm_mean = torch.tensor(
+            [stats[n]["mean"] for n in dataset_names], dtype=torch.float32)
+        norm_std = torch.tensor(
+            [stats[n]["std"] for n in dataset_names], dtype=torch.float32)
+        print(f"[data] robot datasets: {dataset_names}")
+        print(f"[data] norm stats: mean={norm_mean.tolist()}")
+        print(f"[data] norm stats: std={norm_std.tolist()}")
+    else:
+        train_loader, val_loader, _ = get_imagenet_dataloaders(
+            args.data_dir, args.batch_size, args.n_workers)
+        is_robot = False
+        norm_mean = norm_std = None
 
     ddp_kwargs = DistributedDataParallelKwargs(
         find_unused_parameters=True
@@ -37,9 +63,6 @@ def main(args: argparse.Namespace) -> None:
                 }
             },
         )
-
-    train_loader, val_loader, _ =\
-        get_dataloaders(args.data_dir, args.batch_size, args.n_workers)
 
     encoder = Encoder(args)
     decoder = Decoder(args)
@@ -96,11 +119,20 @@ def main(args: argparse.Namespace) -> None:
             encoder, decoder, probe, optimizer,
             probe_optimizer, train_loader, val_loader)
 
+    if is_robot:
+        norm_mean_dev = norm_mean.to(accelerator.device)
+        norm_std_dev = norm_std.to(accelerator.device)
+    else:
+        norm_mean_dev = norm_std_dev = None
+
     for epoch in range(1, args.num_epochs + 1):
         encoder.train()
         decoder.train()
         probe.train()
         for batch_idx, (imgs, labels) in enumerate(train_loader):
+            if is_robot:
+                imgs = normalize_batch(imgs, labels,
+                                       norm_mean_dev, norm_std_dev)
             patches = patchify(imgs, args.patch_size)
             
             B, N, _ = patches.shape
@@ -191,10 +223,22 @@ def main(args: argparse.Namespace) -> None:
                     f" Probe Acc: {acc:.4f}"
                     f" Router Loss: {router_loss.item() if router_loss is not None else 0.0:.4f}"
                 )
+            if args.max_steps and global_step + 1 >= args.max_steps:
+                accelerator.print(
+                    f"[max_steps] stopping after {args.max_steps} train steps")
+                break
+        if args.max_steps and global_step + 1 >= args.max_steps:
+            break
             
         accelerator.wait_for_everyone()
         if accelerator.is_main_process and epoch % args.save_interval == 0:
             accelerator.save_state(f"{args.save_dir}/checkpoint")
+
+        if args.max_steps:
+            # Smoke-test mode: skip full validation after the train budget.
+            print(f"[max_steps] reached; skipping validation, "
+                  f"final train loss = {loss.item():.4f}")
+            continue
         
         encoder.eval()
         decoder.eval()
@@ -204,6 +248,9 @@ def main(args: argparse.Namespace) -> None:
         total_correct_1, total_correct_5, total_correct_10 = 0, 0, 0
         with torch.no_grad():
             for batch_idx, (imgs, labels) in enumerate(val_loader):
+                if is_robot:
+                    imgs = normalize_batch(imgs, labels,
+                                           norm_mean_dev, norm_std_dev)
                 patches = patchify(imgs, args.patch_size)
                 
                 B, N, _ = patches.shape
@@ -217,17 +264,25 @@ def main(args: argparse.Namespace) -> None:
                 
                 pred_loss = F.mse_loss(
                     reconstructed, patches, reduction='none').mean(-1)
+                if is_robot:
+                    s_mean = norm_mean_dev[labels]
+                    s_std = norm_std_dev[labels]
+                else:
+                    s_mean = s_std = None
                 preds = denormalize(unpatchify(
-                    reconstructed, args.patch_size, args.image_size, args.in_channels))
+                    reconstructed, args.patch_size, args.image_size, args.in_channels),
+                                    mean=s_mean, std=s_std)
                 targets = denormalize(unpatchify(
-                    patches, args.patch_size, args.image_size, args.in_channels))
+                    patches, args.patch_size, args.image_size, args.in_channels),
+                                      mean=s_mean, std=s_std)
                 mask = torch.ones(B, N, device=accelerator.device)
                 mask.scatter_(1, ids_keep, 0.)
                 if batch_idx == 0 and accelerator.is_main_process:
                     masked_patches = patches * (1 - mask.unsqueeze(-1))
                     masked_inputs = denormalize(unpatchify(
                         masked_patches, args.patch_size,
-                        args.image_size, args.in_channels))
+                        args.image_size, args.in_channels),
+                        mean=s_mean, std=s_std)
                     fig = visualize(targets, masked_inputs, preds)
                     accelerator.log({"visualization": fig}, step=global_step)
                 pred_loss = (pred_loss * mask).sum() / mask.sum()
@@ -291,10 +346,10 @@ def main(args: argparse.Namespace) -> None:
             f" Average Val Pred Loss: {val_pred_loss:.4f}"
             f" Average Val Var Loss: {val_var_loss:.4f}"
             f" Average Val SW Loss: {val_sw_loss:.4f}"
-            f" Average Val MSE: {val_mse:.4f}"
+            f" Average Val MSE: {val_mse:.6f}"
             f" Average Val RMSE: {math.sqrt(val_mse):.4f}"
             f" Average Val MAE: {val_mae:.4f}"
-            f" Average Val PSNR: {val_psnr:.4f} dB"
+            f" Average Val PSNR: {val_psnr:.2f} dB"
             f" Average Val Acc@1: {correct_1:.4f}"
             f" Average Val Acc@5: {correct_5:.4f}"
             f" Average Val Acc@10: {correct_10:.4f}"
@@ -305,8 +360,8 @@ def main(args: argparse.Namespace) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=2026)
-    parser.add_argument('--data_dir', type=str, default='data/imagenet-540k-1k')
-    parser.add_argument('--image_size', type=int, default=224)
+    parser.add_argument('--data_dir', type=str, default='data')
+    parser.add_argument('--image_size', type=int, default=256)
     parser.add_argument('--patch_size', type=int, default=16)
     parser.add_argument('--in_channels', type=int, default=3)
     parser.add_argument('--n_embed', type=int, default=768)
@@ -320,12 +375,15 @@ if __name__ == "__main__":
     parser.add_argument('--decoder_n_heads', type=int, default=4)
     parser.add_argument('--decoder_n_layers', type=int, default=6)
     parser.add_argument('--dropout', type=float, default=0.05)
-    parser.add_argument('--n_classes', type=int, default=1000)
+    parser.add_argument('--n_classes', type=int, default=8)
     parser.add_argument('--n_workers', type=int, default=8)
     parser.add_argument('--num_epochs', type=int, default=500)
     parser.add_argument('--warmup_epochs', type=int, default=10)
     parser.add_argument('--last_decay_epoch', type=int, default=480)
     parser.add_argument('--batch_size', type=int, default=512)
+    parser.add_argument('--max_steps', type=int, default=0,
+                        help='stop after this many train steps (0 = no '
+                             'limit, e.g. 50 for a smoke test)')
     parser.add_argument('--lr', type=float, default=2e-4)
     parser.add_argument('--weight_decay', type=float, default=0.05)
     parser.add_argument('--probe_lr', type=float, default=6e-3)
