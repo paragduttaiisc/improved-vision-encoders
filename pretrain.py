@@ -108,15 +108,19 @@ def _resume_from_checkpoint(ckpt_dir, args, encoder, decoder, probe,
     enc_ok = _load_into(enc_p, _raw_module(encoder), "encoder", True)
     dec_ok = _load_into(dec_p, _raw_module(decoder), "decoder", True)
     prb_ok = _load_into(prb_p, probe, "probe", False)
+    # The main optimizer is deliberately NOT resumed. Stage-1 ran with a
+    # different LR regime (peak 2e-4 vs stage-2 peak 5e-5, fresh warmup) on
+    # a different dataset, so ImageNet's AdamW momentum is not useful for the
+    # continued run. It is also the source of a dtype crash: the saved
+    # exp_avg/exp_avg_sq are FP32 while the resumed bf16 params make the
+    # fused GPU Adam assert same-dtype and fail at step 1. Loss continuity
+    # comes from the model weights, not the optimizer, so skipping this is
+    # correct, not just a workaround. (If a future stage wants momentum,
+    # cast the loaded moments to the param dtype before load_state_dict.)
     if enc_ok and dec_ok:
-        opt_p = os.path.join(ckpt_dir, "optimizer.bin")
-        if os.path.isfile(opt_p):
-            optimizer.load_state_dict(torch.load(opt_p,
-                                                 map_location="cpu"))
-            print("[resume] loaded main optimizer state")
-        else:
-            print("[resume] WARNING: optimizer.bin not found; "
-                  "main optimizer starts fresh")
+        print("[resume] main optimizer left fresh (stage-2 uses a new LR "
+              "schedule on a new dataset; saved state is FP32 and is not "
+              "compatible with the bf16 params)")
     else:
         print("[resume] WARNING: encoder/decoder did not fully load; "
               "main optimizer starts fresh (no state loaded)")
