@@ -1,8 +1,11 @@
 #!/bin/bash
-# switch_7to8.sh -- stop the 7-GPU robot run and relaunch on 8 GPUs @ 400/GPU
-# 448/GPU OOMed on 8-GPU DDP (verified: all 8 ranks OOM at batch 1), so the
-# 8-GPU phase runs at the DDP-verified 400/GPU (3200 global).
-# Idempotent-ish: refuses to run if GPUs 1-7 are busy with a non-robot job.
+# switch_7to8.sh -- stop the 7-GPU robot run and resume on all 8 GPUs.
+# 8-GPU phase: probe 416/GPU under real 8-GPU DDP (user target; 420 OOMed at
+# batch1 before, so 416). If the short probe OOMs, fall back to verified
+# 400/GPU (40 clean DDP steps, peak 37.54 GB).
+# Uses --start_epoch N+1 so the 8-GPU phase continues at epoch N+1 with the
+# LR scheduler fast-forwarded (no re-warmup, no clobbering 7-GPU ckpts).
+set -u
 repo=/raid/home/paragdutta/Codes/improved-vision-encoders
 cd $repo
 log=/tmp/switch_7to8.log
@@ -56,30 +59,56 @@ resume="$latest"
 echo "resuming from robot ckpt: $latest (epoch $N), 8-GPU phase starts at epoch $((N+1))"
 
 # 3. stop the 7-GPU run
-pidfile=/tmp/robot_run7.pid
-pids=""
-[ -f "$pidfile" ] && pids=$(cat "$pidfile")
-[ -n "$pids" ] && kill $pids 2>/dev/null
+echo "stopping 7-GPU run..."
 pkill -f "num_processes 7" 2>/dev/null
 sleep 10
 pkill -9 -f "num_processes 7" 2>/dev/null
-# drain
-for t in $(seq 1 30); do
-  mems=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i 1-7 | tr '\n' ' ')
-  if echo "$mems" | awk '{for(i=1;i<=NF;i++) if($i+0>1024){exit 1}}' && echo "$mems" | awk '{ok=1; for(i=1;i<=NF;i++) if($i+0>1024) ok=0; exit ok?0:1}'; then
-    echo "GPUs 1-7 drained after ${t}0s"; break
-  fi
+# drain GPUs 1-7
+for t in $(seq 1 24); do
+  busy=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i 1-7 | awk '$1+0>1024' | wc -l)
+  [ "$busy" -eq 0 ] && { echo "GPUs 1-7 drained (${t}0s)"; break; }
   sleep 10
 done
-pgrep -f "num_processes 7" && { echo "7-gpu procs still alive, aborting"; exit 4; } || echo "7-gpu run stopped"
+pgrep -f "num_processes 7" >/dev/null && { echo "7-GPU procs still alive - aborting"; exit 4; } || echo "7-GPU run stopped"
 
-# 4. launch 8-GPU run @ 400/GPU
-cp runs/robot_9ep.log runs/robot_9ep.log.switched_$(date +%s) 2>/dev/null || true
-: > runs/robot_9ep.log
+# 4. short 8-GPU DDP probe at 416/GPU (20 steps, ~3-5 min incl. ckpt load)
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+: > /tmp/probe8.log
+echo "probing 416/GPU on 8-GPU DDP..."
+accelerate launch --num_processes 8 pretrain.py \
+  --data_dir data --image_size 256 --n_classes 8 \
+  --batch_size 416 --n_workers 8 \
+  --lr 5e-5 --probe_lr 6e-3 --no_probe \
+  --num_epochs 99 --warmup_epochs 1 --last_decay_epoch 99 \
+  --start_epoch "$((N + 1))" \
+  --max_steps 20 \
+  --resume "$resume" \
+  --save_dir /tmp/probe8_416 --output_dir /tmp/probe8_out \
+  > /tmp/probe8.log 2>&1
+probe_rc=$?
+if [ $probe_rc -eq 0 ] && ! grep -q "OutOfMemoryError" /tmp/probe8.log; then
+  BATCH=416
+  echo "416/GPU 8-GPU DDP probe clean (rc=$probe_rc)"
+else
+  echo "416/GPU probe FAILED rc=$probe_rc oom=$(grep -c OutOfMemoryError /tmp/probe8.log 2>/dev/null) - falling back to 400/GPU"
+  tail -5 /tmp/probe8.log
+  BATCH=400
+fi
+echo "8-GPU phase batch size: $BATCH"
+
+# drain any residual memory from the probe before the full launch
+for t in $(seq 1 18); do
+  busy=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | awk '$1+0>1024' | wc -l)
+  [ "$busy" -eq 0 ] && { echo "all GPUs drained post-probe (${t}0s)"; break; }
+  sleep 10
+done
+
+# 5. launch the 8-GPU run
+cp runs/robot_9ep.log "runs/robot_9ep.log.7gpu_$(date +%s)" 2>/dev/null || true
+: > runs/robot_9ep.log
 setsid nohup accelerate launch --num_processes 8 pretrain.py \
   --data_dir data --image_size 256 --n_classes 8 \
-  --batch_size 400 --n_workers 8 \
+  --batch_size $BATCH --n_workers 8 \
   --lr 5e-5 --probe_lr 6e-3 --no_probe \
   --num_epochs 9 --warmup_epochs 1 --last_decay_epoch 9 \
   --start_epoch "$((N + 1))" \
@@ -90,9 +119,9 @@ setsid nohup accelerate launch --num_processes 8 pretrain.py \
   2>&1 | python3 "$(pwd)/runs/tsline.py" >> runs/robot_9ep.log &
 newpid=$!
 echo $newpid > /tmp/robot_run8.pid
-echo "8-GPU run launched, pid $newpid, resume=$resume, start_epoch=$((N+1))"
+echo "8-GPU run launched, pid $newpid, resume=$resume, start_epoch=$((N+1)), batch=${BATCH}/GPU"
 
-# 5. health check: wait for first loss line or OOM (max ~20 min)
+# 6. health check: first loss line OR error, within ~20 min
 ok=0
 for t in $(seq 1 120); do
   sleep 10
@@ -114,4 +143,4 @@ else
 fi
 echo "=== switch end $(date -u +%FT%TZ) ==="
 } >> "$log" 2>&1
-echo "switch script rc=$? (log: $log)"
+echo "switch rc=$? (log: $log)"
