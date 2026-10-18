@@ -26,20 +26,29 @@ echo "GPU0 free confirmed"
 # writes model.safetensors/model_1/model_2 + optimizer.bin + random_states +
 # accelerate version metadata. Require model.safetensors (the largest file,
 # written last by safetensors single-file writer) AND random_states_0.pkl.
+# ADDITIONAL GUARD: the checkpoint must be NEWER than the current 7-GPU run's
+# launch banner, so a stale leftover from an abandoned earlier run cannot be
+# resumed over in-progress work of the live run.
+banner_ts=$(grep -m1 "launch banner" runs/robot_9ep.log 2>/dev/null | sed -E 's/.*banner ([0-9-]+ [0-9:]+).*UTC.*/\1/')
+[ -z "$banner_ts" ] && { echo "no launch banner in robot_9ep.log; cannot date-gate"; exit 2; }
+banner_epoch=$(date -d "$banner_ts" +%s 2>/dev/null)
+[ -z "$banner_epoch" ] && { echo "could not parse banner ts '$banner_ts' to epoch"; exit 2; }
+echo "7-GPU run launch banner: $banner_ts (epoch $banner_epoch)"
+
 latest=""
 for c in $(ls -d models/mae_moe_robot_9ep/checkpoint_epoch_* 2>/dev/null | sort -V); do
   if [ -f "$c/model.safetensors" ] && [ -f "$c/random_states_0.pkl" ]; then
-    latest="$c"
+    # mtime of the newest file in the ckpt dir must be >= banner time
+    ckpt_epoch=$(stat -c %Y "$c/random_states_0.pkl" 2>/dev/null || echo 0)
+    if [ "$ckpt_epoch" -ge "$banner_epoch" ]; then
+      latest="$c"
+    else
+      echo "skipping STALE $c (random_states mtime $(date -d @$ckpt_epoch -u +%FT%TZ) < banner)"
+    fi
   fi
 done
 if [ -z "$latest" ]; then
-  # fall back: any dir with model.safetensors even if pkl missing (older save path)
-  for c in $(ls -d models/mae_moe_robot_9ep/checkpoint_epoch_* 2>/dev/null | sort -V); do
-    [ -f "$c/model.safetensors" ] && latest="$c"
-  done
-fi
-if [ -z "$latest" ]; then
-  echo "no complete epoch checkpoint yet (7-GPU run may still be in epoch 1)"
+  echo "no complete+fresh epoch checkpoint yet (7-GPU run may still be in epoch 1)"
   echo "will retry on next watcher poll"; exit 2
 fi
 N=$(basename "$latest" | sed 's/checkpoint_epoch_//')
