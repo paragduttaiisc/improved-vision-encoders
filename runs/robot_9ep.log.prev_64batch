@@ -1,0 +1,602 @@
+
+=== RE-LAUNCH 2026-10-18 03:51:52 UTC (user command: machine free, launch) ===
+=== launch banner 2026-10-18 03:51:53 UTC ===
+git commit: 20e8f50 (jpeg-dataloader)
+gpu check:
+0, 0 MiB, 0 %
+1, 0 MiB, 0 %
+2, 0 MiB, 0 %
+3, 0 MiB, 0 %
+4, 0 MiB, 0 %
+5, 0 MiB, 0 %
+6, 0 MiB, 0 %
+7, 0 MiB, 0 %
+=== pretrain.py launch ===
+1792295525.842 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295525.842 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295525.842 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295526.830 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295526.830 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295526.830 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295527.038 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295527.038 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295527.038 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295527.046 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295527.046 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295527.046 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295527.065 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295527.065 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295527.065 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295527.084 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295527.084 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295527.084 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295527.133 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295527.133 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295527.133 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295527.141 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792295527.141 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792295527.141 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792295529.317 wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /raid/home/paragdutta/.netrc.
+1792295530.322 wandb: Currently logged in as: parag1604 (statsml-csa-iisc) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+1792295531.425 wandb: setting up run go3oodv8
+1792295532.750 wandb: Tracking run with wandb version 0.30.0
+1792295532.750 wandb: Run data is saved locally in /raid/home/paragdutta/Codes/improved-vision-encoders/wandb/run-20261018_035210-go3oodv8
+1792295532.750 wandb: Run `wandb offline` to turn off syncing.
+1792295532.750 wandb: Syncing run mae_moe_robot_9ep
+1792295532.750 wandb: ⭐️ View project at https://wandb.ai/statsml-csa-iisc/improved-vision-encoders
+1792295532.750 wandb: 🚀 View run at https://wandb.ai/statsml-csa-iisc/improved-vision-encoders/runs/go3oodv8
+1792295534.844 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295534.857 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295535.700 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295535.797 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295535.806 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295535.808 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295535.808 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295535.808 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295535.808 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295535.808 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295535.808 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295536.028 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295536.041 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295536.083 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295536.096 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295536.560 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295536.561 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295536.619 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295536.623 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295536.625 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295536.625 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295536.625 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295536.625 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295536.625 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295536.625 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295536.661 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295536.665 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295536.667 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295536.667 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295536.667 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295536.667 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295536.667 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295536.667 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295536.738 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295536.741 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295536.750 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295536.753 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295536.844 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295536.854 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295536.856 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295536.866 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295537.597 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295537.603 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295537.646 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295537.656 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295537.657 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295537.658 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295537.658 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295537.658 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295537.658 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295537.658 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295537.658 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295537.668 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295537.669 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295537.669 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295537.669 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295537.669 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295537.669 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295537.669 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295537.672 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295537.681 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295537.722 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295537.732 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295537.734 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295537.734 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295537.734 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295537.734 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295537.734 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295537.734 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295537.771 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295537.781 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295537.782 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295537.782 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295537.782 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295537.782 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295537.782 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295537.782 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295541.113 Train loader: 18.42M samples
+1792295541.113 Val loader: 2.04M samples
+1792295541.114 Encoder params: 482.19M
+1792295541.115 Decoder params: 5.18M
+1792295541.115 Probe params: 6.15K
+1792295541.115 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792295541.129 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792295541.808 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792295541.899 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792295541.904 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792295541.906 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792295541.906 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792295541.907 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792295541.907 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792295541.907 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792295541.907 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792295541.907 [resume] main-optimizer LR re-synced to the fresh scheduler (step-0 value 5e-08)
+1792295546.873 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.873   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.874 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.874   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.874 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.874   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.874 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.874   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.874 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.874   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.875 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.875   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.875 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.876   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.876 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.876   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.883 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.883   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.883 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.883   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.883 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.883   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.884 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.884   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.884 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.884   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.884 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.884   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.885 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.885   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.885 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.885   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.910 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.910   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.910 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.910   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.911 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.911   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.911 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.911   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.911 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.911   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.912 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.912   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.912 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.912   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.913 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.913   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.914 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.914   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.915 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.915   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.915 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.915   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.915 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.915   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.916 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.916   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.916 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.916   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.916 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.916   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.917 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.917   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.942 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.942   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.942 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.942   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.942 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.942   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.943 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.943   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.943 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.943   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.944 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.944   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.944 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.944   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.945 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.945   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.945 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.945   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.945 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.945   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.946 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.946   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.946 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.946   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.946 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.946   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.946 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.946   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.947 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.947   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.947 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.947   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.955 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.955   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.955 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.955   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.956 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.956   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.956 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.956   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.957 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.957   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.957 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.957   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.958 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.958   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.958 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.958   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.961 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.961   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.961 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.961   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.961 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.961   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.962 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.962   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.962 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.962   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.963 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.963   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.963 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.963   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295546.963 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792295546.963   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792295553.769 [rank6]:[W1018 03:52:33.389908324 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295554.160 [rank5]:[W1018 03:52:34.780404286 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295554.284 [rank3]:[W1018 03:52:34.904412222 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295554.305 [rank4]:[W1018 03:52:34.925210752 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295554.445 [rank0]:[W1018 03:52:34.065237147 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295554.637 [rank2]:[W1018 03:52:34.257272585 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295554.693 [rank7]:[W1018 03:52:34.313410630 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295558.095 [rank1]:[W1018 03:52:38.715306041 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792295562.451 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.451   return func(*args, **kwargs)
+1792295562.452 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.452   return func(*args, **kwargs)
+1792295562.453 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.453   return func(*args, **kwargs)
+1792295562.457 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.457   return func(*args, **kwargs)
+1792295562.460 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.460   return func(*args, **kwargs)
+1792295562.462 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.462   return func(*args, **kwargs)
+1792295562.465 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.465   return func(*args, **kwargs)
+1792295562.467 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295562.467   return func(*args, **kwargs)
+1792295562.471 Epoch [1/9] Batch [1/35978] LR: 0.000000 Loss: 0.4913 Pred Loss: 0.2663 Var Loss: 0.0062 SW Loss: 0.0691 Probe Loss: 2.1476 Probe Acc: 0.0527 Router Loss: 0.0055
+1792295563.289 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295563.289   return func(*args, **kwargs)
+1792295563.290 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295563.290   return func(*args, **kwargs)
+1792295563.294 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295563.294   return func(*args, **kwargs)
+1792295564.076 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295564.076   return func(*args, **kwargs)
+1792295564.699 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295564.699   return func(*args, **kwargs)
+1792295564.847 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295564.847   return func(*args, **kwargs)
+1792295565.774 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295565.774   return func(*args, **kwargs)
+1792295565.920 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295565.920   return func(*args, **kwargs)
+1792295566.373 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295566.373   return func(*args, **kwargs)
+1792295567.122 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295567.123   return func(*args, **kwargs)
+1792295567.728 Epoch [1/9] Batch [11/35978] LR: 0.000000 Loss: 0.5140 Pred Loss: 0.2924 Var Loss: 0.0061 SW Loss: 0.0690 Probe Loss: 0.1255 Probe Acc: 0.9805 Router Loss: 0.0059
+1792295568.476 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792295568.476   return func(*args, **kwargs)
+1792295570.953 Epoch [1/9] Batch [21/35978] LR: 0.000000 Loss: 0.5343 Pred Loss: 0.2721 Var Loss: 0.0077 SW Loss: 0.0704 Probe Loss: 0.0288 Probe Acc: 0.9961 Router Loss: 0.0048
+1792295574.013 Epoch [1/9] Batch [31/35978] LR: 0.000000 Loss: 0.5042 Pred Loss: 0.2856 Var Loss: 0.0060 SW Loss: 0.0695 Probe Loss: 0.0120 Probe Acc: 0.9980 Router Loss: 0.0052
+1792295577.081 Epoch [1/9] Batch [41/35978] LR: 0.000000 Loss: 0.5358 Pred Loss: 0.2943 Var Loss: 0.0069 SW Loss: 0.0699 Probe Loss: 0.0054 Probe Acc: 0.9980 Router Loss: 0.0052
+1792295580.710 Epoch [1/9] Batch [51/35978] LR: 0.000000 Loss: 0.4755 Pred Loss: 0.2630 Var Loss: 0.0057 SW Loss: 0.0691 Probe Loss: 0.0578 Probe Acc: 0.9980 Router Loss: 0.0057
+1792295584.677 Epoch [1/9] Batch [61/35978] LR: 0.000000 Loss: 0.5079 Pred Loss: 0.2911 Var Loss: 0.0059 SW Loss: 0.0696 Probe Loss: 0.0262 Probe Acc: 0.9980 Router Loss: 0.0053
+1792295588.912 Epoch [1/9] Batch [71/35978] LR: 0.000000 Loss: 0.4942 Pred Loss: 0.2969 Var Loss: 0.0051 SW Loss: 0.0689 Probe Loss: 0.0087 Probe Acc: 1.0000 Router Loss: 0.0063
+1792295592.002 Epoch [1/9] Batch [81/35978] LR: 0.000000 Loss: 0.5159 Pred Loss: 0.3227 Var Loss: 0.0050 SW Loss: 0.0687 Probe Loss: 0.0095 Probe Acc: 1.0000 Router Loss: 0.0066
+1792295595.063 Epoch [1/9] Batch [91/35978] LR: 0.000000 Loss: 0.4514 Pred Loss: 0.2530 Var Loss: 0.0052 SW Loss: 0.0692 Probe Loss: 0.0099 Probe Acc: 0.9980 Router Loss: 0.0054
+1792295598.108 Epoch [1/9] Batch [101/35978] LR: 0.000000 Loss: 0.4853 Pred Loss: 0.2966 Var Loss: 0.0048 SW Loss: 0.0689 Probe Loss: 0.0553 Probe Acc: 0.9980 Router Loss: 0.0057
+1792295601.140 Epoch [1/9] Batch [111/35978] LR: 0.000000 Loss: 0.4922 Pred Loss: 0.3025 Var Loss: 0.0048 SW Loss: 0.0689 Probe Loss: 0.0022 Probe Acc: 1.0000 Router Loss: 0.0060
+1792295604.181 Epoch [1/9] Batch [121/35978] LR: 0.000000 Loss: 0.4770 Pred Loss: 0.2916 Var Loss: 0.0047 SW Loss: 0.0689 Probe Loss: 0.0005 Probe Acc: 1.0000 Router Loss: 0.0057
+1792295607.233 Epoch [1/9] Batch [131/35978] LR: 0.000000 Loss: 0.4512 Pred Loss: 0.2705 Var Loss: 0.0045 SW Loss: 0.0690 Probe Loss: 0.0038 Probe Acc: 0.9980 Router Loss: 0.0057
+1792295610.831 Epoch [1/9] Batch [141/35978] LR: 0.000000 Loss: 0.4597 Pred Loss: 0.2702 Var Loss: 0.0048 SW Loss: 0.0702 Probe Loss: 0.0006 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295616.148 Epoch [1/9] Batch [151/35978] LR: 0.000000 Loss: 0.4467 Pred Loss: 0.2665 Var Loss: 0.0044 SW Loss: 0.0691 Probe Loss: 0.0007 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295619.197 Epoch [1/9] Batch [161/35978] LR: 0.000000 Loss: 0.4564 Pred Loss: 0.2811 Var Loss: 0.0043 SW Loss: 0.0687 Probe Loss: 0.0010 Probe Acc: 1.0000 Router Loss: 0.0059
+1792295622.216 Epoch [1/9] Batch [171/35978] LR: 0.000000 Loss: 0.4453 Pred Loss: 0.2751 Var Loss: 0.0040 SW Loss: 0.0693 Probe Loss: 0.0038 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295625.245 Epoch [1/9] Batch [181/35978] LR: 0.000000 Loss: 0.4280 Pred Loss: 0.2595 Var Loss: 0.0039 SW Loss: 0.0701 Probe Loss: 0.0009 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295628.279 Epoch [1/9] Batch [191/35978] LR: 0.000000 Loss: 0.4537 Pred Loss: 0.2920 Var Loss: 0.0037 SW Loss: 0.0690 Probe Loss: 0.0002 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295631.282 Epoch [1/9] Batch [201/35978] LR: 0.000000 Loss: 0.4600 Pred Loss: 0.3022 Var Loss: 0.0036 SW Loss: 0.0690 Probe Loss: 0.0004 Probe Acc: 1.0000 Router Loss: 0.0055
+1792295634.291 Epoch [1/9] Batch [211/35978] LR: 0.000000 Loss: 0.4571 Pred Loss: 0.2997 Var Loss: 0.0035 SW Loss: 0.0691 Probe Loss: 0.0004 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295637.304 Epoch [1/9] Batch [221/35978] LR: 0.000000 Loss: 0.4187 Pred Loss: 0.2619 Var Loss: 0.0035 SW Loss: 0.0703 Probe Loss: 0.0003 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295643.008 Epoch [1/9] Batch [231/35978] LR: 0.000000 Loss: 0.4319 Pred Loss: 0.2756 Var Loss: 0.0035 SW Loss: 0.0694 Probe Loss: 0.0002 Probe Acc: 1.0000 Router Loss: 0.0056
+1792295646.382 Epoch [1/9] Batch [241/35978] LR: 0.000000 Loss: 0.4132 Pred Loss: 0.2617 Var Loss: 0.0033 SW Loss: 0.0696 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295649.403 Epoch [1/9] Batch [251/35978] LR: 0.000000 Loss: 0.4153 Pred Loss: 0.2687 Var Loss: 0.0031 SW Loss: 0.0695 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295652.408 Epoch [1/9] Batch [261/35978] LR: 0.000000 Loss: 0.4234 Pred Loss: 0.2710 Var Loss: 0.0033 SW Loss: 0.0688 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0061
+1792295655.417 Epoch [1/9] Batch [271/35978] LR: 0.000000 Loss: 0.3952 Pred Loss: 0.2567 Var Loss: 0.0028 SW Loss: 0.0690 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295658.435 Epoch [1/9] Batch [281/35978] LR: 0.000000 Loss: 0.4001 Pred Loss: 0.2585 Var Loss: 0.0029 SW Loss: 0.0697 Probe Loss: 0.0005 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295661.429 Epoch [1/9] Batch [291/35978] LR: 0.000000 Loss: 0.3978 Pred Loss: 0.2620 Var Loss: 0.0027 SW Loss: 0.0694 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295664.425 Epoch [1/9] Batch [301/35978] LR: 0.000000 Loss: 0.3961 Pred Loss: 0.2625 Var Loss: 0.0026 SW Loss: 0.0696 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295668.555 Epoch [1/9] Batch [311/35978] LR: 0.000000 Loss: 0.4032 Pred Loss: 0.2650 Var Loss: 0.0027 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0044
+1792295672.805 Epoch [1/9] Batch [321/35978] LR: 0.000000 Loss: 0.3993 Pred Loss: 0.2679 Var Loss: 0.0025 SW Loss: 0.0697 Probe Loss: 0.0002 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295675.810 Epoch [1/9] Batch [331/35978] LR: 0.000001 Loss: 0.3893 Pred Loss: 0.2569 Var Loss: 0.0025 SW Loss: 0.0695 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0043
+1792295678.804 Epoch [1/9] Batch [341/35978] LR: 0.000001 Loss: 0.3946 Pred Loss: 0.2652 Var Loss: 0.0024 SW Loss: 0.0687 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295681.806 Epoch [1/9] Batch [351/35978] LR: 0.000001 Loss: 0.3996 Pred Loss: 0.2729 Var Loss: 0.0023 SW Loss: 0.0689 Probe Loss: 0.1123 Probe Acc: 0.9980 Router Loss: 0.0052
+1792295684.796 Epoch [1/9] Batch [361/35978] LR: 0.000001 Loss: 0.3827 Pred Loss: 0.2596 Var Loss: 0.0022 SW Loss: 0.0693 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0044
+1792295687.797 Epoch [1/9] Batch [371/35978] LR: 0.000001 Loss: 0.3894 Pred Loss: 0.2689 Var Loss: 0.0020 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295690.772 Epoch [1/9] Batch [381/35978] LR: 0.000001 Loss: 0.3981 Pred Loss: 0.2738 Var Loss: 0.0022 SW Loss: 0.0694 Probe Loss: 0.0002 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295693.760 Epoch [1/9] Batch [391/35978] LR: 0.000001 Loss: 0.3723 Pred Loss: 0.2518 Var Loss: 0.0020 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295698.637 Epoch [1/9] Batch [401/35978] LR: 0.000001 Loss: 0.3760 Pred Loss: 0.2537 Var Loss: 0.0021 SW Loss: 0.0693 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295701.974 Epoch [1/9] Batch [411/35978] LR: 0.000001 Loss: 0.3955 Pred Loss: 0.2756 Var Loss: 0.0020 SW Loss: 0.0694 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295704.961 Epoch [1/9] Batch [421/35978] LR: 0.000001 Loss: 0.3656 Pred Loss: 0.2464 Var Loss: 0.0020 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295707.957 Epoch [1/9] Batch [431/35978] LR: 0.000001 Loss: 0.3852 Pred Loss: 0.2670 Var Loss: 0.0019 SW Loss: 0.0699 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0041
+1792295710.946 Epoch [1/9] Batch [441/35978] LR: 0.000001 Loss: 0.3825 Pred Loss: 0.2629 Var Loss: 0.0020 SW Loss: 0.0691 Probe Loss: 0.0003 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295713.933 Epoch [1/9] Batch [451/35978] LR: 0.000001 Loss: 0.3946 Pred Loss: 0.2776 Var Loss: 0.0019 SW Loss: 0.0691 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295716.918 Epoch [1/9] Batch [461/35978] LR: 0.000001 Loss: 0.3723 Pred Loss: 0.2582 Var Loss: 0.0018 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295719.909 Epoch [1/9] Batch [471/35978] LR: 0.000001 Loss: 0.3636 Pred Loss: 0.2494 Var Loss: 0.0018 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295724.797 Epoch [1/9] Batch [481/35978] LR: 0.000001 Loss: 0.3477 Pred Loss: 0.2346 Var Loss: 0.0017 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0043
+1792295728.173 Epoch [1/9] Batch [491/35978] LR: 0.000001 Loss: 0.3772 Pred Loss: 0.2649 Var Loss: 0.0017 SW Loss: 0.0692 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295731.469 Epoch [1/9] Batch [501/35978] LR: 0.000001 Loss: 0.3777 Pred Loss: 0.2661 Var Loss: 0.0017 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295734.447 Epoch [1/9] Batch [511/35978] LR: 0.000001 Loss: 0.3678 Pred Loss: 0.2577 Var Loss: 0.0016 SW Loss: 0.0689 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295737.427 Epoch [1/9] Batch [521/35978] LR: 0.000001 Loss: 0.3607 Pred Loss: 0.2537 Var Loss: 0.0015 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295740.416 Epoch [1/9] Batch [531/35978] LR: 0.000001 Loss: 0.3885 Pred Loss: 0.2790 Var Loss: 0.0016 SW Loss: 0.0691 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295743.405 Epoch [1/9] Batch [541/35978] LR: 0.000001 Loss: 0.3921 Pred Loss: 0.2814 Var Loss: 0.0016 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295746.387 Epoch [1/9] Batch [551/35978] LR: 0.000001 Loss: 0.3711 Pred Loss: 0.2645 Var Loss: 0.0015 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295749.686 Epoch [1/9] Batch [561/35978] LR: 0.000001 Loss: 0.3480 Pred Loss: 0.2401 Var Loss: 0.0015 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0044
+1792295754.286 Epoch [1/9] Batch [571/35978] LR: 0.000001 Loss: 0.3522 Pred Loss: 0.2412 Var Loss: 0.0017 SW Loss: 0.0690 Probe Loss: 0.0002 Probe Acc: 1.0000 Router Loss: 0.0055
+1792295757.275 Epoch [1/9] Batch [581/35978] LR: 0.000001 Loss: 0.3703 Pred Loss: 0.2635 Var Loss: 0.0015 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295760.589 Epoch [1/9] Batch [591/35978] LR: 0.000001 Loss: 0.3749 Pred Loss: 0.2712 Var Loss: 0.0014 SW Loss: 0.0696 Probe Loss: 0.0004 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295763.587 Epoch [1/9] Batch [601/35978] LR: 0.000001 Loss: 0.3732 Pred Loss: 0.2696 Var Loss: 0.0014 SW Loss: 0.0693 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295766.587 Epoch [1/9] Batch [611/35978] LR: 0.000001 Loss: 0.3662 Pred Loss: 0.2606 Var Loss: 0.0014 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295769.562 Epoch [1/9] Batch [621/35978] LR: 0.000001 Loss: 0.3706 Pred Loss: 0.2647 Var Loss: 0.0015 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295772.533 Epoch [1/9] Batch [631/35978] LR: 0.000001 Loss: 0.3671 Pred Loss: 0.2639 Var Loss: 0.0013 SW Loss: 0.0695 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295775.514 Epoch [1/9] Batch [641/35978] LR: 0.000001 Loss: 0.3805 Pred Loss: 0.2735 Var Loss: 0.0015 SW Loss: 0.0693 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295779.466 Epoch [1/9] Batch [651/35978] LR: 0.000001 Loss: 0.3531 Pred Loss: 0.2513 Var Loss: 0.0013 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295783.125 Epoch [1/9] Batch [661/35978] LR: 0.000001 Loss: 0.3684 Pred Loss: 0.2670 Var Loss: 0.0013 SW Loss: 0.0696 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295786.103 Epoch [1/9] Batch [671/35978] LR: 0.000001 Loss: 0.3978 Pred Loss: 0.2933 Var Loss: 0.0014 SW Loss: 0.0695 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295789.412 Epoch [1/9] Batch [681/35978] LR: 0.000001 Loss: 0.3892 Pred Loss: 0.2880 Var Loss: 0.0013 SW Loss: 0.0695 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295792.410 Epoch [1/9] Batch [691/35978] LR: 0.000001 Loss: 0.3523 Pred Loss: 0.2492 Var Loss: 0.0014 SW Loss: 0.0692 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295795.399 Epoch [1/9] Batch [701/35978] LR: 0.000001 Loss: 0.3729 Pred Loss: 0.2727 Var Loss: 0.0012 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295798.401 Epoch [1/9] Batch [711/35978] LR: 0.000001 Loss: 0.3777 Pred Loss: 0.2758 Var Loss: 0.0013 SW Loss: 0.0692 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295801.392 Epoch [1/9] Batch [721/35978] LR: 0.000001 Loss: 0.3627 Pred Loss: 0.2618 Var Loss: 0.0013 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295805.006 Epoch [1/9] Batch [731/35978] LR: 0.000001 Loss: 0.3600 Pred Loss: 0.2601 Var Loss: 0.0012 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295809.213 Epoch [1/9] Batch [741/35978] LR: 0.000001 Loss: 0.3858 Pred Loss: 0.2842 Var Loss: 0.0013 SW Loss: 0.0696 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0055
+1792295812.215 Epoch [1/9] Batch [751/35978] LR: 0.000001 Loss: 0.3672 Pred Loss: 0.2692 Var Loss: 0.0011 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295815.205 Epoch [1/9] Batch [761/35978] LR: 0.000001 Loss: 0.3404 Pred Loss: 0.2440 Var Loss: 0.0011 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295818.633 Epoch [1/9] Batch [771/35978] LR: 0.000001 Loss: 0.3516 Pred Loss: 0.2515 Var Loss: 0.0012 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0057
+1792295821.705 Epoch [1/9] Batch [781/35978] LR: 0.000001 Loss: 0.3844 Pred Loss: 0.2870 Var Loss: 0.0011 SW Loss: 0.0693 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295824.707 Epoch [1/9] Batch [791/35978] LR: 0.000001 Loss: 0.3410 Pred Loss: 0.2420 Var Loss: 0.0012 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295827.747 Epoch [1/9] Batch [801/35978] LR: 0.000001 Loss: 0.3406 Pred Loss: 0.2454 Var Loss: 0.0010 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295830.732 Epoch [1/9] Batch [811/35978] LR: 0.000001 Loss: 0.3552 Pred Loss: 0.2590 Var Loss: 0.0010 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295834.698 Epoch [1/9] Batch [821/35978] LR: 0.000001 Loss: 0.3458 Pred Loss: 0.2477 Var Loss: 0.0011 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0054
+1792295838.071 Epoch [1/9] Batch [831/35978] LR: 0.000001 Loss: 0.3347 Pred Loss: 0.2392 Var Loss: 0.0010 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295841.073 Epoch [1/9] Batch [841/35978] LR: 0.000001 Loss: 0.3738 Pred Loss: 0.2770 Var Loss: 0.0011 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295844.094 Epoch [1/9] Batch [851/35978] LR: 0.000001 Loss: 0.3512 Pred Loss: 0.2562 Var Loss: 0.0010 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295847.400 Epoch [1/9] Batch [861/35978] LR: 0.000001 Loss: 0.3583 Pred Loss: 0.2642 Var Loss: 0.0010 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295850.397 Epoch [1/9] Batch [871/35978] LR: 0.000001 Loss: 0.3311 Pred Loss: 0.2355 Var Loss: 0.0010 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295853.392 Epoch [1/9] Batch [881/35978] LR: 0.000001 Loss: 0.3476 Pred Loss: 0.2509 Var Loss: 0.0011 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792295856.389 Epoch [1/9] Batch [891/35978] LR: 0.000001 Loss: 0.3569 Pred Loss: 0.2635 Var Loss: 0.0009 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295860.727 Epoch [1/9] Batch [901/35978] LR: 0.000001 Loss: 0.3230 Pred Loss: 0.2297 Var Loss: 0.0009 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792295864.414 Epoch [1/9] Batch [911/35978] LR: 0.000001 Loss: 0.3340 Pred Loss: 0.2412 Var Loss: 0.0009 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295867.405 Epoch [1/9] Batch [921/35978] LR: 0.000001 Loss: 0.3185 Pred Loss: 0.2233 Var Loss: 0.0010 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295870.400 Epoch [1/9] Batch [931/35978] LR: 0.000001 Loss: 0.3323 Pred Loss: 0.2384 Var Loss: 0.0010 SW Loss: 0.0701 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295873.396 Epoch [1/9] Batch [941/35978] LR: 0.000001 Loss: 0.3282 Pred Loss: 0.2345 Var Loss: 0.0009 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295876.728 Epoch [1/9] Batch [951/35978] LR: 0.000001 Loss: 0.3515 Pred Loss: 0.2586 Var Loss: 0.0009 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295879.742 Epoch [1/9] Batch [961/35978] LR: 0.000001 Loss: 0.3179 Pred Loss: 0.2246 Var Loss: 0.0009 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295882.756 Epoch [1/9] Batch [971/35978] LR: 0.000001 Loss: 0.3365 Pred Loss: 0.2450 Var Loss: 0.0009 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295885.760 Epoch [1/9] Batch [981/35978] LR: 0.000001 Loss: 0.3528 Pred Loss: 0.2598 Var Loss: 0.0009 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295890.309 Epoch [1/9] Batch [991/35978] LR: 0.000001 Loss: 0.3463 Pred Loss: 0.2542 Var Loss: 0.0009 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295893.691 Epoch [1/9] Batch [1001/35978] LR: 0.000001 Loss: 0.3563 Pred Loss: 0.2639 Var Loss: 0.0009 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792295896.684 Epoch [1/9] Batch [1011/35978] LR: 0.000001 Loss: 0.3628 Pred Loss: 0.2704 Var Loss: 0.0009 SW Loss: 0.0705 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295899.694 Epoch [1/9] Batch [1021/35978] LR: 0.000001 Loss: 0.3157 Pred Loss: 0.2237 Var Loss: 0.0009 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295902.688 Epoch [1/9] Batch [1031/35978] LR: 0.000001 Loss: 0.3245 Pred Loss: 0.2335 Var Loss: 0.0008 SW Loss: 0.0714 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0044
+1792295906.009 Epoch [1/9] Batch [1041/35978] LR: 0.000001 Loss: 0.3195 Pred Loss: 0.2262 Var Loss: 0.0009 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295909.032 Epoch [1/9] Batch [1051/35978] LR: 0.000002 Loss: 0.3238 Pred Loss: 0.2318 Var Loss: 0.0009 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295912.047 Epoch [1/9] Batch [1061/35978] LR: 0.000002 Loss: 0.3301 Pred Loss: 0.2378 Var Loss: 0.0009 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0059
+1792295916.755 Epoch [1/9] Batch [1071/35978] LR: 0.000002 Loss: 0.3768 Pred Loss: 0.2843 Var Loss: 0.0009 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0054
+1792295920.432 Epoch [1/9] Batch [1081/35978] LR: 0.000002 Loss: 0.3533 Pred Loss: 0.2611 Var Loss: 0.0009 SW Loss: 0.0705 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295923.438 Epoch [1/9] Batch [1091/35978] LR: 0.000002 Loss: 0.3329 Pred Loss: 0.2406 Var Loss: 0.0009 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295926.442 Epoch [1/9] Batch [1101/35978] LR: 0.000002 Loss: 0.3494 Pred Loss: 0.2586 Var Loss: 0.0008 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295929.441 Epoch [1/9] Batch [1111/35978] LR: 0.000002 Loss: 0.3581 Pred Loss: 0.2643 Var Loss: 0.0009 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0054
+1792295932.443 Epoch [1/9] Batch [1121/35978] LR: 0.000002 Loss: 0.3390 Pred Loss: 0.2480 Var Loss: 0.0008 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792295935.778 Epoch [1/9] Batch [1131/35978] LR: 0.000002 Loss: 0.3266 Pred Loss: 0.2344 Var Loss: 0.0009 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792295938.770 Epoch [1/9] Batch [1141/35978] LR: 0.000002 Loss: 0.3162 Pred Loss: 0.2250 Var Loss: 0.0009 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792295942.355 Epoch [1/9] Batch [1151/35978] LR: 0.000002 Loss: 0.3265 Pred Loss: 0.2348 Var Loss: 0.0009 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295946.657 Epoch [1/9] Batch [1161/35978] LR: 0.000002 Loss: 0.3240 Pred Loss: 0.2297 Var Loss: 0.0009 SW Loss: 0.0723 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792295950.014 Epoch [1/9] Batch [1171/35978] LR: 0.000002 Loss: 0.3241 Pred Loss: 0.2336 Var Loss: 0.0008 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295953.031 Epoch [1/9] Batch [1181/35978] LR: 0.000002 Loss: 0.3148 Pred Loss: 0.2251 Var Loss: 0.0008 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295956.026 Epoch [1/9] Batch [1191/35978] LR: 0.000002 Loss: 0.3384 Pred Loss: 0.2486 Var Loss: 0.0008 SW Loss: 0.0695 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295959.034 Epoch [1/9] Batch [1201/35978] LR: 0.000002 Loss: 0.3201 Pred Loss: 0.2303 Var Loss: 0.0008 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295962.037 Epoch [1/9] Batch [1211/35978] LR: 0.000002 Loss: 0.3336 Pred Loss: 0.2425 Var Loss: 0.0009 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295965.402 Epoch [1/9] Batch [1221/35978] LR: 0.000002 Loss: 0.3422 Pred Loss: 0.2516 Var Loss: 0.0008 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792295968.420 Epoch [1/9] Batch [1231/35978] LR: 0.000002 Loss: 0.3419 Pred Loss: 0.2454 Var Loss: 0.0011 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0062
+1792295972.856 Epoch [1/9] Batch [1241/35978] LR: 0.000002 Loss: 0.3095 Pred Loss: 0.2191 Var Loss: 0.0008 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295976.580 Epoch [1/9] Batch [1251/35978] LR: 0.000002 Loss: 0.3081 Pred Loss: 0.2172 Var Loss: 0.0008 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792295979.604 Epoch [1/9] Batch [1261/35978] LR: 0.000002 Loss: 0.3389 Pred Loss: 0.2488 Var Loss: 0.0008 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295982.608 Epoch [1/9] Batch [1271/35978] LR: 0.000002 Loss: 0.3191 Pred Loss: 0.2308 Var Loss: 0.0007 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295985.626 Epoch [1/9] Batch [1281/35978] LR: 0.000002 Loss: 0.3506 Pred Loss: 0.2591 Var Loss: 0.0009 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0057
+1792295988.642 Epoch [1/9] Batch [1291/35978] LR: 0.000002 Loss: 0.3428 Pred Loss: 0.2525 Var Loss: 0.0008 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792295991.654 Epoch [1/9] Batch [1301/35978] LR: 0.000002 Loss: 0.3257 Pred Loss: 0.2352 Var Loss: 0.0008 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792295995.001 Epoch [1/9] Batch [1311/35978] LR: 0.000002 Loss: 0.3451 Pred Loss: 0.2556 Var Loss: 0.0008 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792295999.231 Epoch [1/9] Batch [1321/35978] LR: 0.000002 Loss: 0.3055 Pred Loss: 0.2169 Var Loss: 0.0007 SW Loss: 0.0704 Probe Loss: 0.0001 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296003.206 Epoch [1/9] Batch [1331/35978] LR: 0.000002 Loss: 0.3302 Pred Loss: 0.2408 Var Loss: 0.0008 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792296006.212 Epoch [1/9] Batch [1341/35978] LR: 0.000002 Loss: 0.3165 Pred Loss: 0.2265 Var Loss: 0.0008 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296009.209 Epoch [1/9] Batch [1351/35978] LR: 0.000002 Loss: 0.3305 Pred Loss: 0.2396 Var Loss: 0.0008 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296012.201 Epoch [1/9] Batch [1361/35978] LR: 0.000002 Loss: 0.3121 Pred Loss: 0.2230 Var Loss: 0.0007 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296015.210 Epoch [1/9] Batch [1371/35978] LR: 0.000002 Loss: 0.3155 Pred Loss: 0.2244 Var Loss: 0.0009 SW Loss: 0.0693 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0056
+1792296018.225 Epoch [1/9] Batch [1381/35978] LR: 0.000002 Loss: 0.3306 Pred Loss: 0.2420 Var Loss: 0.0008 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296021.260 Epoch [1/9] Batch [1391/35978] LR: 0.000002 Loss: 0.3157 Pred Loss: 0.2253 Var Loss: 0.0008 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792296024.616 Epoch [1/9] Batch [1401/35978] LR: 0.000002 Loss: 0.3278 Pred Loss: 0.2410 Var Loss: 0.0006 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296029.116 Epoch [1/9] Batch [1411/35978] LR: 0.000002 Loss: 0.3403 Pred Loss: 0.2492 Var Loss: 0.0009 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0056
+1792296032.406 Epoch [1/9] Batch [1421/35978] LR: 0.000002 Loss: 0.3350 Pred Loss: 0.2463 Var Loss: 0.0007 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296035.405 Epoch [1/9] Batch [1431/35978] LR: 0.000002 Loss: 0.3372 Pred Loss: 0.2480 Var Loss: 0.0008 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296038.404 Epoch [1/9] Batch [1441/35978] LR: 0.000002 Loss: 0.3297 Pred Loss: 0.2399 Var Loss: 0.0008 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296041.407 Epoch [1/9] Batch [1451/35978] LR: 0.000002 Loss: 0.3073 Pred Loss: 0.2178 Var Loss: 0.0007 SW Loss: 0.0720 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0044
+1792296044.418 Epoch [1/9] Batch [1461/35978] LR: 0.000002 Loss: 0.3197 Pred Loss: 0.2344 Var Loss: 0.0006 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296047.430 Epoch [1/9] Batch [1471/35978] LR: 0.000002 Loss: 0.3329 Pred Loss: 0.2409 Var Loss: 0.0009 SW Loss: 0.0693 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0062
+1792296050.440 Epoch [1/9] Batch [1481/35978] LR: 0.000002 Loss: 0.3003 Pred Loss: 0.2134 Var Loss: 0.0006 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296054.798 Epoch [1/9] Batch [1491/35978] LR: 0.000002 Loss: 0.3322 Pred Loss: 0.2429 Var Loss: 0.0008 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792296058.747 Epoch [1/9] Batch [1501/35978] LR: 0.000002 Loss: 0.3123 Pred Loss: 0.2241 Var Loss: 0.0007 SW Loss: 0.0714 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296061.753 Epoch [1/9] Batch [1511/35978] LR: 0.000002 Loss: 0.3365 Pred Loss: 0.2504 Var Loss: 0.0006 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296064.766 Epoch [1/9] Batch [1521/35978] LR: 0.000002 Loss: 0.2975 Pred Loss: 0.2104 Var Loss: 0.0006 SW Loss: 0.0713 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296067.771 Epoch [1/9] Batch [1531/35978] LR: 0.000002 Loss: 0.3191 Pred Loss: 0.2263 Var Loss: 0.0009 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0063
+1792296070.776 Epoch [1/9] Batch [1541/35978] LR: 0.000002 Loss: 0.3200 Pred Loss: 0.2314 Var Loss: 0.0007 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0058
+1792296073.785 Epoch [1/9] Batch [1551/35978] LR: 0.000002 Loss: 0.3107 Pred Loss: 0.2220 Var Loss: 0.0008 SW Loss: 0.0694 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0058
+1792296076.800 Epoch [1/9] Batch [1561/35978] LR: 0.000002 Loss: 0.3145 Pred Loss: 0.2266 Var Loss: 0.0006 SW Loss: 0.0720 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296080.379 Epoch [1/9] Batch [1571/35978] LR: 0.000002 Loss: 0.2927 Pred Loss: 0.2064 Var Loss: 0.0006 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296084.701 Epoch [1/9] Batch [1581/35978] LR: 0.000002 Loss: 0.3120 Pred Loss: 0.2247 Var Loss: 0.0007 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0056
+1792296088.020 Epoch [1/9] Batch [1591/35978] LR: 0.000002 Loss: 0.3070 Pred Loss: 0.2189 Var Loss: 0.0007 SW Loss: 0.0702 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0055
+1792296091.023 Epoch [1/9] Batch [1601/35978] LR: 0.000002 Loss: 0.3201 Pred Loss: 0.2337 Var Loss: 0.0006 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296094.029 Epoch [1/9] Batch [1611/35978] LR: 0.000002 Loss: 0.3308 Pred Loss: 0.2441 Var Loss: 0.0007 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296097.030 Epoch [1/9] Batch [1621/35978] LR: 0.000002 Loss: 0.3256 Pred Loss: 0.2391 Var Loss: 0.0007 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792296100.031 Epoch [1/9] Batch [1631/35978] LR: 0.000002 Loss: 0.3429 Pred Loss: 0.2559 Var Loss: 0.0007 SW Loss: 0.0705 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296103.047 Epoch [1/9] Batch [1641/35978] LR: 0.000002 Loss: 0.3224 Pred Loss: 0.2358 Var Loss: 0.0006 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792296106.062 Epoch [1/9] Batch [1651/35978] LR: 0.000002 Loss: 0.2988 Pred Loss: 0.2132 Var Loss: 0.0006 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296110.351 Epoch [1/9] Batch [1661/35978] LR: 0.000002 Loss: 0.3152 Pred Loss: 0.2288 Var Loss: 0.0006 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296114.312 Epoch [1/9] Batch [1671/35978] LR: 0.000002 Loss: 0.3066 Pred Loss: 0.2207 Var Loss: 0.0006 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296117.318 Epoch [1/9] Batch [1681/35978] LR: 0.000002 Loss: 0.3152 Pred Loss: 0.2287 Var Loss: 0.0006 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296120.330 Epoch [1/9] Batch [1691/35978] LR: 0.000002 Loss: 0.3191 Pred Loss: 0.2341 Var Loss: 0.0006 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792296123.344 Epoch [1/9] Batch [1701/35978] LR: 0.000002 Loss: 0.3193 Pred Loss: 0.2324 Var Loss: 0.0006 SW Loss: 0.0713 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296126.355 Epoch [1/9] Batch [1711/35978] LR: 0.000002 Loss: 0.3016 Pred Loss: 0.2147 Var Loss: 0.0006 SW Loss: 0.0713 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296129.363 Epoch [1/9] Batch [1721/35978] LR: 0.000002 Loss: 0.3195 Pred Loss: 0.2343 Var Loss: 0.0006 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296132.373 Epoch [1/9] Batch [1731/35978] LR: 0.000002 Loss: 0.3000 Pred Loss: 0.2158 Var Loss: 0.0005 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296135.697 Epoch [1/9] Batch [1741/35978] LR: 0.000002 Loss: 0.2937 Pred Loss: 0.2086 Var Loss: 0.0006 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296139.909 Epoch [1/9] Batch [1751/35978] LR: 0.000002 Loss: 0.2989 Pred Loss: 0.2138 Var Loss: 0.0005 SW Loss: 0.0722 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296143.563 Epoch [1/9] Batch [1761/35978] LR: 0.000002 Loss: 0.3048 Pred Loss: 0.2173 Var Loss: 0.0007 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792296146.570 Epoch [1/9] Batch [1771/35978] LR: 0.000003 Loss: 0.3220 Pred Loss: 0.2350 Var Loss: 0.0006 SW Loss: 0.0711 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296149.577 Epoch [1/9] Batch [1781/35978] LR: 0.000003 Loss: 0.3138 Pred Loss: 0.2274 Var Loss: 0.0006 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296152.591 Epoch [1/9] Batch [1791/35978] LR: 0.000003 Loss: 0.3062 Pred Loss: 0.2204 Var Loss: 0.0006 SW Loss: 0.0714 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792296155.601 Epoch [1/9] Batch [1801/35978] LR: 0.000003 Loss: 0.3141 Pred Loss: 0.2280 Var Loss: 0.0006 SW Loss: 0.0720 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0044
+1792296158.609 Epoch [1/9] Batch [1811/35978] LR: 0.000003 Loss: 0.3088 Pred Loss: 0.2233 Var Loss: 0.0006 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296161.616 Epoch [1/9] Batch [1821/35978] LR: 0.000003 Loss: 0.3134 Pred Loss: 0.2261 Var Loss: 0.0007 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296166.103 Epoch [1/9] Batch [1831/35978] LR: 0.000003 Loss: 0.3037 Pred Loss: 0.2166 Var Loss: 0.0007 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0056
+1792296169.413 Epoch [1/9] Batch [1841/35978] LR: 0.000003 Loss: 0.3182 Pred Loss: 0.2316 Var Loss: 0.0007 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296172.954 Epoch [1/9] Batch [1851/35978] LR: 0.000003 Loss: 0.3273 Pred Loss: 0.2406 Var Loss: 0.0006 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792296175.951 Epoch [1/9] Batch [1861/35978] LR: 0.000003 Loss: 0.3256 Pred Loss: 0.2394 Var Loss: 0.0006 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296178.956 Epoch [1/9] Batch [1871/35978] LR: 0.000003 Loss: 0.3473 Pred Loss: 0.2612 Var Loss: 0.0006 SW Loss: 0.0701 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296181.961 Epoch [1/9] Batch [1881/35978] LR: 0.000003 Loss: 0.3142 Pred Loss: 0.2295 Var Loss: 0.0006 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296184.973 Epoch [1/9] Batch [1891/35978] LR: 0.000003 Loss: 0.3240 Pred Loss: 0.2378 Var Loss: 0.0006 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296187.980 Epoch [1/9] Batch [1901/35978] LR: 0.000003 Loss: 0.2875 Pred Loss: 0.2032 Var Loss: 0.0006 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0057
+1792296191.624 Epoch [1/9] Batch [1911/35978] LR: 0.000003 Loss: 0.3089 Pred Loss: 0.2260 Var Loss: 0.0005 SW Loss: 0.0714 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296195.270 Epoch [1/9] Batch [1921/35978] LR: 0.000003 Loss: 0.3233 Pred Loss: 0.2388 Var Loss: 0.0006 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296198.623 Epoch [1/9] Batch [1931/35978] LR: 0.000003 Loss: 0.3175 Pred Loss: 0.2327 Var Loss: 0.0006 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792296201.958 Epoch [1/9] Batch [1941/35978] LR: 0.000003 Loss: 0.3111 Pred Loss: 0.2258 Var Loss: 0.0006 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296204.963 Epoch [1/9] Batch [1951/35978] LR: 0.000003 Loss: 0.3015 Pred Loss: 0.2184 Var Loss: 0.0005 SW Loss: 0.0713 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296207.957 Epoch [1/9] Batch [1961/35978] LR: 0.000003 Loss: 0.3098 Pred Loss: 0.2238 Var Loss: 0.0006 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296210.953 Epoch [1/9] Batch [1971/35978] LR: 0.000003 Loss: 0.2942 Pred Loss: 0.2111 Var Loss: 0.0005 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296213.947 Epoch [1/9] Batch [1981/35978] LR: 0.000003 Loss: 0.2982 Pred Loss: 0.2140 Var Loss: 0.0005 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296216.942 Epoch [1/9] Batch [1991/35978] LR: 0.000003 Loss: 0.2954 Pred Loss: 0.2122 Var Loss: 0.0005 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296221.534 Epoch [1/9] Batch [2001/35978] LR: 0.000003 Loss: 0.3230 Pred Loss: 0.2367 Var Loss: 0.0006 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296224.850 Epoch [1/9] Batch [2011/35978] LR: 0.000003 Loss: 0.3079 Pred Loss: 0.2237 Var Loss: 0.0006 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0054
+1792296227.843 Epoch [1/9] Batch [2021/35978] LR: 0.000003 Loss: 0.3070 Pred Loss: 0.2235 Var Loss: 0.0005 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296231.183 Epoch [1/9] Batch [2031/35978] LR: 0.000003 Loss: 0.3231 Pred Loss: 0.2377 Var Loss: 0.0006 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296234.190 Epoch [1/9] Batch [2041/35978] LR: 0.000003 Loss: 0.2962 Pred Loss: 0.2123 Var Loss: 0.0005 SW Loss: 0.0713 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296237.200 Epoch [1/9] Batch [2051/35978] LR: 0.000003 Loss: 0.2986 Pred Loss: 0.2160 Var Loss: 0.0005 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296240.218 Epoch [1/9] Batch [2061/35978] LR: 0.000003 Loss: 0.3245 Pred Loss: 0.2404 Var Loss: 0.0005 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296243.242 Epoch [1/9] Batch [2071/35978] LR: 0.000003 Loss: 0.3170 Pred Loss: 0.2317 Var Loss: 0.0006 SW Loss: 0.0705 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296247.075 Epoch [1/9] Batch [2081/35978] LR: 0.000003 Loss: 0.3090 Pred Loss: 0.2226 Var Loss: 0.0007 SW Loss: 0.0698 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0060
+1792296251.007 Epoch [1/9] Batch [2091/35978] LR: 0.000003 Loss: 0.3382 Pred Loss: 0.2507 Var Loss: 0.0007 SW Loss: 0.0696 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0063
+1792296254.477 Epoch [1/9] Batch [2101/35978] LR: 0.000003 Loss: 0.3058 Pred Loss: 0.2216 Var Loss: 0.0005 SW Loss: 0.0711 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296257.477 Epoch [1/9] Batch [2111/35978] LR: 0.000003 Loss: 0.2975 Pred Loss: 0.2120 Var Loss: 0.0005 SW Loss: 0.0722 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0043
+1792296260.791 Epoch [1/9] Batch [2121/35978] LR: 0.000003 Loss: 0.3079 Pred Loss: 0.2244 Var Loss: 0.0005 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296263.776 Epoch [1/9] Batch [2131/35978] LR: 0.000003 Loss: 0.3038 Pred Loss: 0.2200 Var Loss: 0.0005 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296266.758 Epoch [1/9] Batch [2141/35978] LR: 0.000003 Loss: 0.3200 Pred Loss: 0.2347 Var Loss: 0.0006 SW Loss: 0.0697 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296269.748 Epoch [1/9] Batch [2151/35978] LR: 0.000003 Loss: 0.3161 Pred Loss: 0.2317 Var Loss: 0.0005 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296272.735 Epoch [1/9] Batch [2161/35978] LR: 0.000003 Loss: 0.3208 Pred Loss: 0.2371 Var Loss: 0.0005 SW Loss: 0.0715 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296277.284 Epoch [1/9] Batch [2171/35978] LR: 0.000003 Loss: 0.2950 Pred Loss: 0.2124 Var Loss: 0.0005 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296280.943 Epoch [1/9] Batch [2181/35978] LR: 0.000003 Loss: 0.2955 Pred Loss: 0.2115 Var Loss: 0.0005 SW Loss: 0.0720 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296283.933 Epoch [1/9] Batch [2191/35978] LR: 0.000003 Loss: 0.2983 Pred Loss: 0.2150 Var Loss: 0.0005 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792296286.925 Epoch [1/9] Batch [2201/35978] LR: 0.000003 Loss: 0.2966 Pred Loss: 0.2141 Var Loss: 0.0005 SW Loss: 0.0707 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0047
+1792296290.244 Epoch [1/9] Batch [2211/35978] LR: 0.000003 Loss: 0.3041 Pred Loss: 0.2218 Var Loss: 0.0005 SW Loss: 0.0709 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296293.247 Epoch [1/9] Batch [2221/35978] LR: 0.000003 Loss: 0.2887 Pred Loss: 0.2051 Var Loss: 0.0005 SW Loss: 0.0703 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296296.250 Epoch [1/9] Batch [2231/35978] LR: 0.000003 Loss: 0.2990 Pred Loss: 0.2158 Var Loss: 0.0005 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0050
+1792296299.254 Epoch [1/9] Batch [2241/35978] LR: 0.000003 Loss: 0.2949 Pred Loss: 0.2105 Var Loss: 0.0005 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0053
+1792296302.897 Epoch [1/9] Batch [2251/35978] LR: 0.000003 Loss: 0.2963 Pred Loss: 0.2128 Var Loss: 0.0005 SW Loss: 0.0700 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296306.826 Epoch [1/9] Batch [2261/35978] LR: 0.000003 Loss: 0.2927 Pred Loss: 0.2107 Var Loss: 0.0004 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296310.135 Epoch [1/9] Batch [2271/35978] LR: 0.000003 Loss: 0.3104 Pred Loss: 0.2276 Var Loss: 0.0005 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0044
+1792296313.134 Epoch [1/9] Batch [2281/35978] LR: 0.000003 Loss: 0.3129 Pred Loss: 0.2303 Var Loss: 0.0004 SW Loss: 0.0714 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296316.132 Epoch [1/9] Batch [2291/35978] LR: 0.000003 Loss: 0.3014 Pred Loss: 0.2192 Var Loss: 0.0004 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296319.461 Epoch [1/9] Batch [2301/35978] LR: 0.000003 Loss: 0.2855 Pred Loss: 0.2039 Var Loss: 0.0004 SW Loss: 0.0714 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296322.466 Epoch [1/9] Batch [2311/35978] LR: 0.000003 Loss: 0.3059 Pred Loss: 0.2228 Var Loss: 0.0005 SW Loss: 0.0705 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296325.464 Epoch [1/9] Batch [2321/35978] LR: 0.000003 Loss: 0.3102 Pred Loss: 0.2272 Var Loss: 0.0005 SW Loss: 0.0711 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296329.095 Epoch [1/9] Batch [2331/35978] LR: 0.000003 Loss: 0.3055 Pred Loss: 0.2185 Var Loss: 0.0007 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0056
+1792296332.716 Epoch [1/9] Batch [2341/35978] LR: 0.000003 Loss: 0.2909 Pred Loss: 0.2079 Var Loss: 0.0005 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296336.650 Epoch [1/9] Batch [2351/35978] LR: 0.000003 Loss: 0.2908 Pred Loss: 0.2087 Var Loss: 0.0004 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296339.652 Epoch [1/9] Batch [2361/35978] LR: 0.000003 Loss: 0.2919 Pred Loss: 0.2096 Var Loss: 0.0004 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296342.654 Epoch [1/9] Batch [2371/35978] LR: 0.000003 Loss: 0.3327 Pred Loss: 0.2482 Var Loss: 0.0006 SW Loss: 0.0699 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0059
+1792296345.657 Epoch [1/9] Batch [2381/35978] LR: 0.000003 Loss: 0.2957 Pred Loss: 0.2135 Var Loss: 0.0004 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296348.994 Epoch [1/9] Batch [2391/35978] LR: 0.000003 Loss: 0.3104 Pred Loss: 0.2287 Var Loss: 0.0004 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0043
+1792296352.001 Epoch [1/9] Batch [2401/35978] LR: 0.000003 Loss: 0.2907 Pred Loss: 0.2083 Var Loss: 0.0004 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296354.997 Epoch [1/9] Batch [2411/35978] LR: 0.000003 Loss: 0.3199 Pred Loss: 0.2376 Var Loss: 0.0005 SW Loss: 0.0704 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0052
+1792296358.964 Epoch [1/9] Batch [2421/35978] LR: 0.000003 Loss: 0.2991 Pred Loss: 0.2173 Var Loss: 0.0004 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0045
+1792296362.902 Epoch [1/9] Batch [2431/35978] LR: 0.000003 Loss: 0.3042 Pred Loss: 0.2227 Var Loss: 0.0004 SW Loss: 0.0706 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0049
+1792296366.212 Epoch [1/9] Batch [2441/35978] LR: 0.000003 Loss: 0.2860 Pred Loss: 0.2047 Var Loss: 0.0004 SW Loss: 0.0712 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0046
+1792296369.216 Epoch [1/9] Batch [2451/35978] LR: 0.000003 Loss: 0.3006 Pred Loss: 0.2183 Var Loss: 0.0004 SW Loss: 0.0713 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0048
+1792296372.219 Epoch [1/9] Batch [2461/35978] LR: 0.000003 Loss: 0.2917 Pred Loss: 0.2111 Var Loss: 0.0004 SW Loss: 0.0708 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0043
+1792296375.220 Epoch [1/9] Batch [2471/35978] LR: 0.000003 Loss: 0.3092 Pred Loss: 0.2267 Var Loss: 0.0005 SW Loss: 0.0710 Probe Loss: 0.0000 Probe Acc: 1.0000 Router Loss: 0.0051
+1792296377.229 W1018 04:06:17.213000 200514 site-packages/torch/distributed/elastic/agent/server/api.py:753] Received 15 death signal, shutting down workers
+1792296377.243 W1018 04:06:17.240000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200620 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.241000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200621 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.241000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200622 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.241000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200623 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.242000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200624 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.242000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200625 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.243000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200626 closing signal SIGTERM
+1792296377.243 W1018 04:06:17.243000 200514 site-packages/torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 200628 closing signal SIGTERM
+1792296380.422 Traceback (most recent call last):
+1792296380.422   File "/raid/home/paragdutta/miniconda3/envs/dl/bin/accelerate", line 6, in <module>
+1792296380.422     sys.exit(main())
+1792296380.422              ^^^^^^
+1792296380.422   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+1792296380.422     args.func(args)
+1792296380.422   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/accelerate/commands/launch.py", line 1404, in launch_command
+1792296380.423     multi_gpu_launcher(args)
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/accelerate/commands/launch.py", line 1029, in multi_gpu_launcher
+1792296380.423     distrib_run.run(args)
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/run.py", line 1129, in run
+1792296380.423     elastic_launch(
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 197, in __call__
+1792296380.423     return launch_agent(
+1792296380.423            ^^^^^^^^^^^^^
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 377, in launch_agent
+1792296380.423     result = agent.run()
+1792296380.423              ^^^^^^^^^^^
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+1792296380.423     result = f(*args, **kwargs)
+1792296380.423              ^^^^^^^^^^^^^^^^^^
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/elastic/agent/server/api.py", line 745, in run
+1792296380.423     result = self._invoke_run(role)
+1792296380.423              ^^^^^^^^^^^^^^^^^^^^^^
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/elastic/agent/server/api.py", line 923, in _invoke_run
+1792296380.423     time.sleep(monitor_interval)
+1792296380.423   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+1792296380.424     raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+1792296380.424 torch.distributed.elastic.multiprocessing.api.SignalException: Process 200514 got signal: 15
+ROBOT_9EP_EXIT=1
