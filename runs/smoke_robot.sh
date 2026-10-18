@@ -26,6 +26,7 @@ accelerate launch --num_processes 8 pretrain.py \
   --max_steps 12 --save_interval 99 --save_dir /tmp/robot_smoke_ckpt \
   --log_interval 1 --run_name "" \
   2>&1 | python3 "$(pwd)/runs/tsline.py" >> runs/robot_smoke.log
+RC=${PIPESTATUS[0]}
 kill $VRAM_PID 2>/dev/null
 echo "SMOKE_EXIT=${RC}" >> runs/robot_smoke.log
 exit $RC
