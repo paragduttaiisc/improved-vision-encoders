@@ -6,6 +6,8 @@
 repo=/raid/home/paragdutta/Codes/improved-vision-encoders
 cd $repo
 log=/tmp/switch_7to8.log
+# idempotency: refuse if a switch already completed
+[ -f /tmp/switch_7to8_done ] && { echo "already switched (marker present)"; exit 0; }
 {
 echo "=== switch start $(date -u +%FT%TZ) ==="
 
@@ -95,8 +97,8 @@ done
 if [ $ok -eq 1 ]; then
   echo "HEALTH OK: first loss lines:"
   grep "Loss:" runs/robot_9ep.log | head -3
-  mem=$(nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader | tr '\n' '; ')
-  echo "GPU mem/util: $mem"
+  nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader | tr '\n' '; '; echo
+  date -u +%FT%TZ > /tmp/switch_7to8_done
   echo "SWITCH_OK"
 else
   echo "HEALTH TIMEOUT: no loss line in 20 min (may still be initializing; check log)"; tail -10 runs/robot_9ep.log
