@@ -1,6 +1,9 @@
 import math
 import os
 import argparse
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import torch, torch.nn.functional as F, torch.optim as optim
 from accelerate import Accelerator
 from accelerate.utils import DistributedDataParallelKwargs
@@ -78,6 +81,34 @@ def _load_into(path, raw, label, interpolate):
     return not missing
 
 
+def save_recon_grid(original, masked, reconstruction, out_path, n=12):
+    """Save an Original / Masked-Input / Reconstruction grid image to disk.
+
+    original/masked/reconstruction: [B,3,H,W] float tensors in display
+    space (0..1). Each sample occupies one row: [original, masked, recon].
+    """
+    n = min(n, original.shape[0])
+    rows = (n + 2) // 3
+    fig, axes = plt.subplots(rows, 3, figsize=(6.0, 6.0 * rows))
+    if rows == 1:
+        axes = axes[None, :]
+    titles = ["Original", "Masked Input", "Reconstruction"]
+    for i in range(n):
+        r, c = divmod(i, 3)
+        for j, im in enumerate([original[i], masked[i], reconstruction[i]]):
+            ax = axes[r, j]
+            ax.imshow(im.permute(1, 2, 0).detach().cpu().numpy())
+            if r == 0:
+                ax.set_title(titles[j], fontsize=9)
+            ax.axis("off")
+    for i in range(n, rows * 3):
+        r, c = divmod(i, 3)
+        axes[r, c].axis("off")
+    plt.tight_layout()
+    fig.savefig(out_path, dpi=100)
+    plt.close(fig)
+
+
 def _resume_from_checkpoint(ckpt_dir, args, encoder, decoder, probe,
                             optimizer, probe_optimizer):
     """Continue training from an accelerate checkpoint directory.
@@ -107,7 +138,8 @@ def _resume_from_checkpoint(ckpt_dir, args, encoder, decoder, probe,
           f"(image_size={args.image_size})")
     enc_ok = _load_into(enc_p, _raw_module(encoder), "encoder", True)
     dec_ok = _load_into(dec_p, _raw_module(decoder), "decoder", True)
-    prb_ok = _load_into(prb_p, probe, "probe", False)
+    prb_ok = (_load_into(prb_p, probe, "probe", False)
+              if probe is not None else True)
     # The main optimizer is deliberately NOT resumed. Stage-1 ran with a
     # different LR regime (peak 2e-4 vs stage-2 peak 5e-5, fresh warmup) on
     # a different dataset, so ImageNet's AdamW momentum is not useful for the
@@ -124,7 +156,10 @@ def _resume_from_checkpoint(ckpt_dir, args, encoder, decoder, probe,
     else:
         print("[resume] WARNING: encoder/decoder did not fully load; "
               "main optimizer starts fresh (no state loaded)")
-    if prb_ok:
+    if probe is None:
+        print("[resume] probe disabled (--no_probe): probe weights and "
+              "probe optimizer not loaded")
+    elif prb_ok:
         popt_p = os.path.join(ckpt_dir, "optimizer_1.bin")
         if os.path.isfile(popt_p):
             probe_optimizer.load_state_dict(torch.load(popt_p,
@@ -193,9 +228,16 @@ def main(args: argparse.Namespace) -> None:
     encoder.compile()
     decoder.compile()
     
-    probe = torch.nn.Linear(args.n_embed, args.n_classes)
-    torch.nn.init.trunc_normal_(probe.weight, std=0.02)
-    torch.nn.init.zeros_(probe.bias)
+    if args.no_probe:
+        # Probe CODE is fully retained; --no_probe only blocks its
+        # execution. Robot data has no class concept so the probe is
+        # skipped there; ImageNet runs (without the flag) are unchanged.
+        probe = None
+        print("[probe] disabled via --no_probe: not built, not trained")
+    else:
+        probe = torch.nn.Linear(args.n_embed, args.n_classes)
+        torch.nn.init.trunc_normal_(probe.weight, std=0.02)
+        torch.nn.init.zeros_(probe.bias)
     
     decay = []
     no_decay = []
@@ -212,9 +254,12 @@ def main(args: argparse.Namespace) -> None:
         {"params": decay, "weight_decay": args.weight_decay},
         {"params": no_decay, "weight_decay": 0.0},
     ], lr=args.lr, betas=(0.9, 0.95), fused=torch.cuda.is_available())
-    probe_optimizer = optim.AdamW(
-        probe.parameters(), lr=args.probe_lr,
-        betas=(0.9, 0.95), weight_decay=0.0)
+    if args.no_probe:
+        probe_optimizer = None
+    else:
+        probe_optimizer = optim.AdamW(
+            probe.parameters(), lr=args.probe_lr,
+            betas=(0.9, 0.95), weight_decay=0.0)
 
     # steps_per_epoch: per-rank DDP step count. Use ceil (not floor) so the
     # schedule milestones do not fire 1 step early. len(train_loader) is the
@@ -252,7 +297,10 @@ def main(args: argparse.Namespace) -> None:
     accelerator.print(f"Val loader: {hrn(len(val_loader.dataset))} samples") # type: ignore
     accelerator.print(f"Encoder params: {hrn(get_param_count(encoder))}")
     accelerator.print(f"Decoder params: {hrn(get_param_count(decoder))}")
-    accelerator.print(f"Probe params: {hrn(get_param_count(probe))}")
+    if args.no_probe:
+        accelerator.print("Probe params: 0 (disabled via --no_probe)")
+    else:
+        accelerator.print(f"Probe params: {hrn(get_param_count(probe))}")
 
     if args.resume:
         _resume_from_checkpoint(
@@ -268,10 +316,16 @@ def main(args: argparse.Namespace) -> None:
         accelerator.print(
             f"[resume] main-optimizer LR re-synced to the fresh scheduler "
             f"(step-0 value {optimizer.param_groups[0]['lr']:.6g})")
-    encoder, decoder, probe, optimizer, probe_optimizer, train_loader,\
-        val_loader = accelerator.prepare(
-            encoder, decoder, probe, optimizer,
-            probe_optimizer, train_loader, val_loader)
+    if args.no_probe:
+        encoder, decoder, optimizer, train_loader, val_loader = \
+            accelerator.prepare(encoder, decoder, optimizer,
+                                train_loader, val_loader)
+        probe, probe_optimizer = None, None
+    else:
+        encoder, decoder, probe, optimizer, probe_optimizer, train_loader,\
+            val_loader = accelerator.prepare(
+                encoder, decoder, probe, optimizer,
+                probe_optimizer, train_loader, val_loader)
 
     if is_robot:
         norm_mean_dev = norm_mean.to(accelerator.device)
@@ -282,7 +336,8 @@ def main(args: argparse.Namespace) -> None:
     for epoch in range(1, args.num_epochs + 1):
         encoder.train()
         decoder.train()
-        probe.train()
+        if not args.no_probe:
+            probe.train()
         for batch_idx, (imgs, labels) in enumerate(train_loader):
             if is_robot:
                 imgs = normalize_batch(imgs, labels,
@@ -320,19 +375,23 @@ def main(args: argparse.Namespace) -> None:
             optimizer.step()
             scheduler.step()
 
-            encoder.eval()
-            with torch.no_grad():
-                latents, _ = encoder(patches)
-                features = latents.mean(dim=1).detach()
-            encoder.train()
-            logits = probe(features)
-            probe_loss = F.cross_entropy(logits, labels)
-            probe_optimizer.zero_grad()
-            accelerator.backward(probe_loss)
-            probe_optimizer.step()
-            preds = logits.argmax(dim=-1)
-            preds, labels = accelerator.gather_for_metrics((preds, labels))
-            acc = (preds == labels).sum().item() / len(labels)
+            if args.no_probe:
+                probe_loss = torch.zeros((), device=accelerator.device)
+                acc = 0.0
+            else:
+                encoder.eval()
+                with torch.no_grad():
+                    latents, _ = encoder(patches)
+                    features = latents.mean(dim=1).detach()
+                encoder.train()
+                logits = probe(features)
+                probe_loss = F.cross_entropy(logits, labels)
+                probe_optimizer.zero_grad()
+                accelerator.backward(probe_loss)
+                probe_optimizer.step()
+                preds = logits.argmax(dim=-1)
+                preds, labels = accelerator.gather_for_metrics((preds, labels))
+                acc = (preds == labels).sum().item() / len(labels)
 
             model = accelerator.unwrap_model(encoder)
             if model.layers[0].channel_mixer.last_load is not None:
@@ -352,19 +411,24 @@ def main(args: argparse.Namespace) -> None:
                 load_logs[f"expert_{i}_importance"] = avg_importance[i].item()
 
             global_step = (epoch - 1) * len(train_loader) + batch_idx
-            accelerator.log({
+            _train_metrics = {
                 "train/epoch": (epoch-1) + (batch_idx + 1) / len(train_loader),
                 "train/lr": optimizer.param_groups[0]["lr"],
                 "train/loss": loss.item(),
                 "train/pred_loss": pred_loss.item(),
                 "train/var_loss": var_loss.item(),
                 "train/sw_loss": sw_loss.item(),
-                "train/probe_loss": probe_loss.item(),
-                "train/probe_acc": acc,
                 "train/router_loss": router_loss.item() if router_loss is not None else 0.0,
                 **load_logs
-            }, step=global_step)
+            }
+            if not args.no_probe:
+                _train_metrics["train/probe_loss"] = probe_loss.item()
+                _train_metrics["train/probe_acc"] = acc
+            accelerator.log(_train_metrics, step=global_step)
             if batch_idx % args.log_interval == 0:
+                _probe_str = (f" Probe Loss: {probe_loss.item():.4f}"
+                              f" Probe Acc: {acc:.4f}"
+                              if not args.no_probe else "")
                 accelerator.print(
                     f"Epoch [{epoch}/{args.num_epochs}]"
                     f" Batch [{batch_idx + 1}/{len(train_loader)}]"
@@ -373,8 +437,7 @@ def main(args: argparse.Namespace) -> None:
                     f" Pred Loss: {pred_loss.item():.4f}"
                     f" Var Loss: {var_loss.item():.4f}"
                     f" SW Loss: {sw_loss.item():.4f}"
-                    f" Probe Loss: {probe_loss.item():.4f}"
-                    f" Probe Acc: {acc:.4f}"
+                    f"{_probe_str}"
                     f" Router Loss: {router_loss.item() if router_loss is not None else 0.0:.4f}"
                 )
             if args.max_steps and global_step + 1 >= args.max_steps:
@@ -398,12 +461,17 @@ def main(args: argparse.Namespace) -> None:
         
         encoder.eval()
         decoder.eval()
-        probe.eval()
+        if not args.no_probe:
+            probe.eval()
         total_loss, total_mse, total_mae, total_psnr = 0.0, 0.0, 0.0, 0.0
         total_pred_loss, total_var_loss, total_sw_loss = 0.0, 0.0, 0.0
         total_correct_1, total_correct_5, total_correct_10 = 0, 0, 0
         with torch.no_grad():
+            _max_val_batches = (args.val_samples_max // len(val_loader) + 1) \
+                if args.val_samples_max > 0 else None
             for batch_idx, (imgs, labels) in enumerate(val_loader):
+                if _max_val_batches is not None and batch_idx >= _max_val_batches:
+                    break
                 if is_robot:
                     imgs = normalize_batch(imgs, labels,
                                            norm_mean_dev, norm_std_dev)
@@ -441,6 +509,17 @@ def main(args: argparse.Namespace) -> None:
                         mean=s_mean, std=s_std)
                     fig = visualize(targets, masked_inputs, preds)
                     accelerator.log({"visualization": fig}, step=global_step)
+                    # On-disk reconstruction grid: auto-enabled for
+                    # --no_probe (robot) runs; opt-in elsewhere.
+                    if (args.save_recon or args.no_probe) and args.output_dir:
+                        os.makedirs(args.output_dir, exist_ok=True)
+                        _gpath = os.path.join(
+                            args.output_dir,
+                            f"recon_epoch{epoch}_valbatch{batch_idx}.png")
+                        save_recon_grid(targets, masked_inputs, preds, _gpath)
+                        accelerator.print(
+                            f"[recon] epoch {epoch} val-batch {batch_idx}"
+                            f" -> {_gpath}")
                 pred_loss = (pred_loss * mask).sum() / mask.sum()
                 var_loss = variance_loss_fn(latents)
                 sw_loss = sliced_wasserstein_loss_fn(latents)
@@ -454,16 +533,17 @@ def main(args: argparse.Namespace) -> None:
                 mae = F.l1_loss(preds, targets)
                 psnr = -10 * torch.log10(mse)
 
-                latents, _ = encoder(patches)
-                logits = probe(latents.mean(dim=1).detach())
-                logits, labels = accelerator.gather_for_metrics((logits, labels))
-                total_correct_1 +=\
-                    (logits.argmax(dim=-1) == labels).sum().item()
-                labels = labels.unsqueeze(-1)
-                total_correct_5 +=\
-                    (logits.topk(5, dim=-1).indices == labels).sum().item()
-                total_correct_10 +=\
-                    (logits.topk(10, dim=-1).indices == labels).sum().item()
+                if not args.no_probe:
+                    latents, _ = encoder(patches)
+                    logits = probe(latents.mean(dim=1).detach())
+                    logits, labels = accelerator.gather_for_metrics((logits, labels))
+                    total_correct_1 +=\
+                        (logits.argmax(dim=-1) == labels).sum().item()
+                    labels = labels.unsqueeze(-1)
+                    total_correct_5 +=\
+                        (logits.topk(5, dim=-1).indices == labels).sum().item()
+                    total_correct_10 +=\
+                        (logits.topk(10, dim=-1).indices == labels).sum().item()
 
                 total_pred_loss += pred_loss.item()
                 total_var_loss += var_loss.item()
@@ -479,10 +559,11 @@ def main(args: argparse.Namespace) -> None:
         val_mse = total_mse / len(val_loader)
         val_mae = total_mae / len(val_loader)
         val_psnr = total_psnr / len(val_loader)
-        correct_1 = total_correct_1 / len(val_loader.dataset)
-        correct_5 = total_correct_5 / len(val_loader.dataset)
-        correct_10 = total_correct_10 / len(val_loader.dataset)
-        accelerator.log({
+        _n_val_ds = len(val_loader.dataset)
+        correct_1 = total_correct_1 / _n_val_ds if not args.no_probe else 0.0
+        correct_5 = total_correct_5 / _n_val_ds if not args.no_probe else 0.0
+        correct_10 = total_correct_10 / _n_val_ds if not args.no_probe else 0.0
+        _val_metrics = {
             "val/pred_loss": val_pred_loss,
             "val/var_loss": val_var_loss,
             "val/sw_loss": val_sw_loss,
@@ -490,11 +571,15 @@ def main(args: argparse.Namespace) -> None:
             "val/mse": val_mse,
             "val/rmse": math.sqrt(val_mse),
             "val/mae": val_mae,
-            "val/psnr": val_psnr,
-            "val/acc@1": correct_1,
-            "val/acc@5": correct_5,
-            "val/acc@10": correct_10
-        }, step=global_step)
+            "val/psnr": val_psnr
+        }
+        if not args.no_probe:
+            _val_metrics.update({
+                "val/acc@1": correct_1,
+                "val/acc@5": correct_5,
+                "val/acc@10": correct_10
+            })
+        accelerator.log(_val_metrics, step=global_step)
         
         accelerator.print(
             f"Epoch [{epoch}/{args.num_epochs}]"
@@ -505,11 +590,12 @@ def main(args: argparse.Namespace) -> None:
             f" Average Val MSE: {val_mse:.6f}"
             f" Average Val RMSE: {math.sqrt(val_mse):.4f}"
             f" Average Val MAE: {val_mae:.4f}"
-            f" Average Val PSNR: {val_psnr:.2f} dB"
-            f" Average Val Acc@1: {correct_1:.4f}"
-            f" Average Val Acc@5: {correct_5:.4f}"
-            f" Average Val Acc@10: {correct_10:.4f}"
-        )
+            f" Average Val PSNR: {val_psnr:.2f} dB")
+        if not args.no_probe:
+            accelerator.print(
+                f" Average Val Acc@1: {correct_1:.4f}"
+                f" Average Val Acc@5: {correct_5:.4f}"
+                f" Average Val Acc@10: {correct_10:.4f}")
     # Final checkpoint: persist the finished model after the last epoch's
     # validation. With --save_interval 1, the per-epoch saves at each epoch
     # START cover epochs 1..N-1; this final save covers the end of epoch N.
@@ -541,6 +627,18 @@ if __name__ == "__main__":
     parser.add_argument('--decoder_n_layers', type=int, default=6)
     parser.add_argument('--dropout', type=float, default=0.05)
     parser.add_argument('--n_classes', type=int, default=8)
+    parser.add_argument('--no_probe', action='store_true',
+                        help='optionally block probe execution (robot data '
+                             'has no class concept). Probe code is retained; '
+                             'build/train/eval are skipped. Default: probe runs '
+                             '(ImageNet behavior unchanged).')
+    parser.add_argument('--save_recon', action='store_true',
+                        help='save a reconstruction image grid to output_dir '
+                             'at each validation start (auto-enabled when '
+                             '--no_probe is set)')
+    parser.add_argument('--val_samples_max', type=int, default=0,
+                        help='cap validation to this many samples '
+                             '(0 = full val set)')
     parser.add_argument('--n_workers', type=int, default=8)
     parser.add_argument('--num_epochs', type=int, default=500)
     parser.add_argument('--warmup_epochs', type=int, default=10)

@@ -8,7 +8,7 @@
 # Fresh LR schedule (NOT the stage-1 scheduler):
 #   --lr 5e-5  -> 1 epoch linear warmup 5e-8 -> 5e-5,
 #                 cosine 5e-5 -> 2.5e-6 (= lr/20) over the remaining 8 epochs.
-# Probe keeps its own fresh --probe_lr 6e-3 (new 8-class head).
+# Probe: DISABLED for robot runs (--no_probe; no class concept in robot data).
 #
 # Checkpoints: per-epoch (save_interval 1) at end of each epoch's training
 #   -> models/mae_moe_robot_9ep/checkpoint_epoch_{1..9} (~5.5 GB each),
@@ -35,9 +35,9 @@ mkdir -p runs models/mae_moe_robot_9ep
 accelerate launch --num_processes 8 pretrain.py \
   --data_dir data --image_size 256 --n_classes 8 \
   --batch_size 400 --n_workers 8 \
-  --lr 5e-5 --probe_lr 6e-3 \
+  --lr 5e-5 --probe_lr 6e-3 --no_probe \
   --num_epochs 9 --warmup_epochs 1 --last_decay_epoch 9 \
-  --save_interval 1 \
+  --save_interval 1 --val_samples_max 4000 \
   --resume models/mae_moe_imagenet_100ep/checkpoint \
   --save_dir models/mae_moe_robot_9ep --output_dir outputs \
   --run_name mae_moe_robot_9ep \
