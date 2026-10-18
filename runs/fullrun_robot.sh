@@ -1,7 +1,7 @@
 #!/bin/bash
 # Full 9-epoch continue-pretrain on the robot dataset, resuming the
 # ImageNet 100-ep checkpoint (epoch-90-start save, 89 clean epochs).
-# 8-GPU DDP, wandb on, per-GPU batch 420 (=3360 global), image_size 256.
+# 8-GPU DDP, wandb on, per-GPU batch 400 (=3200 global), image_size 256.
 # NOTE: --batch_size in this codebase is PER-GPU (dataloader.py uses it as-is);
 # 420 x 8 = 3360 global (448 OOMed under 8-GPU DDP at batch 1: single-GPU peak 39.46GB left only ~58MB for NCCL buffers; 420 verified 12 clean DDP steps, 0 OOM). LR stays 5e-5 peak per user choice (conservative at this batch).
 #
@@ -22,6 +22,7 @@ source /raid/home/paragdutta/miniconda3/etc/profile.d/conda.sh
 conda activate dl
 cd /raid/home/paragdutta/Codes/improved-vision-encoders
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 mkdir -p runs models/mae_moe_robot_9ep
 
 {
@@ -33,7 +34,7 @@ mkdir -p runs models/mae_moe_robot_9ep
 
 accelerate launch --num_processes 8 pretrain.py \
   --data_dir data --image_size 256 --n_classes 8 \
-  --batch_size 420 --n_workers 8 \
+  --batch_size 400 --n_workers 8 \
   --lr 5e-5 --probe_lr 6e-3 \
   --num_epochs 9 --warmup_epochs 1 --last_decay_epoch 9 \
   --save_interval 1 \
