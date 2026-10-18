@@ -6,6 +6,8 @@
 # Uses --start_epoch N+1 so the 8-GPU phase continues at epoch N+1 with the
 # LR scheduler fast-forwarded (no re-warmup, no clobbering 7-GPU ckpts).
 set -u
+source /raid/home/paragdutta/miniconda3/etc/profile.d/conda.sh
+conda activate dl
 repo=/raid/home/paragdutta/Codes/improved-vision-encoders
 cd $repo
 log=/tmp/switch_7to8.log
