@@ -2,7 +2,7 @@
 # Full 9-epoch continue-pretrain on the robot dataset, resuming the
 # ImageNet 100-ep checkpoint (epoch-90-start save, 89 clean epochs).
 # 7-GPU DDP phase (GPU0 held by nikhils): CUDA_VISIBLE_DEVICES=1-7,
-# num_processes 7, per-GPU batch 448 (=3136 global), image_size 256.
+# num_processes 7, per-GPU batch 416 (=2912 global), image_size 256.
 # DDP-verified 105+ clean steps, 0 OOM (peak ~39.9GB/GPU -- tight but stable).
 # NOTE: --batch_size in this codebase is PER-GPU (dataloader.py uses it as-is).
 # LR stays 5e-5 peak per user choice.
@@ -48,7 +48,7 @@ mkdir -p runs models/mae_moe_robot_9ep
 
 accelerate launch --num_processes 7 pretrain.py \
   --data_dir data --image_size 256 --n_classes 8 \
-  --batch_size 448 --n_workers 8 \
+  --batch_size 416 --n_workers 8 \
   --lr 5e-5 --probe_lr 6e-3 --no_probe \
   --num_epochs 9 --warmup_epochs 1 --last_decay_epoch 9 \
   --save_interval 1 --val_samples_max 4000 \
