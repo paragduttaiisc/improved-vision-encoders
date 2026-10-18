@@ -1,0 +1,404 @@
+1792284318.565 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284318.565 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284318.565 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284319.858 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284319.858 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284319.858 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284319.860 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284319.860 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284319.860 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284319.935 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284319.935 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284319.935 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284319.947 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284319.947 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284319.947 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284319.953 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284319.953 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284319.953 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284320.010 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284320.010 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284320.010 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284320.016 [data] robot datasets: ['bc_z', 'bridge', 'custom_robot', 'freiburg_play', 'furniture_bench', 'maniskill', 'qt-opt', 'rt-1']
+1792284320.016 [data] norm stats: mean=[[0.3687555193901062, 0.26286324858665466, 0.17202800512313843], [0.47951528429985046, 0.40112394094467163, 0.36238813400268555], [0.60395348072052, 0.5630027055740356, 0.5527175068855286], [0.5622652769088745, 0.5580712556838989, 0.5355653166770935], [0.40216317772865295, 0.47076964378356934, 0.429530531167984], [0.30758944153785706, 0.33179405331611633, 0.3723926544189453], [0.46867504715919495, 0.47808390855789185, 0.4532451927661896], [0.3891378939151764, 0.2845657169818878, 0.20230796933174133]]
+1792284320.016 [data] norm stats: std=[[0.2707708775997162, 0.2003919929265976, 0.15117938816547394], [0.2592860162258148, 0.2247653305530548, 0.21829532086849213], [0.3043014109134674, 0.3206894099712372, 0.33421531319618225], [0.16548514366149902, 0.1761299967765808, 0.21671296656131744], [0.34600934386253357, 0.30964216589927673, 0.32835453748703003], [0.14214634895324707, 0.13773970305919647, 0.13410204648971558], [0.2766290605068207, 0.257982462644577, 0.2359772026538849], [0.23714715242385864, 0.18814784288406372, 0.15470202267169952]]
+1792284327.572 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284327.585 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284328.426 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284328.516 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284328.525 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284328.526 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284328.526 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284328.527 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284328.527 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284328.527 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284328.527 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284329.108 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.120 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284329.545 Train loader: 18.42M samples
+1792284329.546 Val loader: 2.04M samples
+1792284329.546 Encoder params: 482.19M
+1792284329.547 Decoder params: 5.18M
+1792284329.547 Probe params: 6.15K
+1792284329.547 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.559 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284329.589 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.601 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284329.615 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284329.701 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284329.706 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284329.707 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284329.707 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284329.707 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284329.707 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284329.707 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284329.707 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284329.721 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.733 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284329.756 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.761 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.768 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284329.773 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284329.781 [resume] continuing from models/mae_moe_imagenet_100ep/checkpoint (image_size=256)
+1792284329.794 [resume] encoder: interpolated pos_emb (1, 196, 768) -> (1, 256, 768)
+1792284330.326 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284330.381 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284330.386 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284330.387 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284330.387 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284330.387 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284330.387 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284330.387 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284330.387 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284330.387 [resume] main-optimizer LR re-synced to the fresh scheduler (step-0 value 5e-08)
+1792284330.405 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284330.461 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284330.466 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284330.467 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284330.467 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284330.467 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284330.467 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284330.467 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284330.467 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284330.488 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284330.489 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284330.545 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284330.549 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284330.551 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284330.551 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284330.551 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284330.551 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284330.551 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284330.551 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284330.551 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284330.556 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284330.558 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284330.558 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284330.558 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284330.558 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284330.558 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284330.558 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284330.565 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284330.599 [resume] encoder: loaded 364/364 tensors; still-missing=[]
+1792284330.615 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284330.620 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284330.621 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284330.621 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284330.621 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284330.621 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284330.621 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284330.621 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284330.688 [resume] decoder: interpolated pos_emb (1, 196, 256) -> (1, 256, 256)
+1792284330.698 [resume] decoder: loaded 49/49 tensors; still-missing=[]
+1792284330.699 [resume] probe: skipping bias (shape (1000,) != (8,))
+1792284330.699 [resume] probe: skipping weight (shape (1000, 768) != (8, 768))
+1792284330.699 [resume] probe: loaded 0/2 tensors; still-missing=['weight', 'bias']
+1792284330.699 [resume] main optimizer left fresh (stage-2 uses a new LR schedule on a new dataset; saved state is FP32 and is not compatible with the bf16 params)
+1792284330.699 [resume] probe was re-initialized (n_classes differs); probe optimizer left fresh
+1792284330.699 [resume] checkpoint models/mae_moe_imagenet_100ep/checkpoint loaded successfully
+1792284335.524 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.524   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.524 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.524   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.525 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.525   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.525 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.525   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.526 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.526   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.526 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.526   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.526 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.526   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.527 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.527   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.530 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.530   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.531 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.531   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.531 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.531   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.531 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.531   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.531 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.531   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.532 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.532   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.533 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.533   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.533 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.533   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.569 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.569   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.569 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.569   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.569 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.569   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.570 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.570   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.570 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.570   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.570 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.570   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.570 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.570   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.571 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.571   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.571 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.571   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.571 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.571   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.571 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.571   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.571 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.571   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.572 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.572   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.572 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.572   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.572 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.572   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.572 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.572   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.622 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.622   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.622 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.622   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.622 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.622   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.623 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.623   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.623 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.623   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.624 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.624   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.624 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.624   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.624 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.624   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.674 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.674   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.674 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.674   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.675 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.675   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.675 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.675   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.675 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.675   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.675 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.675   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.676 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.676   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.676 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.676   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.707 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.707   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.708 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.708   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.708 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.708   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.708 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.708   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.708 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.708   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.709 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.709   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.709 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.709   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.709 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.709   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.718 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.718   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.718 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.718   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.719 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.719   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.719 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.719   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.720 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.720   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.720 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.720   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.721 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.721   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284335.721 /raid/home/paragdutta/Codes/improved-vision-encoders/dataloader.py:209: UserWarning: The given buffer is not writable, and PyTorch does not support non-writable tensors. This means you can write to the underlying (supposedly non-writable) buffer using the tensor. You may want to copy the buffer to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_new.cpp:1556.)
+1792284335.721   torch.frombuffer(fh.read(), dtype=torch.uint8)
+1792284342.177 [rank6]:[W1018 00:45:42.796730938 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284342.631 [rank0]:[W1018 00:45:42.251052895 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284342.837 [rank5]:[W1018 00:45:42.457249545 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284342.930 [rank3]:[W1018 00:45:42.550907515 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284342.970 [rank4]:[W1018 00:45:42.590371952 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284343.022 [rank2]:[W1018 00:45:43.642460266 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284343.199 [rank7]:[W1018 00:45:43.819734181 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284346.746 [rank1]:[W1018 00:45:46.366052266 reducer.cpp:1529] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+1792284350.781 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.781   return func(*args, **kwargs)
+1792284350.783 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.783   return func(*args, **kwargs)
+1792284350.785 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.785   return func(*args, **kwargs)
+1792284350.786 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.786   return func(*args, **kwargs)
+1792284350.792 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.792   return func(*args, **kwargs)
+1792284350.792 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.792   return func(*args, **kwargs)
+1792284350.795 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.795   return func(*args, **kwargs)
+1792284350.796 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284350.796   return func(*args, **kwargs)
+1792284350.798 Epoch [1/500] Batch [1/35978] LR: 0.000000 Loss: 0.4913 Pred Loss: 0.2663 Var Loss: 0.0062 SW Loss: 0.0691 Probe Loss: 2.1474 Probe Acc: 0.0527 Router Loss: 0.0055
+1792284351.536 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284351.536   return func(*args, **kwargs)
+1792284351.537 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284351.537   return func(*args, **kwargs)
+1792284351.538 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284351.538   return func(*args, **kwargs)
+1792284351.543 Epoch [1/500] Batch [2/35978] LR: 0.000000 Loss: 0.5423 Pred Loss: 0.2983 Var Loss: 0.0070 SW Loss: 0.0695 Probe Loss: 1.2024 Probe Acc: 0.8730 Router Loss: 0.0056
+1792284352.313 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284352.313   return func(*args, **kwargs)
+1792284352.315 Epoch [1/500] Batch [3/35978] LR: 0.000000 Loss: 0.4901 Pred Loss: 0.2644 Var Loss: 0.0063 SW Loss: 0.0694 Probe Loss: 0.9113 Probe Acc: 0.9004 Router Loss: 0.0061
+1792284352.933 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284352.933   return func(*args, **kwargs)
+1792284353.081 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284353.081   return func(*args, **kwargs)
+1792284353.083 Epoch [1/500] Batch [4/35978] LR: 0.000000 Loss: 0.5421 Pred Loss: 0.2989 Var Loss: 0.0070 SW Loss: 0.0693 Probe Loss: 0.5361 Probe Acc: 0.9160 Router Loss: 0.0055
+1792284353.552 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284353.552   return func(*args, **kwargs)
+1792284353.554 Epoch [1/500] Batch [5/35978] LR: 0.000000 Loss: 0.5219 Pred Loss: 0.2845 Var Loss: 0.0067 SW Loss: 0.0692 Probe Loss: 0.4596 Probe Acc: 0.9434 Router Loss: 0.0059
+1792284354.149 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284354.149   return func(*args, **kwargs)
+1792284354.295 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284354.295   return func(*args, **kwargs)
+1792284354.297 Epoch [1/500] Batch [6/35978] LR: 0.000000 Loss: 0.5131 Pred Loss: 0.2721 Var Loss: 0.0068 SW Loss: 0.0700 Probe Loss: 0.2361 Probe Acc: 0.9512 Router Loss: 0.0053
+1792284354.598 Epoch [1/500] Batch [7/35978] LR: 0.000000 Loss: 0.5141 Pred Loss: 0.2860 Var Loss: 0.0063 SW Loss: 0.0695 Probe Loss: 0.1865 Probe Acc: 0.9727 Router Loss: 0.0062
+1792284354.899 Epoch [1/500] Batch [8/35978] LR: 0.000000 Loss: 0.5295 Pred Loss: 0.3117 Var Loss: 0.0060 SW Loss: 0.0690 Probe Loss: 0.2280 Probe Acc: 0.9766 Router Loss: 0.0059
+1792284355.346 /raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+1792284355.346   return func(*args, **kwargs)
+1792284355.348 Epoch [1/500] Batch [9/35978] LR: 0.000000 Loss: 0.5272 Pred Loss: 0.2826 Var Loss: 0.0070 SW Loss: 0.0701 Probe Loss: 0.0972 Probe Acc: 0.9863 Router Loss: 0.0053
+1792284355.649 Epoch [1/500] Batch [10/35978] LR: 0.000000 Loss: 0.5108 Pred Loss: 0.2912 Var Loss: 0.0060 SW Loss: 0.0692 Probe Loss: 0.1080 Probe Acc: 0.9844 Router Loss: 0.0055
+1792284355.949 Epoch [1/500] Batch [11/35978] LR: 0.000000 Loss: 0.5140 Pred Loss: 0.2927 Var Loss: 0.0061 SW Loss: 0.0691 Probe Loss: 0.1254 Probe Acc: 0.9805 Router Loss: 0.0059
+1792284356.254 Epoch [1/500] Batch [12/35978] LR: 0.000000 Loss: 0.5099 Pred Loss: 0.2880 Var Loss: 0.0061 SW Loss: 0.0692 Probe Loss: 0.0637 Probe Acc: 0.9785 Router Loss: 0.0061
+1792284356.254 [max_steps] stopping after 12 train steps
+1792284357.585 Exception ignored in atexit callback: <function _MultiProcessingDataLoaderIter._clean_up_persistent_workers_atexit at 0x7829f20e1260>
+1792284357.585 Traceback (most recent call last):
+1792284357.585   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1690, in _clean_up_persistent_workers_atexit
+1792284357.586     iterator._shutdown_workers()
+1792284357.586   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1637, in _shutdown_workers
+1792284357.586     self._worker_result_queue.put((None, None))
+1792284357.586   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 94, in put
+1792284357.586     self._start_thread()
+1792284357.586   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 177, in _start_thread
+1792284357.586     self._thread.start()
+1792284357.586   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/threading.py", line 971, in start
+1792284357.586     _start_new_thread(self._bootstrap, ())
+1792284357.586 RuntimeError: can't create new thread at interpreter shutdown
+1792284357.715 Exception ignored in atexit callback: <function _MultiProcessingDataLoaderIter._clean_up_persistent_workers_atexit at 0x7fc7e4dd9260>
+1792284357.715 Traceback (most recent call last):
+1792284357.715   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1690, in _clean_up_persistent_workers_atexit
+1792284357.715     iterator._shutdown_workers()
+1792284357.715   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1637, in _shutdown_workers
+1792284357.716     self._worker_result_queue.put((None, None))
+1792284357.716   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 94, in put
+1792284357.716     self._start_thread()
+1792284357.716   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 177, in _start_thread
+1792284357.716     self._thread.start()
+1792284357.716   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/threading.py", line 971, in start
+1792284357.716     _start_new_thread(self._bootstrap, ())
+1792284357.716 RuntimeError: can't create new thread at interpreter shutdown
+1792284357.725 Exception ignored in atexit callback: <function _MultiProcessingDataLoaderIter._clean_up_persistent_workers_atexit at 0x7ed238edd260>
+1792284357.725 Traceback (most recent call last):
+1792284357.725   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1690, in _clean_up_persistent_workers_atexit
+1792284357.725     iterator._shutdown_workers()
+1792284357.725   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1637, in _shutdown_workers
+1792284357.725     self._worker_result_queue.put((None, None))
+1792284357.725   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 94, in put
+1792284357.725     self._start_thread()
+1792284357.725   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 177, in _start_thread
+1792284357.725     self._thread.start()
+1792284357.725   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/threading.py", line 971, in start
+1792284357.726     _start_new_thread(self._bootstrap, ())
+1792284357.726 RuntimeError: can't create new thread at interpreter shutdown
+1792284357.748 Exception ignored in atexit callback: <function _MultiProcessingDataLoaderIter._clean_up_persistent_workers_atexit at 0x709d62dd5260>
+1792284357.748 Traceback (most recent call last):
+1792284357.748   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1690, in _clean_up_persistent_workers_atexit
+1792284357.748     iterator._shutdown_workers()
+1792284357.748   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1637, in _shutdown_workers
+1792284357.748     self._worker_result_queue.put((None, None))
+1792284357.749   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 94, in put
+1792284357.749     self._start_thread()
+1792284357.749   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/multiprocessing/queues.py", line 177, in _start_thread
+1792284357.749     self._thread.start()
+1792284357.749   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/threading.py", line 971, in start
+1792284357.749     _start_new_thread(self._bootstrap, ())
+1792284357.749 RuntimeError: can't create new thread at interpreter shutdown
+1792284359.078 Exception ignored in: <function ResourceTracker.__del__ at 0x770e3361e0c0>
+1792284359.078 Traceback (most recent call last):
+1792284359.078   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.078   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.078   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.078 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.128 Exception ignored in: <function ResourceTracker.__del__ at 0x7567485960c0>
+1792284359.128 Traceback (most recent call last):
+1792284359.128   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.128   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.128   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.128 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.202 Exception ignored in: <function ResourceTracker.__del__ at 0x7e9e7cc660c0>
+1792284359.202 Traceback (most recent call last):
+1792284359.202   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.202   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.202   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.202 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.256 Exception ignored in: <function ResourceTracker.__del__ at 0x7d60cc65a0c0>
+1792284359.256 Traceback (most recent call last):
+1792284359.256   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.256   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.256   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.256 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.856 Exception ignored in: <function ResourceTracker.__del__ at 0x78284c3be0c0>
+1792284359.856 Traceback (most recent call last):
+1792284359.856   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.856   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.856   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.856 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.934 Exception ignored in: <function ResourceTracker.__del__ at 0x709bbd1b20c0>
+1792284359.934 Traceback (most recent call last):
+1792284359.934   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.934   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.934   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.934 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.951 Exception ignored in: <function ResourceTracker.__del__ at 0x7fc7327060c0>
+1792284359.951 Traceback (most recent call last):
+1792284359.951   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.951   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.951   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.951 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+1792284359.965 Exception ignored in: <function ResourceTracker.__del__ at 0x7ed182d260c0>
+1792284359.965 Traceback (most recent call last):
+1792284359.965   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 80, in __del__
+1792284359.965   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 89, in _stop
+1792284359.965   File "/raid/home/paragdutta/miniconda3/envs/dl/lib/python3.12/site-packages/multiprocess/resource_tracker.py", line 102, in _stop_locked
+1792284359.965 AttributeError: '_thread.RLock' object has no attribute '_recursion_count'
+SMOKE_EXIT=0
