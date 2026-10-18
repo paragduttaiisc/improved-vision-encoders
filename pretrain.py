@@ -292,6 +292,15 @@ def main(args: argparse.Namespace) -> None:
 
     scheduler = LambdaLR(optimizer, _lr_lambda)
 
+    if args.start_epoch > 1:
+        _ff = (args.start_epoch - 1) * steps_per_epoch
+        scheduler.last_epoch = _ff
+        for pg, new_lr in zip(optimizer.param_groups, scheduler.get_lr()):
+            pg["lr"] = new_lr
+        accelerator.print(
+            f"[start_epoch={args.start_epoch}] scheduler fast-forwarded to step {_ff}, "
+            f"LR={scheduler.get_last_lr()[0]:.6g}")
+
     get_param_count = lambda model: sum(p.numel() for p in model.parameters())
     accelerator.print(f"Train loader: {hrn(len(train_loader.dataset))} samples") # type: ignore
     accelerator.print(f"Val loader: {hrn(len(val_loader.dataset))} samples") # type: ignore
@@ -333,7 +342,7 @@ def main(args: argparse.Namespace) -> None:
     else:
         norm_mean_dev = norm_std_dev = None
 
-    for epoch in range(1, args.num_epochs + 1):
+    for epoch in range(args.start_epoch, args.num_epochs + 1):
         encoder.train()
         decoder.train()
         if not args.no_probe:
@@ -641,6 +650,8 @@ if __name__ == "__main__":
                              '(0 = full val set)')
     parser.add_argument('--n_workers', type=int, default=8)
     parser.add_argument('--num_epochs', type=int, default=500)
+    parser.add_argument('--start_epoch', type=int, default=1,
+                        help='Continue training from this 1-indexed epoch; skip 1..start_epoch-1 and fast-forward the LR scheduler to the matching step.')
     parser.add_argument('--warmup_epochs', type=int, default=10)
     parser.add_argument('--last_decay_epoch', type=int, default=480)
     parser.add_argument('--batch_size', type=int, default=512)
