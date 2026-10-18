@@ -1,9 +1,9 @@
 #!/bin/bash
 # Full 9-epoch continue-pretrain on the robot dataset, resuming the
 # ImageNet 100-ep checkpoint (epoch-90-start save, 89 clean epochs).
-# 8-GPU DDP, wandb on, per-GPU batch 64 (=512 global), image_size 256.
+# 8-GPU DDP, wandb on, per-GPU batch 448 (=3584 global), image_size 256.
 # NOTE: --batch_size in this codebase is PER-GPU (dataloader.py uses it as-is);
-# 64 x 8 = 512 global matches stage-1 exactly, so the lr=5e-5 peak calibration holds.
+# 448 x 8 = 3584 global (single-GPU probe verified: 448 peak 39.5GB no OOM; 480 OOMs at 40.1GB). LR stays 5e-5 peak per user choice (conservative at this batch).
 #
 # Fresh LR schedule (NOT the stage-1 scheduler):
 #   --lr 5e-5  -> 1 epoch linear warmup 5e-8 -> 5e-5,
