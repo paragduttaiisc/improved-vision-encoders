@@ -478,9 +478,11 @@ def main(args: argparse.Namespace) -> None:
         with torch.no_grad():
             _max_val_batches = (args.val_samples_max // len(val_loader) + 1) \
                 if args.val_samples_max > 0 else None
+            _n_val_batches = 0
             for batch_idx, (imgs, labels) in enumerate(val_loader):
                 if _max_val_batches is not None and batch_idx >= _max_val_batches:
                     break
+                _n_val_batches += 1
                 if is_robot:
                     imgs = normalize_batch(imgs, labels,
                                            norm_mean_dev, norm_std_dev)
@@ -561,13 +563,18 @@ def main(args: argparse.Namespace) -> None:
                 total_mse += mse.item()
                 total_mae += mae.item()
                 total_psnr += psnr.item()
-        val_pred_loss = total_pred_loss / len(val_loader)
-        val_var_loss = total_var_loss / len(val_loader)
-        val_sw_loss = total_sw_loss / len(val_loader)
-        val_loss = total_loss / len(val_loader)
-        val_mse = total_mse / len(val_loader)
-        val_mae = total_mae / len(val_loader)
-        val_psnr = total_psnr / len(val_loader)
+        # Denominator = number of val batches ACTUALLY processed (capped by
+        # --val_samples_max), not the full per-rank len(val_loader). Dividing
+        # the capped sum by the full count understates every val metric by
+        # len(val_loader)/n_processed (e.g. ~117x when val runs 6 of ~702).
+        _n_val = max(_n_val_batches, 1)
+        val_pred_loss = total_pred_loss / _n_val
+        val_var_loss = total_var_loss / _n_val
+        val_sw_loss = total_sw_loss / _n_val
+        val_loss = total_loss / _n_val
+        val_mse = total_mse / _n_val
+        val_mae = total_mae / _n_val
+        val_psnr = total_psnr / _n_val
         _n_val_ds = len(val_loader.dataset)
         correct_1 = total_correct_1 / _n_val_ds if not args.no_probe else 0.0
         correct_5 = total_correct_5 / _n_val_ds if not args.no_probe else 0.0
