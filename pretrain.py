@@ -477,9 +477,11 @@ def main(args: argparse.Namespace) -> None:
             accelerator.print(f"[save] epoch {epoch} checkpoint -> {ckpt_path}")
 
         if args.max_steps:
-            # Smoke-test mode: skip full validation after the train budget.
-            print(f"[max_steps] reached; skipping validation, "
-                  f"final train loss = {loss.item():.4f}")
+            # Smoke-test mode: no validation at epoch ends; training goes on
+            # until max_steps is reached.
+            accelerator.print(
+                f"[max_steps] epoch {epoch} done; skipping validation "
+                f"(train loss {loss.item():.4f})")
             continue
         
         encoder.eval()
