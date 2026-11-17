@@ -53,6 +53,14 @@ class FourierMixer(nn.Module):
         return self.dropout(self.proj(x))
 
 
+def ffn_hidden_size(n_embed: int, hidden_size: int, activation: str) -> int:
+    """Actual FFN width. SwiGLU ignores `hidden_size` and uses 8/3 * n_embed
+    rounded up to a multiple of 256 (same params as a 4x 2-matrix FFN)."""
+    if activation != "SwiGLU":
+        return hidden_size
+    return 256 * ((8 * n_embed // 3 + 255) // 256)
+
+
 class FeedForward(nn.Module):
     def __init__(
             self,
@@ -67,9 +75,8 @@ class FeedForward(nn.Module):
         self.act = nn.GELU(approximate="tanh") if activation == "GELU"\
                     else lambda x: F.relu(x).square()
         self.forward = self._forward_standard
+        hidden_size = ffn_hidden_size(n_embed, hidden_size, activation)
         if activation == "SwiGLU":
-            hidden_size = 8 * n_embed // 3
-            hidden_size = 256 * ((hidden_size + 255) // 256) # for efficiency
             self.gate_proj = nn.Linear(n_embed, hidden_size, bias=False)
             self.forward = self._forward_SwiGLU
         self.up_proj = nn.Linear(n_embed, hidden_size, bias=False)
@@ -91,6 +98,27 @@ class FeedForward(nn.Module):
 
 
 class MoE(nn.Module):
+    """Mixture-of-Experts FFN with top-k token-choice routing.
+
+    Ported from modern_llms (model/feed_forward.py). Expert weights are
+    stacked into 3-D parameters so all experts run in one `grouped_mm` call
+    over expert-sorted tokens, instead of a Python loop with data-dependent
+    shapes (which forced host syncs and torch.compile graph breaks):
+        SwiGLU:        gate_up_weight [E, 2H, C] (rows [gate (H) | up (H)]),
+                       down_weight    [E, C, H]
+        GELU / SqReLU: up_weight      [E, H, C], down_weight [E, C, H]
+    H follows `ffn_hidden_size`, so it matches the old per-expert
+    FeedForward and legacy checkpoints convert exactly
+    (`convert_legacy_moe_state_dict`).
+
+    `grouped_mm` only runs in bf16 and is not covered by autocast, so the
+    expert matmuls cast both activations and (fp32 master) weights to bf16,
+    like every other matmul under bf16 autocast.
+
+    Side effects of `forward` for logging, all detached: `last_load` [E]
+    fraction of routed slots per expert, `last_importance` [E] mean router
+    probability, `last_num_tokens` [E] slot counts, `last_aux_loss`.
+    """
     def __init__(
         self,
         n_embed: int,
@@ -101,72 +129,140 @@ class MoE(nn.Module):
         dropout: float = 0.0,
     ) -> None:
         super().__init__()
+        if activation not in {"GELU", "SwiGLU", "SqReLU"}:
+            raise ValueError(f"Unsupported activation: {activation}")
+        if not 1 <= top_k <= n_experts:
+            raise ValueError(
+                f"need 1 <= top_k <= n_experts, got {top_k=}, {n_experts=}")
 
+        self.n_embed = n_embed
         self.num_experts = n_experts
         self.top_k = top_k
+        self.activation = activation
+        self.dropout_p = dropout
+        self.hidden_size = H = ffn_hidden_size(n_embed, hidden_size, activation)
 
         self.router = nn.Linear(n_embed, n_experts, bias=False)
-        self.experts = nn.ModuleList([
-            FeedForward(
-                n_embed=n_embed,
-                hidden_size=hidden_size,
-                activation=activation,
-                dropout=dropout,
-            )
-            for _ in range(n_experts)
-        ])
+        self.gate_up_weight: nn.Parameter | None = None
+        self.up_weight: nn.Parameter | None = None
+        if activation == "SwiGLU":
+            self.gate_up_weight = nn.Parameter(
+                torch.empty(n_experts, 2 * H, n_embed))
+        else:
+            self.up_weight = nn.Parameter(torch.empty(n_experts, H, n_embed))
+        self.down_weight = nn.Parameter(torch.empty(n_experts, n_embed, H))
+        # Same init as the nn.Linear experts got from BaseModel._init_weights
+        # (which does not reach these 3-D parameters).
+        for p in (self.gate_up_weight, self.up_weight, self.down_weight):
+            if p is not None:
+                nn.init.trunc_normal_(p, std=0.02)
 
-        self.last_load = None
-        self.last_importance = None
-        self.last_aux_loss = None
-        self.last_num_tokens = None
+        self.last_load: torch.Tensor | None = None
+        self.last_importance: torch.Tensor | None = None
+        self.last_aux_loss: torch.Tensor | None = None
+        self.last_num_tokens: torch.Tensor | None = None
+
+    @staticmethod
+    def _grouped_mm(
+        x: torch.Tensor, weight: torch.Tensor, offsets: torch.Tensor
+    ) -> torch.Tensor:
+        """x [N_routed, in] with rows grouped by expert; weight [E, in, out];
+        offsets [E] int32 cumulative row counts. Returns bf16 [N_routed, out]."""
+        x = x.to(torch.bfloat16)
+        weight = weight.to(torch.bfloat16)
+        if hasattr(F, "grouped_mm"):
+            return F.grouped_mm(x, weight, offs=offsets)
+        if hasattr(torch, "_grouped_mm"):
+            return torch._grouped_mm(  # pyright: ignore[reportPrivateImportUsage]
+                x, weight, offsets)
+        out = x.new_empty(x.shape[0], weight.shape[-1])
+        start = 0
+        for e in range(weight.shape[0]):
+            end = int(offsets[e].item())
+            if end > start:
+                out[start:end] = x[start:end] @ weight[e]
+            start = end
+        return out
 
     def forward(self, x: torch.Tensor) -> MLPOutput:
-
         B, T, C = x.shape
+        N, H, K = B * T, self.hidden_size, self.top_k
+        x_flat = x.reshape(N, C)
 
-        router_logits = self.router(x) # (B,T,E)
-        router_probs = F.softmax(router_logits, dim=-1)
-        importance = router_probs.float().mean(dim=(0, 1))
+        router_probs = F.softmax(self.router(x_flat).float(), dim=-1)  # [N, E]
+        topk_probs, topk_idx = torch.topk(router_probs, k=K, dim=-1)
+        topk_weights = topk_probs / topk_probs.sum(dim=-1, keepdim=True)
 
-        topk_probs, indices = torch.topk(router_probs, self.top_k, dim=-1)
-        weights = topk_probs / topk_probs.sum(dim=-1, keepdim=True)
-
-        flat_indices = indices.reshape(-1, self.top_k)
-        flat_weights = topk_probs.float().reshape(-1, self.top_k)
-        load = torch.zeros(self.num_experts, device=x.device, dtype=x.dtype)
-        load.scatter_add_(0, flat_indices.reshape(-1), flat_weights.reshape(-1))
-        load /= load.sum()
-
-        target = torch.full(
-            (self.num_experts,),
-            1.0 / self.num_experts,
-            device=x.device,
-            dtype=torch.float32,
-        )
-        aux_loss = F.mse_loss(load, target) + F.mse_loss(importance, target)
+        # Per-expert slot counts via a fixed-size scatter_add (bincount would
+        # read its max index back to the host every step).
+        flat_idx = topk_idx.reshape(-1)
+        counts = torch.zeros(
+            self.num_experts, dtype=torch.long, device=x.device
+        ).scatter_add_(0, flat_idx, torch.ones_like(flat_idx))
+        importance = router_probs.mean(dim=0)  # differentiable
+        load = counts.float() / float(N * K)    # counts: no gradient
+        # Switch-Transformer balance loss; == 1.0 when perfectly balanced.
+        aux_loss = self.num_experts * torch.sum(load * importance)
 
         self.last_load = load.detach()
         self.last_importance = importance.detach()
         self.last_aux_loss = aux_loss.detach()
-        self.last_num_tokens = torch.bincount(
-            flat_indices.reshape(-1), minlength=self.num_experts).detach()
+        self.last_num_tokens = counts.detach()
 
-        x_flat = x.reshape(-1, C)
-        out = torch.zeros_like(x_flat)
-        flat_weights = weights.reshape(-1, self.top_k)
+        # Sort the N*K (token, expert) slots by expert so each expert's rows
+        # are contiguous, which is the layout grouped_mm expects.
+        sort_order = torch.argsort(flat_idx)
+        token_idx = torch.arange(N, device=x.device).repeat_interleave(K)
+        x_sorted = x_flat[token_idx[sort_order]]
+        offsets = torch.cumsum(counts, dim=0, dtype=torch.int32)
 
-        for expert_id, expert in enumerate(self.experts):
-            token_idx, kth = torch.where(flat_indices == expert_id)
-            if token_idx.numel() == 0:
-                continue
-            expert_input = x_flat[token_idx]
-            expert_output = expert.forward(expert_input).to(out.dtype)
-            expert_output *= flat_weights[token_idx, kth].unsqueeze(-1)
-            out.index_add_(0, token_idx, expert_output)
-        out = out.view(B, T, C)
+        if self.gate_up_weight is not None:
+            gate_up = self._grouped_mm(
+                x_sorted, self.gate_up_weight.transpose(-1, -2), offsets)
+            hidden = F.silu(gate_up[:, :H]) * gate_up[:, H:]
+        else:
+            assert self.up_weight is not None
+            hidden = self._grouped_mm(
+                x_sorted, self.up_weight.transpose(-1, -2), offsets)
+            hidden = F.gelu(hidden, approximate="tanh") \
+                if self.activation == "GELU" else F.relu(hidden).square()
+        out_sorted = self._grouped_mm(
+            hidden, self.down_weight.transpose(-1, -2), offsets)
+        out_sorted = out_sorted * topk_weights.reshape(-1)[sort_order]\
+            .to(out_sorted.dtype).unsqueeze(-1)
 
-        return MLPOutput(value=out, loss=aux_loss)
+        # Unsort back to (token, slot) order and sum each token's K outputs.
+        out = torch.empty_like(out_sorted)
+        out[sort_order] = out_sorted
+        out = out.view(N, K, C).float().sum(dim=1).to(x.dtype)
+        out = F.dropout(out, p=self.dropout_p, training=self.training)
+        return MLPOutput(value=out.view(B, T, C), loss=aux_loss)
+
+
+def convert_legacy_moe_state_dict(
+        sd: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
+    """Convert checkpoints from the old loop-based MoE (one FeedForward per
+    expert: `...channel_mixer.experts.{e}.{gate,up,down}_proj.weight`) to the
+    stacked layout (`gate_up_weight` / `up_weight` / `down_weight`). Keys of
+    an already-converted (or dense) state dict pass through unchanged."""
+    groups: dict[str, dict[int, dict[str, torch.Tensor]]] = {}
+    out: dict[str, torch.Tensor] = {}
+    for k, v in sd.items():
+        head, sep, tail = k.partition(".experts.")
+        parts = tail.split(".")
+        if sep and len(parts) == 3 and parts[2] == "weight" and parts[0].isdigit():
+            groups.setdefault(head, {}).setdefault(int(parts[0]), {})[parts[1]] = v
+        else:
+            out[k] = v
+    for head, experts in groups.items():
+        ex = [experts[e] for e in sorted(experts)]
+        if "gate_proj" in ex[0]:
+            out[f"{head}.gate_up_weight"] = torch.stack(
+                [torch.cat([e["gate_proj"], e["up_proj"]], dim=0) for e in ex])
+        else:
+            out[f"{head}.up_weight"] = torch.stack([e["up_proj"] for e in ex])
+        out[f"{head}.down_weight"] = torch.stack([e["down_proj"] for e in ex])
+    return out
 
 
 class Block(nn.Module):
@@ -237,12 +333,12 @@ class BaseModel(nn.Module):
     def forward_features(
             self, x: torch.Tensor
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
-        aux_loss = torch.tensor(0.0, device=x.device, dtype=x.dtype)
+        router_losses = []
         for layer in self.layers:
             x, router_loss = layer(x)
             if router_loss is not None:
-                aux_loss += router_loss
-        aux_loss = aux_loss / len(self.layers) if router_loss != 0 else None
+                router_losses.append(router_loss)
+        aux_loss = torch.stack(router_losses).mean() if router_losses else None
         return self.norm_f(x), aux_loss
 
 

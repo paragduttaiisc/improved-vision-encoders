@@ -1,5 +1,6 @@
 import math
 import os
+import time
 import argparse
 import matplotlib
 matplotlib.use("Agg")
@@ -9,7 +10,7 @@ from accelerate import Accelerator
 from accelerate.utils import DistributedDataParallelKwargs
 from torch.optim.lr_scheduler import LambdaLR
 
-from model import Encoder, Decoder
+from model import Encoder, Decoder, convert_legacy_moe_state_dict
 from utils import set_seed, human_readable_numbers as hrn,\
     patchify, unpatchify, denormalize, visualize
 from dataloader import get_robot_dataloaders, get_imagenet_dataloaders,\
@@ -57,7 +58,7 @@ def _load_into(path, raw, label, interpolate):
     every key the model expects was loaded with a matching shape (i.e.
     the module was not partially re-initialized).
     """
-    sd = _load_state_dict(path)
+    sd = convert_legacy_moe_state_dict(_load_state_dict(path))
     cur = raw.state_dict()
     for key in list(sd):
         if key not in cur:
@@ -79,6 +80,26 @@ def _load_into(path, raw, label, interpolate):
     print(f"[resume] {label}: loaded {len(sd)}/{len(cur)} tensors; "
           f"still-missing={missing}")
     return not missing
+
+
+def _expert_logs(encoder) -> dict[str, float]:
+    """Per-expert load / token count / router importance, averaged over the
+    encoder's MoE layers. Empty for a dense encoder (--n_experts 1)."""
+    mixers = [l.channel_mixer for l in encoder.layers
+              if getattr(l.channel_mixer, "last_load", None) is not None]
+    if not mixers:
+        return {}
+    stats = {
+        name: torch.stack([getattr(m, f"last_{name}").float() for m in mixers])
+        .mean(0).tolist()
+        for name in ("load", "num_tokens", "importance")
+    }
+    logs = {}
+    for i in range(len(stats["load"])):
+        logs[f"expert_{i}_load"] = stats["load"][i]
+        logs[f"expert_{i}_tokens"] = stats["num_tokens"][i]
+        logs[f"expert_{i}_importance"] = stats["importance"][i]
+    return logs
 
 
 def save_recon_grid(original, masked, reconstruction, out_path, n=12):
@@ -203,7 +224,10 @@ def main(args: argparse.Namespace) -> None:
         norm_mean = norm_std = None
 
     ddp_kwargs = DistributedDataParallelKwargs(
-        find_unused_parameters=True
+        # Every parameter gets a gradient each step (the grouped-MoE runs
+        # all experts' weights through grouped_mm even with 0 tokens), so
+        # DDP does not need the extra unused-parameter graph traversal.
+        find_unused_parameters=False
     )
     accelerator = Accelerator(
         kwargs_handlers=[ddp_kwargs],
@@ -347,6 +371,7 @@ def main(args: argparse.Namespace) -> None:
         decoder.train()
         if not args.no_probe:
             probe.train()
+        last_log_time, last_log_batch = time.perf_counter(), 0
         for batch_idx, (imgs, labels) in enumerate(train_loader):
             if is_robot:
                 imgs = normalize_batch(imgs, labels,
@@ -384,10 +409,7 @@ def main(args: argparse.Namespace) -> None:
             optimizer.step()
             scheduler.step()
 
-            if args.no_probe:
-                probe_loss = torch.zeros((), device=accelerator.device)
-                acc = 0.0
-            else:
+            if not args.no_probe:
                 encoder.eval()
                 with torch.no_grad():
                     latents, _ = encoder(patches)
@@ -398,50 +420,42 @@ def main(args: argparse.Namespace) -> None:
                 probe_optimizer.zero_grad()
                 accelerator.backward(probe_loss)
                 probe_optimizer.step()
-                preds = logits.argmax(dim=-1)
-                preds, labels = accelerator.gather_for_metrics((preds, labels))
-                acc = (preds == labels).sum().item() / len(labels)
-
-            model = accelerator.unwrap_model(encoder)
-            if model.layers[0].channel_mixer.last_load is not None:
-                avg_load = torch.stack([
-                    l.channel_mixer.last_load.float()
-                    for l in model.layers]).mean(0)
-                avg_tokens = torch.stack([
-                    l.channel_mixer.last_num_tokens.float()
-                    for l in model.layers]).mean(0)
-                avg_importance = torch.stack([
-                    l.channel_mixer.last_importance.float()
-                    for l in model.layers]).mean(0)
-            load_logs = {}
-            for i in range(avg_load.numel()):
-                load_logs[f"expert_{i}_load"] = avg_load[i].item()
-                load_logs[f"expert_{i}_tokens"] = avg_tokens[i].item()
-                load_logs[f"expert_{i}_importance"] = avg_importance[i].item()
 
             global_step = (epoch - 1) * len(train_loader) + batch_idx
-            _train_metrics = {
-                "train/epoch": (epoch-1) + (batch_idx + 1) / len(train_loader),
-                "train/lr": optimizer.param_groups[0]["lr"],
-                "train/loss": loss.item(),
-                "train/pred_loss": pred_loss.item(),
-                "train/var_loss": var_loss.item(),
-                "train/sw_loss": sw_loss.item(),
-                "train/router_loss": router_loss.item() if router_loss is not None else 0.0,
-                **load_logs
-            }
-            if not args.no_probe:
-                _train_metrics["train/probe_loss"] = probe_loss.item()
-                _train_metrics["train/probe_acc"] = acc
-            accelerator.log(_train_metrics, step=global_step)
+            # Metrics are read back (.item(): a host sync each) and logged
+            # only every log_interval steps, not on every step.
             if batch_idx % args.log_interval == 0:
-                _probe_str = (f" Probe Loss: {probe_loss.item():.4f}"
-                              f" Probe Acc: {acc:.4f}"
-                              if not args.no_probe else "")
+                now = time.perf_counter()
+                imgs_per_sec = (
+                    (batch_idx - last_log_batch) * B * accelerator.num_processes
+                    / (now - last_log_time)) if batch_idx > last_log_batch else 0.0
+                last_log_time, last_log_batch = now, batch_idx
+                _train_metrics = {
+                    "train/epoch": (epoch-1) + (batch_idx + 1) / len(train_loader),
+                    "train/lr": optimizer.param_groups[0]["lr"],
+                    "train/imgs_per_sec": imgs_per_sec,
+                    "train/loss": loss.item(),
+                    "train/pred_loss": pred_loss.item(),
+                    "train/var_loss": var_loss.item(),
+                    "train/sw_loss": sw_loss.item(),
+                    "train/router_loss": router_loss.item() if router_loss is not None else 0.0,
+                    **_expert_logs(accelerator.unwrap_model(encoder)),
+                }
+                _probe_str = ""
+                if not args.no_probe:
+                    preds = logits.argmax(dim=-1)
+                    preds, labels = accelerator.gather_for_metrics((preds, labels))
+                    acc = (preds == labels).sum().item() / len(labels)
+                    _train_metrics["train/probe_loss"] = probe_loss.item()
+                    _train_metrics["train/probe_acc"] = acc
+                    _probe_str = (f" Probe Loss: {probe_loss.item():.4f}"
+                                  f" Probe Acc: {acc:.4f}")
+                accelerator.log(_train_metrics, step=global_step)
                 accelerator.print(
                     f"Epoch [{epoch}/{args.num_epochs}]"
                     f" Batch [{batch_idx + 1}/{len(train_loader)}]"
                     f" LR: {optimizer.param_groups[0]['lr']:.6f}"
+                    f" Img/s: {imgs_per_sec:.0f}"
                     f" Loss: {loss.item():.4f}"
                     f" Pred Loss: {pred_loss.item():.4f}"
                     f" Var Loss: {var_loss.item():.4f}"
