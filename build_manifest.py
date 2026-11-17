@@ -45,8 +45,10 @@ def _encode_row(di: int, ep: int, rel: str) -> bytes:
 def build_manifest(robot_dir: str, out_path: str) -> dict:
     meta_path = out_path.replace(".jsonl", "_meta.json")
     tmp_path = out_path + ".tmp"
+    # Skip hidden dirs (e.g. an rsync .move_log/ left in the data root).
     datasets = sorted(d for d in os.listdir(robot_dir)
-                      if os.path.isdir(os.path.join(robot_dir, d)))
+                      if not d.startswith(".")
+                      and os.path.isdir(os.path.join(robot_dir, d)))
     counts: list[int] = []
     n_frames = 0
     t0 = time.time()
